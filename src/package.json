@@ -1,0 +1,63 @@
+{
+  "name": "mgv",
+  "description": "Utils and functions to interact with mangrove protocol",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./_cjs/index.js",
+  "module": "./_esm/index.js",
+  "types": "./_types/index.d.ts",
+  "typings": "./_types/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "*",
+    "!**/*.tsbuildinfo",
+    "!**/*.test.ts",
+    "!**/*.test.ts.snap",
+    "!**/*.test-d.ts",
+    "!**/*.bench.ts",
+    "!tsconfig.build.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./_types/index.d.ts",
+      "import": "./_esm/index.js",
+      "default": "./_cjs/index.js"
+    },
+    "./lib": {
+      "types": "./_types/lib/index.d.ts",
+      "import": "./_esm/lib/index.js",
+      "default": "./_cjs/lib/index.js"
+    },
+    "./abis": {
+      "types": "./_types/abis/index.d.ts",
+      "import": "./_esm/abis/index.js",
+      "default": "./_cjs/abis/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.4",
+    "viem": "^2.7.6"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "license": "MIT",
+  "homepage": "https://mangrove.exchange",
+  "authors": [
+    "maxencerb.eth"
+  ],
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapp",
+    "mangrove",
+    "order",
+    "book"
+  ],
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

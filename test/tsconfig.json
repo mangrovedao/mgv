@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "types": ["@types/bun"],
+    "baseUrl": ".",
+    "module": "NodeNext",
+    "paths": {
+      "~mgv/*": ["../src/*"]
+    }
+  }
+}

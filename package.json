@@ -1,0 +1,37 @@
+{
+  "name": "mgv",
+  "workspaces": [
+    "src",
+    "test"
+  ],
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "bun run clean && bun run build:cjs && bun run build:esm && bun run build:types",
+    "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --outDir ./src/_cjs --removeComments --verbatimModuleSyntax false && printf '{\"type\":\"commonjs\"}' > ./src/_cjs/package.json",
+    "build:esm": "tsc --project ./tsconfig.build.json --module es2015 --outDir ./src/_esm && printf '{\"type\": \"module\",\"sideEffects\":false}' > ./src/_esm/package.json",
+    "build:types": "tsc --project ./tsconfig.build.json --module esnext --declarationDir ./src/_types --emitDeclarationOnly --declaration --declarationMap",
+    "clean": "rimraf src/_esm src/_cjs src/_types",
+    "format": "biome format . --write",
+    "lint": "biome check .",
+    "lint:fix": "bun run lint --apply",
+    "test": "vitest -c ./test/vitest.config.ts dev"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.5.3",
+    "@mangrovedao/mangrove-core": "^2.0.3",
+    "@mangrovedao/mangrove-strats": "2.0.0-b1.3",
+    "@types/bun": "latest",
+    "globby": "^14.0.0",
+    "rimraf": "^5.0.5",
+    "simple-git-hooks": "^2.9.0",
+    "viem": "^2.7.6",
+    "vitest": "^1.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "bun run format && bun run lint:fix"
+  }
+}
