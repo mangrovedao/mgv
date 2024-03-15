@@ -1,6 +1,6 @@
 import { parseAbi, type ContractFunctionParameters } from "viem";
 import type { OLKey } from "../types/lib.js";
-import { tickFromVolumes } from "~mgv/lib/tick.js";
+import { tickFromVolumes } from "../lib/tick.js";
 import { olKeyABIRaw } from "./structs.js";
 
 /**
