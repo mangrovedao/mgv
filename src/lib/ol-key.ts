@@ -1,6 +1,5 @@
-import { type Hex, encodeFunctionResult, keccak256 } from 'viem'
-import { IMangrove } from '../abis/IMangrove.js'
-import type { OLKey } from '../types/lib.js'
+import { type Hex, encodeAbiParameters, keccak256 } from "viem";
+import type { OLKey } from "../types/lib.js";
 
 /**
  * Gets the OLKey from the other side of the market.
@@ -12,7 +11,7 @@ export function flip(olKey: OLKey): OLKey {
     outbound_tkn: olKey.inbound_tkn,
     inbound_tkn: olKey.outbound_tkn,
     tickSpacing: olKey.tickSpacing,
-  }
+  };
 }
 
 /**
@@ -23,10 +22,13 @@ export function flip(olKey: OLKey): OLKey {
 export function hash(olKey: OLKey): Hex {
   // TODO: this can be changed to encode ABI parameters
   // and only include the ABI for ol key struct
-  const bytes = encodeFunctionResult({
-    abi: IMangrove,
-    functionName: 'olKeys',
-    result: olKey,
-  })
-  return keccak256(bytes)
+  const bytes = encodeAbiParameters(
+    [
+      { name: "outbound_tkn", type: "address" },
+      { name: "inbound_tkn", type: "address" },
+      { name: "tickSpacing", type: "uint" },
+    ],
+    [olKey.outbound_tkn, olKey.inbound_tkn, olKey.tickSpacing]
+  );
+  return keccak256(bytes);
 }

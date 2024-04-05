@@ -47,3 +47,23 @@ export type OLKey = {
   inbound_tkn: Address
   tickSpacing: bigint
 }
+
+/**
+ * The offer object returned by the RPC endpoint.
+ */
+export type RpcOffer = {
+  prev: bigint
+  next: bigint
+  tick: bigint
+  gives: bigint
+}
+
+/**
+ * The offer detail object returned by the RPC endpoint.
+ */
+export type RpcOfferDetail = {
+  maker: Address
+  gasreq: bigint
+  kilo_offer_gasbase: bigint
+  gasprice: bigint
+}
