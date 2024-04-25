@@ -10,32 +10,6 @@ const gives_bits = 127n
 const unused_bits = 256n - prev_bits - next_bits - tick_bits - gives_bits
 
 export function unpackOffer(offer: bigint): RpcOffer {
-  // const [prev, next, tick, gives] = decodeBigintsFromBigint(_offer, [
-  //   prev_bits,
-  //   next_bits,
-  //   tick_bits,
-  //   gives_bits,
-  // ])
-  // return {
-  //   prev,
-  //   next,
-  //   tick,
-  //   gives,
-  // }
-  // let _offer = offer
-  // const gives = _offer & mask(gives_bits)
-  // _offer >>= gives_bits
-  // const tick = _offer & mask(tick_bits)
-  // _offer >>= tick_bits
-  // const next = _offer & mask(next_bits)
-  // _offer >>= next_bits
-  // const prev = _offer & mask(prev_bits)
-  // return {
-  //   prev,
-  //   next,
-  //   tick,
-  //   gives,
-  // }
   let _offer = offer >> unused_bits
   const gives = _offer & mask(gives_bits)
   _offer >>= gives_bits

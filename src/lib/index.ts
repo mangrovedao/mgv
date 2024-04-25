@@ -24,8 +24,3 @@ export {
 } from './zod.js'
 
 export { parseDensity, multiplyDensity } from './density.js'
-
-export {
-  humanPriceToTick,
-  type HumanPriceToTickParams,
-} from './human-readable.js'

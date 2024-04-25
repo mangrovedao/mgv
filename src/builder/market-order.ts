@@ -1,7 +1,8 @@
-import { parseAbi, type ContractFunctionParameters } from "viem";
+import { parseAbi, type ContractFunctionParameters, type Address } from "viem";
 import type { OLKey } from "../types/lib.js";
-import { tickFromVolumes } from "../lib/tick.js";
+import { tickFromPrice } from "../lib/tick.js";
 import { olKeyABIRaw } from "./structs.js";
+import { BS } from "../lib/enums.js";
 
 /**
  * Parameters for a market order by tick.
@@ -64,7 +65,8 @@ export type MarketOrderByVolumeParams = {
   olKey: OLKey;
   wants: bigint;
   gives: bigint;
-  fillWants: boolean;
+  slippage?: number;
+  fillWants?: boolean;
 };
 
 /**
@@ -72,47 +74,71 @@ export type MarketOrderByVolumeParams = {
  * @param params market order params
  * @returns the parameters for a market order by volume for viem
  */
-export function marketOrderByVolumeParams({
-  olKey,
-  wants,
-  gives,
-  fillWants,
-}: MarketOrderByVolumeParams) {
+export function marketOrderByVolumeParams(params: MarketOrderByVolumeParams) {
+  const { olKey, wants, gives, fillWants = false, slippage = 0 } = params;
+
   const fillVolume = fillWants ? wants : gives;
-  const tick = tickFromVolumes(gives, wants);
+  const price = (Number(gives) * (1 + slippage)) / Number(wants);
+  const maxTick = tickFromPrice(price);
 
   return marketOrderByTickParams({
     olKey,
-    maxTick: tick,
+    maxTick,
     fillVolume,
     fillWants,
   });
 }
 
 /**
- * Parameters for a market order by price.
- * @param olKey the OLKey object
- * @param price the price of the asset
- * @param fillWants whether the fillVolume is the amount to give or to take
- * @param fillVolume the volume to fill
+ * Parameters for a market order by volume and market.
+ * @param base the base token address
+ * @param quote the quote token address
+ * @param tickSpacing the tick spacing
+ * @param baseAmount the base amount
+ * @param quoteAmount the quote amount
+ * @param bs the buy/sell enum
+ * @param fillWants whether to fill the wants or the gives (it will stop when the volume is filled or the price is not good enough)
+ * @param slippage the slippage
  */
-type MarketOrderWithPriceParams = {
-  olKey: OLKey;
-  gives: bigint;
-  price: number;
-  fillWants: boolean;
+export type MarketOrderByVolumeAndMarketParams = {
+  base: Address;
+  quote: Address;
+  tickSpacing: bigint;
+  baseAmount: bigint;
+  quoteAmount: bigint;
+  bs: BS;
+  fillWants?: boolean;
+  slippage?: number;
 };
 
-/**
- * @param params market order params
- * @returns the parameters for a market order by price for viem
- */
-export function marketOrderWithPriceParams({
-  olKey,
-  gives,
-  price,
-  fillWants,
-}: MarketOrderWithPriceParams) {
-  const wants = BigInt(Math.floor(Number(gives) / price));
-  return marketOrderByVolumeParams({ olKey, gives, wants, fillWants });
+export function marketOrderByVolumeAndMarketParams(
+  params: MarketOrderByVolumeAndMarketParams
+) {
+  const {
+    base,
+    quote,
+    tickSpacing,
+    baseAmount,
+    quoteAmount,
+    bs,
+    fillWants = bs === BS.buy,
+    slippage,
+  } = params;
+
+  const olKey: OLKey = {
+    outbound_tkn: bs === BS.buy ? base : quote,
+    inbound_tkn: bs === BS.buy ? quote : base,
+    tickSpacing,
+  };
+
+  const wants = bs === BS.buy ? baseAmount : quoteAmount;
+  const gives = bs === BS.buy ? quoteAmount : baseAmount;
+
+  return marketOrderByVolumeParams({
+    olKey,
+    wants,
+    gives,
+    fillWants,
+    slippage,
+  });
 }

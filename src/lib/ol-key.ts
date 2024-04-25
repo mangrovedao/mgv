@@ -1,4 +1,4 @@
-import { type Hex, encodeAbiParameters, keccak256 } from "viem";
+import { type Hex, encodeAbiParameters, keccak256, type Address } from "viem";
 import type { OLKey } from "../types/lib.js";
 
 /**
@@ -31,4 +31,33 @@ export function hash(olKey: OLKey): Hex {
     [olKey.outbound_tkn, olKey.inbound_tkn, olKey.tickSpacing]
   );
   return keccak256(bytes);
+}
+
+/**
+ * 
+ * @param params.base the base token
+ * @param params.quote the quote token
+ * @param params.tickSpacing the tick spacing
+ * @returns the OLKeys for the asks and bids market
+ */
+export function getSemibooksOLKeys(params: {
+  base: Address;
+  quote: Address;
+  tickSpacing: bigint;
+}): {
+  asksMarket: OLKey;
+  bidsMarket: OLKey;
+} {
+  return {
+    asksMarket: {
+      outbound_tkn: params.base,
+      inbound_tkn: params.quote,
+      tickSpacing: params.tickSpacing,
+    },
+    bidsMarket: {
+      outbound_tkn: params.quote,
+      inbound_tkn: params.base,
+      tickSpacing: params.tickSpacing,
+    },
+  };
 }
