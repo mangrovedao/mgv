@@ -1,11 +1,11 @@
-import type { CompleteOffer, LocalConfig, GlobalConfig } from "../lib.js";
+import type { CompleteOffer, GlobalConfig, LocalConfig } from '../lib.js'
 
 /**
  * GetBookParams
  * @param depth the depth of the book for each side
  */
 export type BookParams = {
-  depth?: bigint;
+  depth?: bigint
 }
 
 /**
@@ -17,9 +17,9 @@ export type BookParams = {
  * @param marketConfig the global mangrove configuration
  */
 export type Book = {
-  asks: CompleteOffer[];
-  bids: CompleteOffer[];
-  asksConfig: LocalConfig;
-  bidsConfig: LocalConfig;
-  marketConfig: GlobalConfig;
-};
+  asks: CompleteOffer[]
+  bids: CompleteOffer[]
+  asksConfig: LocalConfig
+  bidsConfig: LocalConfig
+  marketConfig: GlobalConfig
+}

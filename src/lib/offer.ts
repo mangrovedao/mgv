@@ -1,5 +1,5 @@
-import type { RpcOffer } from "../types/lib.js";
-import { mask } from "./utils.js";
+import type { RpcOffer } from '../types/lib.js'
+import { mask } from './utils.js'
 // import { decodeBigintsFromBigint } from "./utils.js";
 
 const prev_bits = 32n
@@ -24,5 +24,4 @@ export function unpackOffer(offer: bigint): RpcOffer {
     tick,
     gives,
   }
-
 }

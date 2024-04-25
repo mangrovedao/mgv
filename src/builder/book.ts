@@ -1,19 +1,19 @@
 import {
-  parseAbi,
   type ContractFunctionParameters,
   type ContractFunctionReturnType,
-} from "viem";
-import { olKeyABIRaw } from "./structs.js";
-import type { CompleteOffer, OLKey } from "../types/lib.js";
-import { BA } from "../lib/enums.js";
-import { unpackOffer } from "../lib/offer.js";
-import { unpackOfferDetail } from "../lib/offerDetail.js";
-import { rpcOfferToHumanOffer } from "../lib/human-readable.js";
+  parseAbi,
+} from 'viem'
+import { BA } from '../lib/enums.js'
+import { rpcOfferToHumanOffer } from '../lib/human-readable.js'
+import { unpackOffer } from '../lib/offer.js'
+import { unpackOfferDetail } from '../lib/offerDetail.js'
+import type { CompleteOffer, OLKey } from '../types/lib.js'
+import { olKeyABIRaw } from './structs.js'
 
 export const packedOfferListABI = parseAbi([
   olKeyABIRaw,
-  "function packedOfferList(OLKey memory olKey, uint fromId, uint maxOffers) public view returns (uint, uint[] memory offerIDs, uint[] memory offersPacked, uint[] memory OfferDetailsPacked)",
-]);
+  'function packedOfferList(OLKey memory olKey, uint fromId, uint maxOffers) public view returns (uint, uint[] memory offerIDs, uint[] memory offersPacked, uint[] memory OfferDetailsPacked)',
+])
 
 /**
  * Parameters for getting a book.
@@ -22,10 +22,10 @@ export const packedOfferListABI = parseAbi([
  * @param maxOffers the maximum number of offers to get
  */
 export type GetBookParams = {
-  olKey: OLKey;
-  fromId?: bigint;
-  maxOffers?: bigint;
-};
+  olKey: OLKey
+  fromId?: bigint
+  maxOffers?: bigint
+}
 
 /**
  *
@@ -45,28 +45,28 @@ export type GetBookParams = {
 export function getBookParams(params: GetBookParams) {
   return {
     abi: packedOfferListABI,
-    functionName: "packedOfferList",
+    functionName: 'packedOfferList',
     args: [params.olKey, params.fromId ?? 0n, params.maxOffers ?? 100n],
   } satisfies Omit<
     ContractFunctionParameters<
       typeof packedOfferListABI,
-      "view",
-      "packedOfferList"
+      'view',
+      'packedOfferList'
     >,
-    "address"
-  >;
+    'address'
+  >
 }
 
 export type ParseBookParams = {
   result: ContractFunctionReturnType<
     typeof packedOfferListABI,
-    "view",
-    "packedOfferList"
-  >;
-  ba: BA;
-  baseDecimals: number;
-  quoteDecimals: number;
-};
+    'view',
+    'packedOfferList'
+  >
+  ba: BA
+  baseDecimals: number
+  quoteDecimals: number
+}
 
 /**
  *
@@ -91,21 +91,21 @@ export function parseBookResult({
   baseDecimals,
   quoteDecimals,
 }: ParseBookParams): CompleteOffer[] {
-  const [_, offerIDs, offersPacked, offerDetailsPacked] = result;
+  const [_, offerIDs, offersPacked, offerDetailsPacked] = result
   return offerIDs.map((id, i) => {
-    const offer = unpackOffer(offersPacked[i]);
-    const detail = unpackOfferDetail(offerDetailsPacked[i]);
+    const offer = unpackOffer(offersPacked[i])
+    const detail = unpackOfferDetail(offerDetailsPacked[i])
     const humanReadableParams = rpcOfferToHumanOffer({
       ...offer,
       ba,
       baseDecimals,
       quoteDecimals,
-    });
+    })
     return {
       id,
       offer,
       detail,
       ...humanReadableParams,
-    };
-  });
+    }
+  })
 }

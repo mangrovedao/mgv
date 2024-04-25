@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest'
-import { hexSchema, olKeySchema, tickSchema, volumeSchema } from './zod.js'
-import { MAX_SAFE_VOLUME, MAX_TICK } from './tick.js'
 import { zeroAddress } from 'viem'
+import { describe, expect, it } from 'vitest'
+import { MAX_SAFE_VOLUME, MAX_TICK } from './tick.js'
+import { hexSchema, olKeySchema, tickSchema, volumeSchema } from './zod.js'
 
 describe('zod', () => {
   describe('tick', () => {

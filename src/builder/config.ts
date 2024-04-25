@@ -1,6 +1,6 @@
-import { parseAbi, type ContractFunctionParameters } from 'viem'
-import { olKeyABIRaw } from './structs.js'
+import { type ContractFunctionParameters, parseAbi } from 'viem'
 import type { OLKey } from '../types/lib.js'
+import { olKeyABIRaw } from './structs.js'
 
 export const mgvConfigABI = parseAbi([
   olKeyABIRaw,

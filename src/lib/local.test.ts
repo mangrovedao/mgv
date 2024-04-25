@@ -1,10 +1,10 @@
-import { describe, expect, it } from "vitest";
-import type { LocalConfig } from "~mgv/types/lib.js";
-import { unpackLocalConfig } from "./local.js";
-import { parseDensity } from "./density.js";
+import { describe, expect, it } from 'vitest'
+import type { LocalConfig } from '~mgv/types/lib.js'
+import { parseDensity } from './density.js'
+import { unpackLocalConfig } from './local.js'
 
-describe("local", () => {
-  it("should unpack", () => {
+describe('local', () => {
+  it('should unpack', () => {
     const localUnpacked: LocalConfig = {
       active: true,
       fee: 2n,
@@ -18,9 +18,10 @@ describe("local", () => {
       lock: false,
       last: 8698n,
     }
-    const packed = 58469124224817505385311355821850761387076597147436894115161179890893849633274n
+    const packed =
+      58469124224817505385311355821850761387076597147436894115161179890893849633274n
 
     const local = unpackLocalConfig(packed)
     expect(local).toEqual(localUnpacked)
-  });
-});
+  })
+})

@@ -139,7 +139,7 @@ export type MarketOrderSimulationResult = {
 }
 
 /**
- * 
+ *
  * @param params the parameters for the market order simulation
  * @returns the result of the market order simulation
  */

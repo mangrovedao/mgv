@@ -1,9 +1,9 @@
 export enum BS {
   buy = 'buy',
-  sell = 'sell'
+  sell = 'sell',
 }
 
 export enum BA {
   asks = 'asks',
-  bids = 'bids'
+  bids = 'bids',
 }

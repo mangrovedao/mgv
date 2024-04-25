@@ -1,9 +1,9 @@
 import { describe, expect, test } from 'vitest'
 import {
-  tickFromVolumes,
-  outboundFromInbound,
   MAX_SAFE_VOLUME,
   inboundFromOutbound,
+  outboundFromInbound,
+  tickFromVolumes,
 } from './tick.js'
 
 function assertEq(a: bigint, b: bigint) {

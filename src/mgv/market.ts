@@ -1,3 +1,1 @@
-export type BookActions = {
-  
-}
+export type BookActions = {}

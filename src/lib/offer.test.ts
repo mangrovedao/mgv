@@ -1,10 +1,10 @@
-import { describe, expect, it } from "vitest";
-import type { RpcOffer, RpcOfferDetail } from "~mgv/types/lib.js";
-import { unpackOffer } from "./offer.js";
-import { unpackOfferDetail } from "./offerDetail.js";
+import { describe, expect, it } from 'vitest'
+import type { RpcOffer, RpcOfferDetail } from '~mgv/types/lib.js'
+import { unpackOffer } from './offer.js'
+import { unpackOfferDetail } from './offerDetail.js'
 
-describe("offer unpacking", () => {
-  it("should unpack correctly", () => {
+describe('offer unpacking', () => {
+  it('should unpack correctly', () => {
     const offersPacked = [
       20074413445151042300888515900011094147352441356857739357192192n,
       233176578729722529410070503139477613292134408309508641520409614535884800n,
@@ -16,7 +16,7 @@ describe("offer unpacking", () => {
       242128309146103932242265891043406711097747838886159056896n,
       5555477173105824639687983434852379924900441298287078150242304n,
       232502580111804289737591738881330183235764209919372460636771354578780160n,
-    ];
+    ]
 
     const offerDetailsPacked = [
       111385484405210276107289276202447911509002252844886096948391386415478668787712n,
@@ -29,7 +29,7 @@ describe("offer unpacking", () => {
       13830159667752811102904304868098135171819172012209413287347388936632043307008n,
       97109061083874892979275674078046484534971449924704862943973387262918628737024n,
       13830159667752811102904304868098135171819172012209413287347388936632043307008n,
-    ];
+    ]
 
     const rpcOffers: RpcOffer[] = [
       {
@@ -92,79 +92,79 @@ describe("offer unpacking", () => {
         tick: 80897n,
         gives: 14763692993439552770n,
       },
-    ];
+    ]
 
     const rpcOfferDetails: RpcOfferDetail[] = [
       {
-        maker: "0xF641F33687F21d47CDac08D65021ea77A85B2ADD",
+        maker: '0xF641F33687F21d47CDac08D65021ea77A85B2ADD',
         gasreq: 800000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x0A91d84A961103011B97ED29dc56BD943505EeD0",
+        maker: '0x0A91d84A961103011B97ED29dc56BD943505EeD0',
         gasreq: 1000000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe",
+        maker: '0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe',
         gasreq: 1500000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x0A91d84A961103011B97ED29dc56BD943505EeD0",
+        maker: '0x0A91d84A961103011B97ED29dc56BD943505EeD0',
         gasreq: 1000000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe",
+        maker: '0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe',
         gasreq: 1500000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x9c2490F010fd386dF45DB793a4900e7a6e4059DA",
+        maker: '0x9c2490F010fd386dF45DB793a4900e7a6e4059DA',
         gasreq: 1500000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x9c2490F010fd386dF45DB793a4900e7a6e4059DA",
+        maker: '0x9c2490F010fd386dF45DB793a4900e7a6e4059DA',
         gasreq: 1500000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe",
+        maker: '0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe',
         gasreq: 1500000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0xd6B1C7E2990F7e003272Bd5A0f3a1F13478b0D3c",
+        maker: '0xd6B1C7E2990F7e003272Bd5A0f3a1F13478b0D3c',
         gasreq: 800000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
       {
-        maker: "0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe",
+        maker: '0x1e9397Cd0BD25781857eEe205719631BC5AaFFFe',
         gasreq: 1500000n,
         kilo_offer_gasbase: 300n,
         gasprice: 5n,
       },
-    ];
+    ]
 
     const resolvedOffers: RpcOffer[] = offersPacked.map((offer) =>
-      unpackOffer(offer)
-    );
+      unpackOffer(offer),
+    )
     const resolvedOfferDetails: RpcOfferDetail[] = offerDetailsPacked.map(
-      (offerDetail) => unpackOfferDetail(offerDetail)
-    );
+      (offerDetail) => unpackOfferDetail(offerDetail),
+    )
 
-    expect(resolvedOffers).toEqual(rpcOffers);
-    expect(resolvedOfferDetails).toEqual(rpcOfferDetails);
-  });
-});
+    expect(resolvedOffers).toEqual(rpcOffers)
+    expect(resolvedOfferDetails).toEqual(rpcOfferDetails)
+  })
+})

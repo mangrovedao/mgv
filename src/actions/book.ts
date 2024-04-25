@@ -1,26 +1,26 @@
-import { type Client, type MulticallParameters } from "viem";
-import { getAction } from "../utils/getAction.js";
-import type { MangroveActionsDefaultParams } from "../types/actions/index.js";
-import { multicall } from "viem/actions";
-import { getSemibooksOLKeys } from "../lib/ol-key.js";
-import { getBookParams, parseBookResult } from "../builder/book.js";
+import { type Client, type MulticallParameters } from 'viem'
+import { multicall } from 'viem/actions'
+import { getBookParams, parseBookResult } from '../builder/book.js'
 import {
   getGlobalConfigParams,
   getLocalConfigParams,
-} from "../builder/config.js";
-import { unpackGlobalConfig } from "../lib/global.js";
-import { unpackLocalConfig } from "../lib/local.js";
-import type { MarketParams } from "../types/actions/index.js";
-import type { Book, BookParams } from "../types/actions/book.js";
-import { BA } from "../lib/enums.js";
+} from '../builder/config.js'
+import { BA } from '../lib/enums.js'
+import { unpackGlobalConfig } from '../lib/global.js'
+import { unpackLocalConfig } from '../lib/local.js'
+import { getSemibooksOLKeys } from '../lib/ol-key.js'
+import type { Book, BookParams } from '../types/actions/book.js'
+import type { MangroveActionsDefaultParams } from '../types/actions/index.js'
+import type { MarketParams } from '../types/actions/index.js'
+import { getAction } from '../utils/getAction.js'
 
 export type GetBookArgs = Omit<
   MulticallParameters,
-  "contracts" | "allowFailure"
+  'contracts' | 'allowFailure'
 > &
   MangroveActionsDefaultParams &
   MarketParams &
-  BookParams;
+  BookParams
 
 /**
  *
@@ -30,7 +30,7 @@ export type GetBookArgs = Omit<
  */
 export async function getBook(
   client: Client,
-  parameters: GetBookArgs
+  parameters: GetBookArgs,
 ): Promise<Book> {
   const {
     mgv,
@@ -40,19 +40,19 @@ export async function getBook(
     tickSpacing,
     depth = 100n,
     ...multicallParams
-  } = parameters;
+  } = parameters
 
   const { asksMarket, bidsMarket } = getSemibooksOLKeys({
     base: base.address,
     quote: quote.address,
     tickSpacing,
-  });
+  })
 
   const [rpcAsks, rpcBids, rpcAsksConfig, rpcBaseConfig, rpcMarketConfig] =
     await getAction(
       client,
       multicall,
-      "multicall"
+      'multicall',
     )({
       ...multicallParams,
       contracts: [
@@ -88,7 +88,7 @@ export async function getBook(
         },
       ],
       allowFailure: false,
-    });
+    })
 
   return {
     asks: parseBookResult({
@@ -106,5 +106,5 @@ export async function getBook(
     asksConfig: unpackLocalConfig(rpcAsksConfig),
     bidsConfig: unpackLocalConfig(rpcBaseConfig),
     marketConfig: unpackGlobalConfig(rpcMarketConfig),
-  };
+  }
 }

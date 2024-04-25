@@ -1,4 +1,4 @@
-import type { Address } from "viem"
+import type { Address } from 'viem'
 
 /**
  * The parameters for the Mangrove actions.
@@ -21,14 +21,14 @@ export type Token = {
 }
 
 /**
- * 
+ *
  * The parameters for a given market market
  * @param base The base token
  * @param quote The quote token
  * @param tickSpacing The tick spacing
  */
 export type MarketParams = {
-  base: Token;
-  quote: Token;
-  tickSpacing: bigint;
+  base: Token
+  quote: Token
+  tickSpacing: bigint
 }

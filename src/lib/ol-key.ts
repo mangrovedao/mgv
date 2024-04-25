@@ -1,5 +1,5 @@
-import { type Hex, encodeAbiParameters, keccak256, type Address } from "viem";
-import type { OLKey } from "../types/lib.js";
+import { type Address, type Hex, encodeAbiParameters, keccak256 } from 'viem'
+import type { OLKey } from '../types/lib.js'
 
 /**
  * Gets the OLKey from the other side of the market.
@@ -11,7 +11,7 @@ export function flip(olKey: OLKey): OLKey {
     outbound_tkn: olKey.inbound_tkn,
     inbound_tkn: olKey.outbound_tkn,
     tickSpacing: olKey.tickSpacing,
-  };
+  }
 }
 
 /**
@@ -24,29 +24,29 @@ export function hash(olKey: OLKey): Hex {
   // and only include the ABI for ol key struct
   const bytes = encodeAbiParameters(
     [
-      { name: "outbound_tkn", type: "address" },
-      { name: "inbound_tkn", type: "address" },
-      { name: "tickSpacing", type: "uint" },
+      { name: 'outbound_tkn', type: 'address' },
+      { name: 'inbound_tkn', type: 'address' },
+      { name: 'tickSpacing', type: 'uint' },
     ],
-    [olKey.outbound_tkn, olKey.inbound_tkn, olKey.tickSpacing]
-  );
-  return keccak256(bytes);
+    [olKey.outbound_tkn, olKey.inbound_tkn, olKey.tickSpacing],
+  )
+  return keccak256(bytes)
 }
 
 /**
- * 
+ *
  * @param params.base the base token
  * @param params.quote the quote token
  * @param params.tickSpacing the tick spacing
  * @returns the OLKeys for the asks and bids market
  */
 export function getSemibooksOLKeys(params: {
-  base: Address;
-  quote: Address;
-  tickSpacing: bigint;
+  base: Address
+  quote: Address
+  tickSpacing: bigint
 }): {
-  asksMarket: OLKey;
-  bidsMarket: OLKey;
+  asksMarket: OLKey
+  bidsMarket: OLKey
 } {
   return {
     asksMarket: {
@@ -59,5 +59,5 @@ export function getSemibooksOLKeys(params: {
       inbound_tkn: params.base,
       tickSpacing: params.tickSpacing,
     },
-  };
+  }
 }
