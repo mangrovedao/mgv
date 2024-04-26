@@ -6,6 +6,7 @@ import {
   type erc20Abi,
   maxUint128,
   maxUint256,
+  type SimulateContractReturnType,
 } from 'viem'
 import { readContract, simulateContract } from 'viem/actions'
 import {
@@ -122,12 +123,16 @@ export type SimulateLimitOrderArgs = Prettify<
   LimitOrderParams & Omit<SimulationParams, BuiltArgsWithValue>
 >
 
+export type SimulateLimitOrderResult = Prettify<
+  SimulateContractReturnType<typeof limitOrderABI, 'take'>
+>
+
 export async function simulateLimitOrder(
   client: Client,
   actionParams: MangroveActionsDefaultParams,
   marketParams: MarketParams,
   args: SimulateLimitOrderArgs,
-) {
+): Promise<SimulateLimitOrderResult> {
   return getAction(
     client,
     simulateContract,

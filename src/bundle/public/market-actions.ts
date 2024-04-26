@@ -3,6 +3,9 @@ import { type GetBookArgs, getBook } from '../../actions/book.js'
 import {
   type GetLimitOrderStepsArgs,
   getLimitOrderSteps,
+  type SimulateLimitOrderArgs,
+  type SimulateLimitOrderResult,
+  simulateLimitOrder,
 } from '../../actions/limit-order.js'
 import {
   type GetMarketOrderStepsArgs,
@@ -94,6 +97,28 @@ export type PublicMarketActions = {
   simulateMarketOrderByVolumeAndMarket: (
     args: SimulateMarketOrderByVolumeAndMarketArgs,
   ) => Promise<MarketOrderResult>
+
+  /**
+   *
+   * @param args args for the simulate limit order call
+   * @returns the limit order result
+   * @example
+   *
+   * ```ts
+   * // Buying 1 WETH for 3000 DAI
+   * const { request, result } = await publicMarketActions.simulateLimitOrder({
+   *   baseAmount: parseEther('1'), // 1 WETH
+   *   quoteAmount: parseEther('3000'), // 3000 DAI
+   *   bs: BS.buy,
+   *   book,
+   * });
+   * // sending the transaction
+   * const tx = await walletClient.writeContract(request);
+   * ```
+   */
+  simulateLimitOrder: (
+    args: SimulateLimitOrderArgs,
+  ) => Promise<SimulateLimitOrderResult>
 }
 
 export function publicMarketActions(
@@ -107,5 +132,7 @@ export function publicMarketActions(
     getLimitOrderSteps: (args) => getLimitOrderSteps(client, market, args),
     simulateMarketOrderByVolumeAndMarket: (args) =>
       simulateMarketOrderByVolumeAndMarket(client, actionParams, market, args),
+    simulateLimitOrder: (args) =>
+      simulateLimitOrder(client, actionParams, market, args),
   })
 }
