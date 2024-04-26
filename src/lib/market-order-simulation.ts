@@ -6,6 +6,7 @@ import type {
 } from '../types/lib.js'
 import { BS } from './enums.js'
 import {
+  MAX_TICK,
   inboundFromOutbound,
   outboundFromInbound,
   priceFromTick,
@@ -24,6 +25,7 @@ export type RawMarketOrderSimulationParams = {
   globalConfig: GlobalConfig
   fillVolume: bigint
   fillWants?: boolean
+  maxTick?: bigint
 }
 
 /**
@@ -59,6 +61,7 @@ export function rawMarketOrderSimulation(
     localConfig,
     globalConfig,
     fillWants = true,
+    maxTick = MAX_TICK,
   } = params
 
   // if fillWants is true, then we need to multiply the fillVolume by 10_000n / (10_000n - fee) in order to account for the fee
@@ -82,6 +85,7 @@ export function rawMarketOrderSimulation(
     i++
   ) {
     const offer = orderBook[i]
+    if (offer.offer.tick > maxTick) break
     const maxGot = fillWants
       ? fillVolume
       : outboundFromInbound(offer.offer.tick, fillVolume)
@@ -136,6 +140,7 @@ export type MarketOrderSimulationResult = {
   feePaid: bigint
   maxTickEncountered: bigint
   minSlippage: number
+  fillWants: boolean
 }
 
 /**
@@ -187,5 +192,6 @@ export function marketOrderSimulation(
     feePaid: raw.feePaid,
     maxTickEncountered: raw.maxTickEncountered,
     minSlippage: slippage,
+    fillWants,
   }
 }

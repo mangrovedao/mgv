@@ -18,29 +18,25 @@ export type GetBookArgs = Omit<
   MulticallParameters,
   'contracts' | 'allowFailure'
 > &
-  MangroveActionsDefaultParams &
-  MarketParams &
   BookParams
 
 /**
  *
  * @param client the viem client (public or wallet)
+ * @param actionParams the parameters for the Mangrove actions
+ * @param marketParams the parameters for the market
  * @param parameters the parameters for the initial call
  * @returns gets the book
  */
 export async function getBook(
   client: Client,
-  parameters: GetBookArgs,
+  actionParams: MangroveActionsDefaultParams,
+  marketParams: MarketParams,
+  parameters?: GetBookArgs,
 ): Promise<Book> {
-  const {
-    mgv,
-    mgvReader,
-    base,
-    quote,
-    tickSpacing,
-    depth = 100n,
-    ...multicallParams
-  } = parameters
+  const { depth = 100n, ...multicallParams } = parameters || {}
+  const { mgv, mgvReader } = actionParams
+  const { base, quote, tickSpacing } = marketParams
 
   const { asksMarket, bidsMarket } = getSemibooksOLKeys({
     base: base.address,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { GlobalConfig } from '~mgv/types/lib.js'
+import type { GlobalConfig } from '../types/lib.js'
 import { unpackGlobalConfig } from './global.js'
 
 describe('global', () => {

@@ -22,23 +22,6 @@ export {
   multiplyDensity,
 } from './lib/index.js'
 
-// --- Abis ---
-
-export {
-  AbstractRouter,
-  AbstractRoutingLogic,
-  Direct,
-  IMangrove,
-  MangroveOffer,
-  MangroveOrder,
-  MgvOracle,
-  MgvReader,
-  RenegingForwarder,
-  RouterProxy,
-  RouterProxyFactory,
-  SmartRouter,
-} from './abis/index.js'
-
 // --- Types ---
 
 export type {

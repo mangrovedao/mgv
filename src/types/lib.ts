@@ -1,41 +1,40 @@
-import type { Address, ContractFunctionReturnType } from 'viem'
-import type { MgvReader } from '../abis/MgvReader.js'
+import type { Address } from 'viem'
 import type { BA } from '../lib/enums.js'
 
 export type Prettify<T> = {
   [P in keyof T]: T[P]
 }
 
-export type ReplaceKey<T, K extends keyof T, TReplace> = Prettify<
-  Omit<T, K> & {
-    [P in K]: TReplace
-  }
->
-
 /**
  * The global configuration of Mangrove.
  */
-export type GlobalConfig = ContractFunctionReturnType<
-  typeof MgvReader,
-  'view',
-  'globalUnpacked'
->
+export type GlobalConfig = {
+  monitor: Address
+  useOracle: boolean
+  notify: boolean
+  gasprice: bigint
+  gasmax: bigint
+  dead: boolean
+  maxRecursionDepth: bigint
+  maxGasreqForFailingOffers: bigint
+}
 
 /**
  * The local configuration of the market.
  */
-export type LocalConfig = Prettify<
-  Omit<
-    ReplaceKey<
-      ContractFunctionReturnType<typeof MgvReader, 'view', 'localUnpacked'>,
-      'density',
-      number
-    >,
-    'kilo_offer_gasbase'
-  > & {
-    offer_gasbase: bigint
-  }
->
+export type LocalConfig = {
+  active: boolean
+  fee: bigint
+  density: number
+  binPosInLeaf: bigint
+  level3: bigint
+  level2: bigint
+  level1: bigint
+  root: bigint
+  offer_gasbase: bigint
+  lock: boolean
+  last: bigint
+}
 
 export type CompleteToken = {
   address: Address

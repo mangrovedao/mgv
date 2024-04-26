@@ -4,10 +4,12 @@ import type { Address } from 'viem'
  * The parameters for the Mangrove actions.
  * @param mgv The address of the Mangrove contract.
  * @param mgvReader The address of the Mangrove reader contract.
+ * @param mgvOrder The address of the Mangrove order contract.
  */
 export type MangroveActionsDefaultParams = {
   mgv: Address
   mgvReader: Address
+  mgvOrder: Address
 }
 
 /**
@@ -32,3 +34,13 @@ export type MarketParams = {
   quote: Token
   tickSpacing: bigint
 }
+
+/**
+ * List of args that are built by the transaction builders
+ */
+export type BuiltArgs = 'address' | 'abi' | 'functionName' | 'args'
+
+/**
+ * List of args that are built by the transaction builders with a value
+ */
+export type BuiltArgsWithValue = BuiltArgs | 'value'

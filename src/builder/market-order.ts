@@ -1,6 +1,7 @@
-import { type Address, type ContractFunctionParameters, parseAbi } from 'viem'
+import { type ContractFunctionParameters, parseAbi } from 'viem'
 import { BS } from '../lib/enums.js'
 import { tickFromPrice } from '../lib/tick.js'
+import type { MarketParams } from '../types/actions/index.js'
 import type { OLKey } from '../types/lib.js'
 import { olKeyABIRaw } from './structs.js'
 
@@ -101,9 +102,6 @@ export function marketOrderByVolumeParams(params: MarketOrderByVolumeParams) {
  * @param slippage the slippage
  */
 export type MarketOrderByVolumeAndMarketParams = {
-  base: Address
-  quote: Address
-  tickSpacing: bigint
   baseAmount: bigint
   quoteAmount: bigint
   bs: BS
@@ -112,22 +110,21 @@ export type MarketOrderByVolumeAndMarketParams = {
 }
 
 export function marketOrderByVolumeAndMarketParams(
+  market: MarketParams,
   params: MarketOrderByVolumeAndMarketParams,
 ) {
   const {
-    base,
-    quote,
-    tickSpacing,
     baseAmount,
     quoteAmount,
     bs,
     fillWants = bs === BS.buy,
     slippage,
   } = params
+  const { base, quote, tickSpacing } = market
 
   const olKey: OLKey = {
-    outbound_tkn: bs === BS.buy ? base : quote,
-    inbound_tkn: bs === BS.buy ? quote : base,
+    outbound_tkn: bs === BS.buy ? base.address : quote.address,
+    inbound_tkn: bs === BS.buy ? quote.address : base.address,
     tickSpacing,
   }
 
