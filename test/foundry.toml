@@ -2,7 +2,7 @@
 src = "contracts"
 scripts = "scripts"
 out = "contracts/out"
-lib = "lib"
+allow_paths= ["../"]
 
 [fmt]
 tab_width = 2

@@ -20,8 +20,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@mangrovedao/mangrove-core": "^2.0.3",
-    "@mangrovedao/mangrove-strats": "2.0.0-b1.3",
     "@types/bun": "latest",
     "@viem/anvil": "^0.0.9",
     "globby": "^14.0.0",
