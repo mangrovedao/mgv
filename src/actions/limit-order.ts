@@ -3,10 +3,10 @@ import {
   type Client,
   type ReadContractParameters,
   type SimulateContractParameters,
+  type SimulateContractReturnType,
   type erc20Abi,
   maxUint128,
   maxUint256,
-  type SimulateContractReturnType,
 } from 'viem'
 import { readContract, simulateContract } from 'viem/actions'
 import {
