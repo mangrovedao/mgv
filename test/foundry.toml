@@ -2,3 +2,7 @@
 src = "contracts"
 scripts = "scripts"
 out = "contracts/out"
+lib = "lib"
+
+[fmt]
+tab_width = 2

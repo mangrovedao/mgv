@@ -11,11 +11,12 @@
     "build:cjs": "tsc --project ./tsconfig.build.json --module commonjs --outDir ./src/_cjs --removeComments --verbatimModuleSyntax false && printf '{\"type\":\"commonjs\"}' > ./src/_cjs/package.json",
     "build:esm": "tsc --project ./tsconfig.build.json --module es2015 --outDir ./src/_esm && printf '{\"type\": \"module\",\"sideEffects\":false}' > ./src/_esm/package.json",
     "build:types": "tsc --project ./tsconfig.build.json --module esnext --declarationDir ./src/_types --emitDeclarationOnly --declaration --declarationMap",
-    "clean": "rimraf src/_esm src/_cjs src/_types",
+    "clean": "rimraf src/_esm src/_cjs src/_types test/cache test/contracts/out",
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "bun run lint --apply",
-    "test": "vitest -c ./test/vitest.config.ts dev"
+    "test": "vitest -c ./test/vitest.config.ts dev",
+    "contracts:build": "cd test && forge build"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
