@@ -5,7 +5,8 @@
     "baseUrl": ".",
     "module": "NodeNext",
     "paths": {
-      "~mgv/*": ["../src/*"]
+      "~mgv/*": ["../src/*"],
+      "~test/*": ["./*"],
     }
   }
 }

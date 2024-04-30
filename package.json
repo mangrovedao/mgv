@@ -15,8 +15,7 @@
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "bun run lint --apply",
-    "test": "vitest -c ./test/vitest.config.ts dev",
-    "contracts:build": "cd test && forge build"
+    "test": "vitest -c ./test/vitest.config.ts dev"
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",

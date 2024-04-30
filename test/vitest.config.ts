@@ -1,7 +1,13 @@
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  resolve: {
+    alias: [
+      { find: '~mgv', replacement: resolve(__dirname, '../src') },
+      { find: '~test', replacement: resolve(__dirname, '.') },
+    ],
+  },
   test: {
     alias: {
       '~mgv': join(__dirname, '../src'),

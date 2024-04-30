@@ -1,8 +1,0 @@
-[profile.default]
-src = "contracts"
-scripts = "scripts"
-out = "contracts/out"
-allow_paths= ["../"]
-
-[fmt]
-tab_width = 2
