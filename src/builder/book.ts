@@ -3,7 +3,7 @@ import {
   type ContractFunctionReturnType,
   parseAbi,
 } from 'viem'
-import { BA } from '../lib/enums.js'
+import type { BA } from '../lib/enums.js'
 import { rpcOfferToHumanOffer } from '../lib/human-readable.js'
 import { unpackOffer } from '../lib/offer.js'
 import { unpackOfferDetail } from '../lib/offerDetail.js'

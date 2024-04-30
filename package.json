@@ -1,9 +1,6 @@
 {
   "name": "mgv",
-  "workspaces": [
-    "src",
-    "test"
-  ],
+  "workspaces": ["src", "test"],
   "module": "src/index.ts",
   "type": "module",
   "scripts": {

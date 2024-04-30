@@ -1,5 +1,5 @@
 import { createAnvil, startProxy } from '@viem/anvil'
-import { Address, parseEther, parseUnits } from 'viem'
+import { type Address, parseEther, parseUnits } from 'viem'
 import { foundry } from 'viem/chains'
 import { globalTestClient } from '~test/src/client.js'
 import { accounts } from './src/constants.js'

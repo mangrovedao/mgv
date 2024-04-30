@@ -1,4 +1,4 @@
-import { type Client, type MulticallParameters } from 'viem'
+import type { Client, MulticallParameters } from 'viem'
 import { multicall } from 'viem/actions'
 import { getBookParams, parseBookResult } from '../builder/book.js'
 import {

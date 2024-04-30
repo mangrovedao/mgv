@@ -3,7 +3,7 @@ import {
   type Client,
   type ReadContractParameters,
   type SimulateContractParameters,
-  erc20Abi,
+  type erc20Abi,
   maxUint128,
   maxUint256,
 } from 'viem'
