@@ -1,6 +1,7 @@
 import { createAnvil, startProxy } from '@viem/anvil'
 import { type Address, parseEther, parseUnits } from 'viem'
 import { foundry } from 'viem/chains'
+import type { GlobalSetupContext } from 'vitest/node'
 import { globalTestClient } from '~test/src/client.js'
 import { accounts } from './src/constants.js'
 import {
@@ -10,19 +11,13 @@ import {
   deployMangroveReader,
   deployRouterProxyFactory,
   openMarket,
+  setMulticall,
 } from './src/contracts/index.js'
 import { getMangroveBytecodes } from './src/contracts/mangrove.js'
 
-export let mangrove: Address
-export let mangroveReader: Address
-export let mangroveOrder: Address
-export let routerProxyFactory: Address
+export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
-export let WETH: Address
-export let USDC: Address
-export let DAI: Address
-
-export default async function () {
+export default async function ({ provide }: GlobalSetupContext) {
   // create an anvil instance
   const anvil = createAnvil({
     port: Number(process.env.MAIN_PORT || 8546),
@@ -40,21 +35,38 @@ export default async function () {
     ])
   }
 
+  // set multicall
+  await setMulticall(multicall)
+
   // deploy erc20s and mint to accounts
-  WETH = await deployERC20('Wrapped Ether', 'WETH', 18)
-  USDC = await deployERC20('USD Coin', 'USDC', 6)
-  DAI = await deployERC20('Dai Stablecoin', 'DAI', 18)
+  const WETH = await deployERC20('Wrapped Ether', 'WETH', 18)
+  const USDC = await deployERC20('USD Coin', 'USDC', 6)
+  const DAI = await deployERC20('Dai Stablecoin', 'DAI', 18)
 
   // deploy mangrove contracts
   const data = await getMangroveBytecodes()
-  mangrove = await deployMangroveCore(data.mangrove)
-  mangroveReader = await deployMangroveReader(mangrove, data.mangroveReader)
-  routerProxyFactory = await deployRouterProxyFactory(data.routerProxyFactory)
-  mangroveOrder = await deployMangroveOrder(
+  const mangrove = await deployMangroveCore(data.mangrove)
+  const mangroveReader = await deployMangroveReader(
+    mangrove,
+    data.mangroveReader,
+  )
+  const routerProxyFactory = await deployRouterProxyFactory(
+    data.routerProxyFactory,
+  )
+  const mangroveOrder = await deployMangroveOrder(
     mangrove,
     routerProxyFactory,
     data.mangroveOrder,
   )
+
+  provide('tokens', { WETH, USDC, DAI })
+  provide('mangrove', {
+    mangrove,
+    reader: mangroveReader,
+    order: mangroveOrder,
+    routerProxyFactory,
+    multicall,
+  })
 
   // open markets
 
@@ -91,5 +103,22 @@ export default async function () {
   return async () => {
     await shutdown()
     await anvil.stop()
+  }
+}
+
+declare module 'vitest' {
+  export interface ProvidedContext {
+    tokens: {
+      WETH: Address
+      USDC: Address
+      DAI: Address
+    }
+    mangrove: {
+      mangrove: Address
+      reader: Address
+      order: Address
+      routerProxyFactory: Address
+      multicall: Address
+    }
   }
 }

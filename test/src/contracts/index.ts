@@ -2,9 +2,10 @@ import { globalTestClient } from "../client.js";
 import { accounts } from "../constants.js";
 import { Address, Hex, parseAbi } from "viem";
 import { ERC20_ABI, ERC20_BYTECODE } from "./erc20.js";
-import type { OLKey } from "~mgv/types/lib.js"
-import { flip } from "~mgv/lib/ol-key.js"
-import { olKeyABIRaw } from "~mgv/builder/structs.js"
+import type { OLKey } from "~mgv/types/lib.js";
+import { flip } from "~mgv/lib/ol-key.js";
+import { olKeyABIRaw } from "~mgv/builder/structs.js";
+import { bytecode as multicallBytecode } from "./multicall.deployed.bytecode.js";
 
 export async function deployERC20(
   name: string,
@@ -17,7 +18,7 @@ export async function deployERC20(
     abi: ERC20_ABI,
     bytecode: ERC20_BYTECODE,
     args: [name, symbol, decimals],
-  });
+  } as any);
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
@@ -34,7 +35,7 @@ export async function deployMangroveCore(bytecode: Hex): Promise<Address> {
     ]),
     bytecode,
     args: [accounts[0].address, gasprice / BigInt(1e6), 2_000_000n],
-  });
+  } as any);
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
@@ -51,7 +52,7 @@ export async function deployMangroveReader(
     abi: parseAbi(["constructor(address core)"]),
     bytecode,
     args: [mangrove],
-  });
+  } as any);
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
@@ -66,7 +67,7 @@ export async function deployRouterProxyFactory(
     chain: globalTestClient.chain,
     bytecode,
     abi: parseAbi(["constructor()"]),
-  });
+  } as any);
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
@@ -86,7 +87,7 @@ export async function deployMangroveOrder(
     ]),
     bytecode,
     args: [mangrove, factory, accounts[0].address],
-  });
+  } as any);
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
@@ -95,13 +96,13 @@ export async function deployMangroveOrder(
 
 const openMarketABI = parseAbi([
   olKeyABIRaw,
-  'function activate(OLKey memory olKey, uint fee, uint density96X32, uint offer_gasbase) public'
-])
+  "function activate(OLKey memory olKey, uint fee, uint density96X32, uint offer_gasbase) public",
+]);
 
 const updateMarketABI = parseAbi([
   olKeyABIRaw,
-  'function updateMarket(OLKey memory olKey) external'
-])
+  "function updateMarket(OLKey memory olKey) external",
+]);
 
 export async function openMarket(
   mangrove: Address,
@@ -118,9 +119,9 @@ export async function openMarket(
     outbound_tkn: base,
     inbound_tkn: quote,
     tickSpacing,
-  }
+  };
 
-  const market2 = flip(market1)
+  const market2 = flip(market1);
 
   let tx = await globalTestClient.writeContract({
     account: globalTestClient.account,
@@ -129,8 +130,8 @@ export async function openMarket(
     abi: openMarketABI,
     functionName: "activate",
     args: [market1, fee, baseVolumePerGasUnit << 32n, offerGasBase],
-  })
-  await globalTestClient.waitForTransactionReceipt({ hash: tx })
+  });
+  await globalTestClient.waitForTransactionReceipt({ hash: tx });
 
   tx = await globalTestClient.writeContract({
     account: globalTestClient.account,
@@ -139,8 +140,8 @@ export async function openMarket(
     abi: openMarketABI,
     functionName: "activate",
     args: [market2, fee, quoteVolumePerGasUnit << 32n, offerGasBase],
-  })
-  await globalTestClient.waitForTransactionReceipt({ hash: tx })
+  });
+  await globalTestClient.waitForTransactionReceipt({ hash: tx });
 
   tx = await globalTestClient.writeContract({
     account: globalTestClient.account,
@@ -149,6 +150,13 @@ export async function openMarket(
     abi: updateMarketABI,
     functionName: "updateMarket",
     args: [market1],
+  });
+  await globalTestClient.waitForTransactionReceipt({ hash: tx });
+}
+
+export async function setMulticall(address: Address) {
+  await globalTestClient.setCode({
+    address,
+    bytecode: multicallBytecode,
   })
-  await globalTestClient.waitForTransactionReceipt({ hash: tx })
 }
