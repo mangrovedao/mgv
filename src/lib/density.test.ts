@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { formatDensity, minVolume, multiplyDensity, parseDensity } from './density.js'
+import {
+  formatDensity,
+  minVolume,
+  multiplyDensity,
+  parseDensity,
+} from './density.js'
 import { unpackLocalConfig } from './local.js'
 
 function rawDensityFromMantissa(_mantissa: bigint, _exponent: bigint) {
@@ -49,12 +54,12 @@ describe('density', () => {
   })
 
   it('formatDensity', () => {
-    const numbers = [0n, 1n, 320n, 400n, 500n];
+    const numbers = [0n, 1n, 320n, 400n, 500n]
     for (const number of numbers) {
-      const density = parseDensity(number);
-      const expected = formatDensity(density);
-      const diff = expected > number ? expected - number : number - expected;
-      expect(diff).toBeLessThanOrEqual(1n);
+      const density = parseDensity(number)
+      const expected = formatDensity(density)
+      const diff = expected > number ? expected - number : number - expected
+      expect(diff).toBeLessThanOrEqual(1n)
     }
   })
 })
