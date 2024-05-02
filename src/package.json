@@ -59,17 +59,8 @@
   },
   "license": "MIT",
   "homepage": "https://mangrove.exchange",
-  "authors": [
-    "maxencerb.eth"
-  ],
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapp",
-    "mangrove",
-    "order",
-    "book"
-  ],
+  "authors": ["maxencerb.eth"],
+  "keywords": ["eth", "ethereum", "dapp", "mangrove", "order", "book"],
   "dependencies": {
     "zod": "^3.22.4"
   }
