@@ -1,5 +1,14 @@
 # @mangrovedao/mgv
 
+## 0.1.0
+
+### Minor Changes
+
+- bc7226c: - Added accessor for all functions and utils at different levels
+  - Added functions to cancel and update limit orders
+  - Added logs parser to get market order result
+- b0185a7: Added limit order result from logs
+
 ## 0.0.3
 
 ### Patch Changes
