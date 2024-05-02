@@ -21,7 +21,7 @@ export function rawRetractOfferParams(params: RawRetractOfferParams) {
     abi: retractOfferABI,
     functionName: 'retractOffer',
     args: [olKey, offerId, deprovision],
-  } as Omit<
+  } satisfies Omit<
     ContractFunctionParameters<
       typeof retractOfferABI,
       'nonpayable',

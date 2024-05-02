@@ -5,10 +5,15 @@ import {
   type UpdateOfferByTickParams,
   type updateOfferByTickABI,
   updateOfferByTickParams,
+  type UpdateOfferByVolumeParams,
+  updateOfferByVolumeParams,
+  type UpdateOfferParams,
+  updateOfferParams,
 } from '../../builder/offer/update.js'
 import type {
   BuiltArgsWithValue,
   MangroveActionsDefaultParams,
+  MarketParams,
 } from '../../types/actions/index.js'
 import type { UpdateOfferResult } from '../../types/actions/offer.js'
 import { getAction } from '../../utils/getAction.js'
@@ -40,6 +45,49 @@ export async function simulateUpdateOfferByTick(
     ...(args as unknown as SimulationParams),
     address: actionParams.mgv,
     ...updateOfferByTickParams(args),
+  })
+  return { request }
+}
+
+export type SimulateUpdateOfferByVolumeArgs = Prettify<
+  UpdateOfferByVolumeParams & Omit<SimulationParams, BuiltArgsWithValue>
+>
+
+export async function simulateUpdateOfferByVolume(
+  client: Client,
+  actionParams: MangroveActionsDefaultParams,
+  args: SimulateUpdateOfferByVolumeArgs,
+): Promise<UpdateOfferResult> {
+  const { request } = await getAction(
+    client,
+    simulateContract,
+    'simulateContract',
+  )({
+    ...(args as unknown as SimulationParams),
+    address: actionParams.mgv,
+    ...updateOfferByVolumeParams(args),
+  })
+  return { request }
+}
+
+export type UpdateOfferArgs = Prettify<
+  UpdateOfferParams & Omit<SimulationParams, BuiltArgsWithValue>
+>
+
+export async function simulateUpdateOffer(
+  client: Client,
+  actionParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  args: UpdateOfferArgs,
+): Promise<UpdateOfferResult> {
+  const { request } = await getAction(
+    client,
+    simulateContract,
+    'simulateContract',
+  )({
+    ...(args as unknown as SimulationParams),
+    address: actionParams.mgv,
+    ...updateOfferParams(market, args),
   })
   return { request }
 }
