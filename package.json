@@ -12,12 +12,14 @@
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "bun run lint --apply",
-    "test": "vitest -c ./test/vitest.config.ts dev"
+    "test": "vitest -c ./test/vitest.config.ts dev",
+    "test:ci": "CI=true vitest -c ./test/vitest.config.ts --coverage --retry=3 --bail=1 --pool=forks"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.2",
     "@types/bun": "latest",
     "@viem/anvil": "^0.0.10",
+    "@vitest/coverage-v8": "^1.5.3",
     "globby": "^14.0.0",
     "rimraf": "^5.0.5",
     "simple-git-hooks": "^2.11.1",
