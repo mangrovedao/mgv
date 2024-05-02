@@ -19,6 +19,19 @@ export { unpackGlobalConfig } from './global.js'
 
 export { rpcOfferToHumanOffer } from './human-readable.js'
 
+// limit-order
+
+export type {
+  RawLimitOrderResultFromLogsParams,
+  LimitOrderResultFromLogsParams,
+  LimitOrderResult,
+} from './limit-order.js'
+
+export {
+  rawLimitOrderResultFromLogs,
+  limitOrderResultFromLogs,
+} from './limit-order.js'
+
 // local
 
 export { unpackLocalConfig } from './local.js'

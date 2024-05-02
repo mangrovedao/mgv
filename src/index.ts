@@ -3,6 +3,8 @@
 export type {
   MarketOrderSimulationParams,
   MarketOrderResultFromLogsParams,
+  LimitOrderResultFromLogsParams,
+  LimitOrderResult,
 } from './lib/index.js'
 
 export {
@@ -26,6 +28,7 @@ export {
   minVolume,
   marketOrderSimulation,
   marketOrderResultFromLogs,
+  limitOrderResultFromLogs,
 } from './lib/index.js'
 
 // --- Types ---
