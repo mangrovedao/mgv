@@ -2,6 +2,7 @@
   "name": "mgv",
   "workspaces": ["src", "test"],
   "module": "src/index.ts",
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "bun run clean && bun run build:cjs && bun run build:esm && bun run build:types",
@@ -31,5 +32,8 @@
   },
   "simple-git-hooks": {
     "pre-commit": "bun run format && bun run lint:fix"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.27.1"
   }
 }
