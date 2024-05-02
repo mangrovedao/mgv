@@ -1,8 +1,65 @@
+// density
+
+export {
+  parseDensity,
+  formatDensity,
+  multiplyDensity,
+  minVolume,
+} from './density.js'
+
+// enums
+
+export { BS, BA, Order } from './enums.js'
+
+// global
+
 export { unpackGlobalConfig } from './global.js'
+
+// human-readable
+
+export { rpcOfferToHumanOffer } from './human-readable.js'
+
+// local
 
 export { unpackLocalConfig } from './local.js'
 
-export { flip, hash } from './ol-key.js'
+// market-order-simulation
+
+export {
+  type RawMarketOrderSimulationParams,
+  type RawMarketOrderSimulationResult,
+  rawMarketOrderSimulation,
+  type MarketOrderSimulationParams,
+  type MarketOrderSimulationResult,
+  marketOrderSimulation,
+} from './market-order-simulation.js'
+
+// market-order
+
+export type {
+  RawMarketOrderResultFromLogsParams,
+  MarketOrderResultFromLogsParams,
+} from './market-order.js'
+
+export {
+  mgvEventsABI,
+  rawMarketOrderResultFromLogs,
+  marketOrderResultFromLogs,
+} from './market-order.js'
+
+// offer-detail
+
+export { unpackOfferDetail } from './offer-detail.js'
+
+// offer
+
+export { unpackOffer } from './offer.js'
+
+// olKey
+
+export { flip, hash, getSemibooksOLKeys } from './ol-key.js'
+
+// tick
 
 export {
   MAX_TICK,
@@ -13,7 +70,15 @@ export {
   tickInRange,
   priceFromTick,
   isSafeVolume,
+  outboundFromInbound,
+  inboundFromOutbound,
 } from './tick.js'
+
+// utils
+
+export { mask } from './utils.js'
+
+// zod
 
 export {
   tickSchema,
@@ -22,5 +87,3 @@ export {
   volumeSchema,
   olKeySchema,
 } from './zod.js'
-
-export { parseDensity, multiplyDensity } from './density.js'

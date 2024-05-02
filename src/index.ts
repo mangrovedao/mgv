@@ -1,8 +1,11 @@
 // -- lib functions --
 
+export type {
+  MarketOrderSimulationParams,
+  MarketOrderResultFromLogsParams,
+} from './lib/index.js'
+
 export {
-  unpackGlobalConfig,
-  unpackLocalConfig,
   flip,
   hash,
   MAX_TICK,
@@ -20,12 +23,40 @@ export {
   olKeySchema,
   parseDensity,
   multiplyDensity,
+  minVolume,
+  marketOrderSimulation,
+  marketOrderResultFromLogs,
 } from './lib/index.js'
 
 // --- Types ---
 
 export type {
-  OLKey,
+  MangroveActionsDefaultParams,
+  Token,
+  MarketParams,
+  BuiltArgs,
+  BuiltArgsWithValue,
+  Book,
+  BookParams,
+  MarketOrderResult,
+  NewOfferResult,
+  UpdateOfferResult,
+  RetractOfferResult,
+  MarketOrderSteps,
+  LimitOrderSteps,
+  NewOfferSteps,
+  AmplifiedOrderSteps,
+  KandelSteps,
   GlobalConfig,
   LocalConfig,
+  CompleteToken,
+  OLKey,
+  RpcOffer,
+  RpcOfferDetail,
+  RpcCompleteOffer,
+  CompleteOffer,
 } from './types/index.js'
+
+// --- bundles ---
+
+export { publicMarketActions } from './bundle/index.js'

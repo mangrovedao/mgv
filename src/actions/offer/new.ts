@@ -17,7 +17,7 @@ import {
   newOfferByTickParams,
   newOfferByVolumeParams,
   newOfferParams,
-} from '../../builder/new-offer.js'
+} from '../../builder/offer/new.js'
 import { tokenAllowanceParams } from '../../builder/tokens.js'
 import { BS } from '../../lib/enums.js'
 import type {

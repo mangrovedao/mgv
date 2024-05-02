@@ -1,19 +1,19 @@
 import type { Client, SimulateContractParameters } from 'viem'
+import { simulateContract } from 'viem/actions'
 import {
-  rawRetractOfferParams,
   type RawRetractOfferParams,
-  type retractOfferABI,
   type RetractOfferParams,
-  retractOfferParams
+  rawRetractOfferParams,
+  type retractOfferABI,
+  retractOfferParams,
 } from '../../builder/offer/remove.js'
-import type { Prettify } from '../../types/lib.js'
 import type {
   BuiltArgs,
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../types/actions/index.js'
-import { simulateContract } from 'viem/actions'
 import type { RetractOfferResult } from '../../types/actions/offer.js'
+import type { Prettify } from '../../types/lib.js'
 import { getAction } from '../../utils/getAction.js'
 
 type SimulationParams = SimulateContractParameters<
@@ -41,7 +41,6 @@ export async function simulateRawRetractOffer(
   })
   return { provision: result, request }
 }
-
 
 export type SimulateRetractOfferArgs = Prettify<
   RetractOfferParams & Omit<SimulationParams, BuiltArgs>

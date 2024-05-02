@@ -3,11 +3,11 @@ import { simulateContract } from 'viem/actions'
 import type { Prettify } from 'viem/chains'
 import {
   type UpdateOfferByTickParams,
+  type UpdateOfferByVolumeParams,
+  type UpdateOfferParams,
   type updateOfferByTickABI,
   updateOfferByTickParams,
-  type UpdateOfferByVolumeParams,
   updateOfferByVolumeParams,
-  type UpdateOfferParams,
   updateOfferParams,
 } from '../../builder/offer/update.js'
 import type {
@@ -70,7 +70,7 @@ export async function simulateUpdateOfferByVolume(
   return { request }
 }
 
-export type UpdateOfferArgs = Prettify<
+export type SimulateUpdateOfferArgs = Prettify<
   UpdateOfferParams & Omit<SimulationParams, BuiltArgsWithValue>
 >
 
@@ -78,7 +78,7 @@ export async function simulateUpdateOffer(
   client: Client,
   actionParams: MangroveActionsDefaultParams,
   market: MarketParams,
-  args: UpdateOfferArgs,
+  args: SimulateUpdateOfferArgs,
 ): Promise<UpdateOfferResult> {
   const { request } = await getAction(
     client,

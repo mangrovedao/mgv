@@ -5,8 +5,8 @@ import {
 } from 'viem'
 import type { BA } from '../lib/enums.js'
 import { rpcOfferToHumanOffer } from '../lib/human-readable.js'
+import { unpackOfferDetail } from '../lib/offer-detail.js'
 import { unpackOffer } from '../lib/offer.js'
-import { unpackOfferDetail } from '../lib/offerDetail.js'
 import type { CompleteOffer, OLKey } from '../types/lib.js'
 import { olKeyABIRaw } from './structs.js'
 

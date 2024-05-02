@@ -1,29 +1,34 @@
 import type { Client } from 'viem'
 import { type GetBookArgs, getBook } from '../../actions/book.js'
 import {
-  type GetLimitOrderStepsArgs,
-  type SimulateLimitOrderArgs,
-  type SimulateLimitOrderResult,
-  getLimitOrderSteps,
-  simulateLimitOrder,
-} from '../../actions/limit-order.js'
-import {
   type GetMarketOrderStepsArgs,
   type SimulateMarketOrderByVolumeAndMarketArgs,
   getMarketOrderSteps,
   simulateMarketOrderByVolumeAndMarket,
 } from '../../actions/market-order.js'
 import {
-  type SimulateNewOfferArgs,
-  simulateNewOffer,
-} from '../../actions/offer/new.js'
+  type GetLimitOrderStepsArgs,
+  type SimulateLimitOrderArgs,
+  type SimulateLimitOrderResult,
+  getLimitOrderSteps,
+  simulateLimitOrder,
+} from '../../actions/order/new.js'
+import {
+  type RetractOrderResult,
+  type SimulateRemoveOrderArgs,
+  simulateRemoveOrder,
+} from '../../actions/order/remove.js'
+import {
+  type SimulateUpdateOrderArgs,
+  type SimulateUpdateOrderResult,
+  simulateUpdateOrder,
+} from '../../actions/order/update.js'
 import type { Book } from '../../types/actions/book.js'
 import type {
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../types/actions/index.js'
 import type { MarketOrderResult } from '../../types/actions/market-order.js'
-import type { NewOfferResult } from '../../types/actions/offer.js'
 import type {
   LimitOrderSteps,
   MarketOrderSteps,
@@ -103,8 +108,6 @@ export type PublicMarketActions = {
     args: SimulateMarketOrderByVolumeAndMarketArgs,
   ) => Promise<MarketOrderResult>
 
-  simulateNewOffer: (args: SimulateNewOfferArgs) => Promise<NewOfferResult>
-
   /**
    *
    * @param args args for the simulate limit order call
@@ -126,6 +129,14 @@ export type PublicMarketActions = {
   simulateLimitOrder: (
     args: SimulateLimitOrderArgs,
   ) => Promise<SimulateLimitOrderResult>
+
+  simulateUpdateOrder: (
+    args: SimulateUpdateOrderArgs,
+  ) => Promise<SimulateUpdateOrderResult>
+
+  simulateRemoveOrder: (
+    args: SimulateRemoveOrderArgs,
+  ) => Promise<RetractOrderResult>
 }
 
 export function publicMarketActions(
@@ -139,9 +150,11 @@ export function publicMarketActions(
     getLimitOrderSteps: (args) => getLimitOrderSteps(client, market, args),
     simulateMarketOrderByVolumeAndMarket: (args) =>
       simulateMarketOrderByVolumeAndMarket(client, actionParams, market, args),
-    simulateNewOffer: (args) =>
-      simulateNewOffer(client, actionParams, market, args),
     simulateLimitOrder: (args) =>
       simulateLimitOrder(client, actionParams, market, args),
+    simulateUpdateOrder: (args) =>
+      simulateUpdateOrder(client, actionParams, market, args),
+    simulateRemoveOrder: (args) =>
+      simulateRemoveOrder(client, actionParams, market, args),
   })
 }
