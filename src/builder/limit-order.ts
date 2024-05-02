@@ -92,7 +92,8 @@ export function rawLimitOrderParams(params: RawLimitOrderParams) {
     takerGivesLogic = zeroAddress,
     takerWantsLogic = zeroAddress,
     value = globalConfig.gasprice *
-      (restingOrderGasreq + localConfig.offer_gasbase),
+      (restingOrderGasreq + localConfig.offer_gasbase) *
+      BigInt(1e6),
   } = params
 
   return {

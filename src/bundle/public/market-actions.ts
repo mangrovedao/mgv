@@ -13,12 +13,17 @@ import {
   getMarketOrderSteps,
   simulateMarketOrderByVolumeAndMarket,
 } from '../../actions/market-order.js'
+import {
+  type SimulateNewOfferArgs,
+  simulateNewOffer,
+} from '../../actions/offer/new.js'
 import type { Book } from '../../types/actions/book.js'
 import type {
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../types/actions/index.js'
 import type { MarketOrderResult } from '../../types/actions/market-order.js'
+import type { NewOfferResult } from '../../types/actions/offer.js'
 import type {
   LimitOrderSteps,
   MarketOrderSteps,
@@ -98,6 +103,8 @@ export type PublicMarketActions = {
     args: SimulateMarketOrderByVolumeAndMarketArgs,
   ) => Promise<MarketOrderResult>
 
+  simulateNewOffer: (args: SimulateNewOfferArgs) => Promise<NewOfferResult>
+
   /**
    *
    * @param args args for the simulate limit order call
@@ -132,6 +139,8 @@ export function publicMarketActions(
     getLimitOrderSteps: (args) => getLimitOrderSteps(client, market, args),
     simulateMarketOrderByVolumeAndMarket: (args) =>
       simulateMarketOrderByVolumeAndMarket(client, actionParams, market, args),
+    simulateNewOffer: (args) =>
+      simulateNewOffer(client, actionParams, market, args),
     simulateLimitOrder: (args) =>
       simulateLimitOrder(client, actionParams, market, args),
   })

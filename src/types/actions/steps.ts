@@ -33,6 +33,7 @@ export type SetKandelLogicsStep = Step<
 
 export type MarketOrderSteps = readonly [ERC20ApprovalStep]
 export type LimitOrderSteps = readonly [ERC20ApprovalStep]
+export type NewOfferSteps = readonly [ERC20ApprovalStep]
 export type AmplifiedOrderSteps = readonly [
   DeployRouterStep,
   BindStep,

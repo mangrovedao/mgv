@@ -49,6 +49,7 @@ export function getClient() {
       `http://localhost:${process.env.PROXY_PORT || 8545}/${poolId}`,
     ),
     mode: 'anvil',
+    account: privateKeyToAccount(accounts[0].privateKey),
   })
     .extend(walletActions)
     .extend(publicActions)

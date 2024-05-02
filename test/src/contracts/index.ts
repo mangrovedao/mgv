@@ -1,6 +1,7 @@
 import { globalTestClient } from "../client.js";
 import { accounts } from "../constants.js";
-import { Address, Hex, parseAbi } from "viem";
+import { Address, Client, Hex, parseAbi } from "viem";
+import { writeContract } from "viem/actions";
 import { ERC20_ABI, ERC20_BYTECODE } from "./erc20.js";
 import type { OLKey } from "~mgv/types/lib.js";
 import { flip } from "~mgv/lib/ol-key.js";
@@ -159,4 +160,18 @@ export async function setMulticall(address: Address) {
     address,
     bytecode: multicallBytecode,
   })
+}
+
+export async function mint(
+  client: Client,
+  token: Address,
+  to: Address,
+  amount: bigint
+) {
+  const res = await writeContract(client, {
+    address: token,
+    abi: ERC20_ABI,
+    functionName: "mint",
+    args: [to, amount],
+  } as any);
 }
