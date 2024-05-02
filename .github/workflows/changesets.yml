@@ -47,6 +47,9 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      pull-requests: write
+      repository-projects: write
+
 
     steps:
       - name: Clone repository
