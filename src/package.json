@@ -2,6 +2,9 @@
   "name": "@mangrovedao/mgv",
   "description": "Utils and functions to interact with mangrove protocol",
   "version": "0.0.3",
+  "repository": {
+    "url": "https://github.com/mangrovedao/mgv"
+  },
   "type": "module",
   "main": "./_cjs/index.js",
   "module": "./_esm/index.js",
