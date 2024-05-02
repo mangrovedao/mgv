@@ -4,16 +4,16 @@ import {
   parseAbi,
   zeroAddress,
 } from 'viem'
-import { BS, Order } from '../lib/enums.js'
-import { tickFromVolumes } from '../lib/tick.js'
-import type { Book } from '../types/actions/book.js'
-import type { MarketParams } from '../types/actions/index.js'
-import type { GlobalConfig, LocalConfig, OLKey } from '../types/lib.js'
-import { olKeyABIRaw } from './structs.js'
+import { BS, Order } from '../../lib/enums.js'
+import { tickFromVolumes } from '../../lib/tick.js'
+import type { Book } from '../../types/actions/book.js'
+import type { MarketParams } from '../../types/actions/index.js'
+import type { GlobalConfig, LocalConfig, OLKey } from '../../types/lib.js'
+import { olKeyABIRaw } from '../structs.js'
 
 export const limitOrderABI = parseAbi([
   olKeyABIRaw,
-  'struct TakerOrder { OLKey olKey; uint tick; uint8 orderType; uint fillVolume; bool fillWants; uint expiryDate; uint offerId; uint restingOrderGasreq; address takerGivesLogic; address takerWantsLogic;}',
+  'struct TakerOrder { OLKey olKey; int tick; uint8 orderType; uint fillVolume; bool fillWants; uint expiryDate; uint offerId; uint restingOrderGasreq; address takerGivesLogic; address takerWantsLogic;}',
   'struct TakerOrderResult { uint takerGot; uint takerGave; uint bounty; uint fee; uint offerId; bytes32 offerWriteData;}',
   'function take(TakerOrder calldata tko) external payable returns (TakerOrderResult memory res)',
   'function router(address fundOwner) public view returns (address)',

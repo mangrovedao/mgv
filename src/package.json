@@ -26,15 +26,25 @@
       "import": "./_esm/index.js",
       "default": "./_cjs/index.js"
     },
+    "./actions": {
+      "types": "./_types/actions/index.d.ts",
+      "import": "./_esm/actions/index.js",
+      "default": "./_cjs/actions/index.js"
+    },
+    "./builder": {
+      "types": "./_types/builder/index.d.ts",
+      "import": "./_esm/builder/index.js",
+      "default": "./_cjs/builder/index.js"
+    },
+    "./bundle": {
+      "types": "./_types/bundle/index.d.ts",
+      "import": "./_esm/bundle/index.js",
+      "default": "./_cjs/bundle/index.js"
+    },
     "./lib": {
       "types": "./_types/lib/index.d.ts",
       "import": "./_esm/lib/index.js",
       "default": "./_cjs/lib/index.js"
-    },
-    "./abis": {
-      "types": "./_types/abis/index.d.ts",
-      "import": "./_esm/abis/index.js",
-      "default": "./_cjs/abis/index.js"
     },
     "./package.json": "./package.json"
   },

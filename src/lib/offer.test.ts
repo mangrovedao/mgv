@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { RpcOffer, RpcOfferDetail } from '~mgv/types/lib.js'
+import { unpackOfferDetail } from './offer-detail.js'
 import { unpackOffer } from './offer.js'
-import { unpackOfferDetail } from './offerDetail.js'
 
 describe('offer unpacking', () => {
   it('should unpack correctly', () => {

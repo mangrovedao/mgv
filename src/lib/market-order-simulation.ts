@@ -54,7 +54,7 @@ export type RawMarketOrderSimulationResult = {
  */
 export function rawMarketOrderSimulation(
   params: RawMarketOrderSimulationParams,
-) {
+): RawMarketOrderSimulationResult {
   const {
     orderBook,
     fillVolume: _fillVolume,

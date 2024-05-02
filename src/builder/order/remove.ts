@@ -4,26 +4,26 @@ import type { MarketParams } from '../../types/actions/index.js'
 import type { OLKey } from '../../types/lib.js'
 import { olKeyABIRaw } from '../structs.js'
 
-export const retractOfferABI = parseAbi([
+export const retractOrderABI = parseAbi([
   olKeyABIRaw,
-  'function retractOffer(OLKey memory olKey, uint offerId, bool deprovision) external returns (uint provision)',
+  'function retractOffer(OLKey memory olKey, uint offerId, bool deprovision) external returns (uint freeWei)',
 ])
 
-export type RawRetractOfferParams = {
+export type RawRemoveOrderParams = {
   olKey: OLKey
   offerId: bigint
   deprovision?: boolean
 }
 
-export function rawRetractOfferParams(params: RawRetractOfferParams) {
+export function rawRemoveOrderParams(params: RawRemoveOrderParams) {
   const { olKey, offerId, deprovision = true } = params
   return {
-    abi: retractOfferABI,
+    abi: retractOrderABI,
     functionName: 'retractOffer',
     args: [olKey, offerId, deprovision],
   } satisfies Omit<
     ContractFunctionParameters<
-      typeof retractOfferABI,
+      typeof retractOrderABI,
       'nonpayable',
       'retractOffer'
     >,
@@ -31,15 +31,15 @@ export function rawRetractOfferParams(params: RawRetractOfferParams) {
   >
 }
 
-export type RetractOfferParams = {
-  offerId: bigint
+export type RemoveOrderParams = {
   bs: BS
+  offerId: bigint
   deprovision?: boolean
 }
 
-export function retractOfferParams(
+export function removeOrderParams(
   market: MarketParams,
-  params: RetractOfferParams,
+  params: RemoveOrderParams,
 ) {
   const olKey: OLKey = {
     outbound_tkn:
@@ -48,7 +48,7 @@ export function retractOfferParams(
       params.bs === BS.buy ? market.base.address : market.quote.address,
     tickSpacing: market.tickSpacing,
   }
-  return rawRetractOfferParams({
+  return rawRemoveOrderParams({
     olKey,
     ...params,
   })
