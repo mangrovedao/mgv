@@ -1,8 +1,8 @@
+import { http, createPublicClient } from 'viem'
+import { blast } from 'viem/chains'
 import { describe, expect, inject, it } from 'vitest'
 import { getClient } from '~test/src/client.js'
 import { getBook } from './book.js'
-import { createPublicClient, http } from 'viem'
-import { blast } from 'viem/chains'
 
 const { WETH, DAI } = inject('tokens')
 const { mangrove, reader, order } = inject('mangrove')
