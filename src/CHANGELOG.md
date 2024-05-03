@@ -1,5 +1,12 @@
 # @mangrovedao/mgv
 
+## 0.3.0
+
+### Minor Changes
+
+- 0fc1b02: Added routing logics
+  Added midPrice and spread calculation to getBook
+
 ## 0.2.2
 
 ### Patch Changes
