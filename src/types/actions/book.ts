@@ -15,6 +15,9 @@ export type BookParams = {
  * @param asksConfig the asks semibook configuration
  * @param bidsConfig the bids semibook configuration
  * @param marketConfig the global mangrove configuration
+ * @param midPrice the mid price
+ * @param spread the spread
+ * @param spreadPercent the spread percent
  */
 export type Book = {
   asks: CompleteOffer[]
@@ -22,4 +25,7 @@ export type Book = {
   asksConfig: LocalConfig
   bidsConfig: LocalConfig
   marketConfig: GlobalConfig
+  midPrice: number
+  spread: number
+  spreadPercent: number
 }

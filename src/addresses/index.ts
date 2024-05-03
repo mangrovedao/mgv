@@ -17,3 +17,26 @@ export {
 // --- mangrove ---
 
 export { blastMangrove } from './mangrove/index.js'
+
+// --- logics ---
+
+export type {
+  OverlyingParams,
+  OverlyingResponse,
+  RoutingLogicOverlying,
+  LogicBalanceParams,
+  LogicBalanceResponse,
+  RoutingLogicBalance,
+} from './logics/index.js'
+
+export {
+  blastOrbitLogic,
+  blastZeroLendLogic,
+  blastPacFinanceLogic,
+  balanceLogicABI,
+  baseBalance,
+  aaveLogicABI,
+  aaveBalance,
+  aaveOverLying,
+  buildLogic,
+} from './logics/index.js'
