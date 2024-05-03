@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.1.2
+
+### Patch Changes
+
+- 485538b: Fix price on bids
+
 ## 0.1.1
 
 ### Patch Changes
