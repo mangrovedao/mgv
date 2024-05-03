@@ -31,6 +31,11 @@
       "import": "./_esm/actions/index.js",
       "default": "./_cjs/actions/index.js"
     },
+    "./addresses": {
+      "types": "./_types/addresses/index.d.ts",
+      "import": "./_esm/addresses/index.js",
+      "default": "./_cjs/addresses/index.js"
+    },
     "./builder": {
       "types": "./_types/builder/index.d.ts",
       "import": "./_esm/builder/index.js",

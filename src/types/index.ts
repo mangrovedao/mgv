@@ -1,6 +1,5 @@
 export type {
   MangroveActionsDefaultParams,
-  Token,
   MarketParams,
   BuiltArgs,
   BuiltArgsWithValue,
