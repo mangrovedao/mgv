@@ -86,21 +86,40 @@ export async function getBook(
       allowFailure: false,
     })
 
+  const asks = parseBookResult({
+    result: rpcAsks,
+    ba: BA.asks,
+    baseDecimals: base.decimals,
+    quoteDecimals: quote.decimals,
+  })
+
+  const bids = parseBookResult({
+    result: rpcBids,
+    ba: BA.bids,
+    baseDecimals: base.decimals,
+    quoteDecimals: quote.decimals,
+  })
+
+  const midPrice = !asks[0]?.price
+    ? !bids[0]?.price
+      ? 0
+      : bids[0].price
+    : (asks[0].price + bids[0].price) / 2
+
+  const spread =
+    !asks[0]?.price || !bids[0]?.price ? 0 : asks[0].price - bids[0].price
+
+  const spreadPercent =
+    !asks[0]?.price || !bids[0]?.price ? 0 : spread / midPrice
+
   return {
-    asks: parseBookResult({
-      result: rpcAsks,
-      ba: BA.asks,
-      baseDecimals: base.decimals,
-      quoteDecimals: quote.decimals,
-    }),
-    bids: parseBookResult({
-      result: rpcBids,
-      ba: BA.bids,
-      baseDecimals: base.decimals,
-      quoteDecimals: quote.decimals,
-    }),
+    asks,
+    bids,
     asksConfig: unpackLocalConfig(rpcAsksConfig),
     bidsConfig: unpackLocalConfig(rpcBaseConfig),
     marketConfig: unpackGlobalConfig(rpcMarketConfig),
+    midPrice,
+    spread,
+    spreadPercent,
   }
 }

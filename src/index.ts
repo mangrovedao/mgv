@@ -68,4 +68,10 @@ export { publicMarketActions } from './bundle/index.js'
 export type {
   Token,
   BuildTokenParms,
+  OverlyingParams,
+  OverlyingResponse,
+  RoutingLogicOverlying,
+  LogicBalanceParams,
+  LogicBalanceResponse,
+  RoutingLogicBalance,
 } from './addresses/index.js'
