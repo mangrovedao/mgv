@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.1.1
+
+### Patch Changes
+
+- a0eb0a9: Fixed negative tick calculation
+
 ## 0.1.0
 
 ### Minor Changes
