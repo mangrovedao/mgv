@@ -4,7 +4,7 @@ import { unpackOfferDetail } from './offer-detail.js'
 import { unpackOffer } from './offer.js'
 
 describe('offer unpacking', () => {
-  it('should unpack correctly', () => {
+  it('should unpack correctly (positive tick)', () => {
     const offersPacked = [
       20074413445151042300888515900011094147352441356857739357192192n,
       233176578729722529410070503139477613292134408309508641520409614535884800n,
@@ -166,5 +166,44 @@ describe('offer unpacking', () => {
 
     expect(resolvedOffers).toEqual(rpcOffers)
     expect(resolvedOfferDetails).toEqual(rpcOfferDetails)
+  })
+
+  it('should unpack correctly (negative tick)', () => {
+    const offersPacked = [
+      6037607402951440078068834159367999131039187881724974465024n,
+      6037610396106793331758010605330164445154812137074822479872n,
+      6037637334504972614960598542085547985349238119548191768576n,
+      6037643320815679122338960834772586440906678945923150643200n,
+      6037646313971032376028140869540704815886303201272998658048n,
+      290196450876233378097758262348194902868415046125028938377854976n,
+      501320208275672184631140271928759749678999361822713279965701379033399296n,
+      6037661279747798644474008873479899466573577449747358154752n,
+      85437392285878783700956946440343577085766537272144231655276544n,
+      501347168245457900980323016316576116850136692486404924633552497240178688n,
+    ]
+
+    const rpcOffers: RpcOffer[] = [
+      { prev: 0n, next: 0n, tick: -80014n, gives: 409000000000000000000n },
+      { prev: 0n, next: 0n, tick: -80013n, gives: 407000000000000000000n },
+      { prev: 0n, next: 0n, tick: -80004n, gives: 384628507787907540642n },
+      { prev: 0n, next: 0n, tick: -80002n, gives: 915000000000000000000n },
+      { prev: 0n, next: 0n, tick: -80001n, gives: 1117000000000000000000n },
+      { prev: 0n, next: 46230n, tick: -80000n, gives: 887000000000000000000n },
+      { prev: 18595n, next: 0n, tick: -80000n, gives: 285151932926349488305n },
+      { prev: 0n, next: 0n, tick: -79996n, gives: 298352820166691182804n },
+      { prev: 0n, next: 13610n, tick: -79994n, gives: 1927000000000000000000n },
+      {
+        prev: 18596n,
+        next: 3683n,
+        tick: -79994n,
+        gives: 2326000000000000000000n,
+      },
+    ]
+
+    const resolvedOffers: RpcOffer[] = offersPacked.map((offer) =>
+      unpackOffer(offer),
+    )
+
+    expect(resolvedOffers).toEqual(rpcOffers)
   })
 })

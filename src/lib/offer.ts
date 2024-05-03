@@ -13,7 +13,7 @@ export function unpackOffer(offer: bigint): RpcOffer {
   let _offer = offer >> unused_bits
   const gives = _offer & mask(gives_bits)
   _offer >>= gives_bits
-  const tick = _offer & mask(tick_bits)
+  const tick = BigInt.asIntN(Number(tick_bits), _offer & mask(tick_bits))
   _offer >>= tick_bits
   const next = _offer & mask(next_bits)
   _offer >>= next_bits
