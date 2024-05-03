@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.2.2
+
+### Patch Changes
+
+- 4266fe3: change price display
+
 ## 0.2.1
 
 ### Patch Changes
