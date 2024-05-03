@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.2.1
+
+### Patch Changes
+
+- 193d75a: Fix USDB address on blast
+
 ## 0.2.0
 
 ### Minor Changes
