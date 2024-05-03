@@ -6,7 +6,7 @@ export const blastWETH = buildToken({
 })
 
 export const blastUSDB = buildToken({
-  address: '0x4300000000000000000000000000000000000002',
+  address: '0x4300000000000000000000000000000000000003',
   symbol: 'USDB',
   displayDecimals: 2,
   priceDisplayDecimals: 2,
