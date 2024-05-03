@@ -1,7 +1,7 @@
 import type { Address } from 'viem'
 
 export const DEFAULT_DISPLAY_DECIMALS = 3 as const
-export const DEFAULT_PRICE_DISPLAY_DECIMALS = 6 as const
+export const DEFAULT_PRICE_DISPLAY_DECIMALS = 4 as const
 export const DEFAULT_DECIMALS = 18 as const
 
 export type Token<
