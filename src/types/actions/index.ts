@@ -1,4 +1,5 @@
 import type { Address } from 'viem'
+import type { Token } from '../../addresses/tokens/utils.js'
 
 /**
  * The parameters for the Mangrove actions.
@@ -10,16 +11,6 @@ export type MangroveActionsDefaultParams = {
   mgv: Address
   mgvReader: Address
   mgvOrder: Address
-}
-
-/**
- * The parameters for a token.
- * @param address The address of the token.
- * @param decimals The number of decimals of the token.
- */
-export type Token = {
-  address: Address
-  decimals: number
 }
 
 /**

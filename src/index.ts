@@ -35,7 +35,6 @@ export {
 
 export type {
   MangroveActionsDefaultParams,
-  Token,
   MarketParams,
   BuiltArgs,
   BuiltArgsWithValue,
@@ -63,3 +62,10 @@ export type {
 // --- bundles ---
 
 export { publicMarketActions } from './bundle/index.js'
+
+// --- addresses ---
+
+export type {
+  Token,
+  BuildTokenParms,
+} from './addresses/index.js'
