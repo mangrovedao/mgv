@@ -1,4 +1,4 @@
-import type { MangroveActionsDefaultParams } from '~mgv/types/index.js'
+import type { MangroveActionsDefaultParams } from '../../types/index.js'
 
 export const blastMangrove = {
   mgv: '0xb1a49C54192Ea59B233200eA38aB56650Dfb448C',
