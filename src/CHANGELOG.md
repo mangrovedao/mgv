@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.2.0
+
+### Minor Changes
+
+- 83f23ab: Added addresses book in /addresses
+
 ## 0.1.2
 
 ### Patch Changes
