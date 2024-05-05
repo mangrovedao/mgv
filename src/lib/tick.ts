@@ -30,16 +30,20 @@ export function tickInRange(tick: bigint): boolean {
 /**
  * Computes the tick value corresponding to the price of the asset.
  * @param price the price of the asset
+ * @param tickSpacing the tick spacing of the market @default 1n
  * @returns A Tick instance corresponding to the price of the asset.
  */
-export function tickFromPrice(price: number): bigint {
-  return BigInt(Math.floor(Math.log(price) / Math.log(1.0001)))
+export function tickFromPrice(price: number, tickSpacing = 1n): bigint {
+  const rawTick = BigInt(Math.floor(Math.log(price) / Math.log(1.0001)))
+  const bin = rawTick / tickSpacing + (rawTick % tickSpacing > 0n ? 1n : 0n)
+  return bin * tickSpacing
 }
 
 /**
  * Computes the tick value corresponding to the price between two assets.
  * @param inboundAmt amount of inbound asset
  * @param outboundAmt amount of outbound asset
+ * @param tickSpacing the tick spacing of the market @default 1n
  * @returns A Tick instance corresponding to the price between the two assets.
  * @example
  * const inboundVolume = 100000000000000000000n
@@ -50,10 +54,11 @@ export function tickFromPrice(price: number): bigint {
 export function tickFromVolumes(
   inboundAmt: bigint,
   outboundAmt: bigint,
+  tickSpacing = 1n,
 ): bigint {
   // This implementation is not exact
   const price = Number(inboundAmt) / Number(outboundAmt)
-  return tickFromPrice(price)
+  return tickFromPrice(price, tickSpacing)
 }
 
 /**

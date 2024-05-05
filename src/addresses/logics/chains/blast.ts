@@ -21,3 +21,9 @@ export const blastPacFinanceLogic = buildLogic(
   aaveOverLying,
   aaveBalance,
 )
+
+export const blastLogics = [
+  blastOrbitLogic,
+  blastZeroLendLogic,
+  blastPacFinanceLogic,
+] as const

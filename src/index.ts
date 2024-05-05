@@ -5,6 +5,9 @@ export type {
   MarketOrderResultFromLogsParams,
   LimitOrderResultFromLogsParams,
   LimitOrderResult,
+  AmountsToHumanPriceParams,
+  AmountsParams,
+  AmountsOutput,
 } from './lib/index.js'
 
 export {
@@ -61,7 +64,7 @@ export type {
 
 // --- bundles ---
 
-export { publicMarketActions } from './bundle/index.js'
+export { publicMarketActions, generalActions } from './bundle/index.js'
 
 // --- addresses ---
 

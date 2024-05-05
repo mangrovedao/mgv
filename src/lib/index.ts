@@ -17,7 +17,19 @@ export { unpackGlobalConfig } from './global.js'
 
 // human-readable
 
-export { rpcOfferToHumanOffer } from './human-readable.js'
+export type {
+  AmountsToHumanPriceParams,
+  AmountsParams,
+  AmountsOutput,
+} from './human-readable.js'
+
+export {
+  rpcOfferToHumanOffer,
+  rawPriceToHumanPrice,
+  humanPriceToRawPrice,
+  amountsToHumanPrice,
+  amounts,
+} from './human-readable.js'
 
 // limit-order
 

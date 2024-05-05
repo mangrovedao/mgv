@@ -15,7 +15,7 @@ export type OverlyingParams = {
 
 export type OverlyingResponse = {
   type: 'erc20' | 'erc721'
-  token: Address
+  overlying: Address
   available: boolean
 }
 
@@ -96,3 +96,5 @@ export function buildLogic<
     logicBalance,
   }
 }
+
+export type Logic = ReturnType<typeof buildLogic>

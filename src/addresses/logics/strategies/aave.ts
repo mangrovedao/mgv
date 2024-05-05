@@ -22,7 +22,7 @@ export const aaveOverLying: RoutingLogicOverlying<
   parseOverlyingContractResponse(response) {
     return {
       type: 'erc20',
-      token: response,
+      overlying: response,
       available: !isAddressEqual(response, zeroAddress),
     }
   },
