@@ -35,6 +35,7 @@ export type GetLimitOrderStepsParams = {
   userRouter: Address
   bs: BS
   sendAmount?: bigint
+  logicToken?: Address
 }
 
 export type GetLimitOrderStepsArgs = Prettify<
@@ -48,8 +49,11 @@ export async function getLimitOrderSteps(
   args: GetLimitOrderStepsArgs,
 ): Promise<LimitOrderSteps> {
   const { sendAmount: amount = maxUint256 } = args
-  const tokenToApprove =
-    args.bs === BS.buy ? market.quote.address : market.base.address
+  const tokenToApprove = args.logicToken
+    ? args.logicToken
+    : args.bs === BS.buy
+      ? market.quote.address
+      : market.base.address
 
   const allowance = await getAction(
     client,

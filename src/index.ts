@@ -61,7 +61,7 @@ export type {
 
 // --- bundles ---
 
-export { publicMarketActions } from './bundle/index.js'
+export { publicMarketActions, generalActions } from './bundle/index.js'
 
 // --- addresses ---
 

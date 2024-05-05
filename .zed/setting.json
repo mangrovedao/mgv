@@ -1,0 +1,8 @@
+{
+  "formatter": {
+    "external": {
+      "command": "bun",
+      "arguments": ["run", "format", "--stdin-file-path={buffer_path}"]
+    }
+  }
+}

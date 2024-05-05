@@ -2,6 +2,7 @@ export {
   blastOrbitLogic,
   blastZeroLendLogic,
   blastPacFinanceLogic,
+  blastLogics,
 } from './chains/index.js'
 
 export {
@@ -19,6 +20,7 @@ export type {
   LogicBalanceParams,
   LogicBalanceResponse,
   RoutingLogicBalance,
+  Logic,
 } from './utils.js'
 
 export { buildLogic } from './utils.js'
