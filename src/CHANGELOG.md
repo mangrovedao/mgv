@@ -1,5 +1,16 @@
 # @mangrovedao/mgv
 
+## 0.4.0
+
+### Minor Changes
+
+- 0ea39e9: Added general actions for balances and logic
+- 0ea39e9: Add human readable prices conversions
+
+### Patch Changes
+
+- 0ea39e9: Added tickSpacing to tick lib
+
 ## 0.3.0
 
 ### Minor Changes
