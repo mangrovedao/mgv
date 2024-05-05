@@ -5,6 +5,9 @@ export type {
   MarketOrderResultFromLogsParams,
   LimitOrderResultFromLogsParams,
   LimitOrderResult,
+  AmountsToHumanPriceParams,
+  AmountsParams,
+  AmountsOutput,
 } from './lib/index.js'
 
 export {
