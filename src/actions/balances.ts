@@ -1,17 +1,17 @@
 import {
+  type Address,
+  type Client,
   erc20Abi,
   isAddressEqual,
   zeroAddress,
-  type Address,
-  type Client,
-} from "viem";
-import type { Logic, OverlyingResponse } from "../addresses/logics/utils.js";
-import type { MarketParams } from "../types/actions/index.js";
-import type { ContractFunctionParameters, MulticallParameters } from "viem";
-import { getAction } from "../utils/getAction.js";
-import { multicall } from "viem/actions";
-import type { Token } from "../addresses/tokens/utils.js";
-import type { Prettify } from "../types/lib.js";
+} from 'viem'
+import type { ContractFunctionParameters, MulticallParameters } from 'viem'
+import { multicall } from 'viem/actions'
+import type { Logic, OverlyingResponse } from '../addresses/logics/utils.js'
+import type { Token } from '../addresses/tokens/utils.js'
+import type { MarketParams } from '../types/actions/index.js'
+import type { Prettify } from '../types/lib.js'
+import { getAction } from '../utils/getAction.js'
 
 /**
  * Get the balances for a user
@@ -20,54 +20,54 @@ import type { Prettify } from "../types/lib.js";
  * @param user the user to get balances for
  */
 export type GetBalancesParams<TLogics extends Logic[] = Logic[]> = {
-  logics: TLogics;
-  markets: MarketParams[];
-  user: Address;
-};
+  logics: TLogics
+  markets: MarketParams[]
+  user: Address
+}
 
 export type GetBalancesArgs<TLogics extends Logic[] = Logic[]> =
   GetBalancesParams<TLogics> &
-    Omit<MulticallParameters, "allowFailure" | "contracts">;
+    Omit<MulticallParameters, 'allowFailure' | 'contracts'>
 
-type ExtendedOverlyingResponse = Prettify<OverlyingResponse & { token: Token }>;
+type ExtendedOverlyingResponse = Prettify<OverlyingResponse & { token: Token }>
 
 export type GetBalanceResult<TLogics extends Logic[] = Logic[]> = {
   tokens: {
-    token: Token;
-    balance: bigint;
-  }[];
-  overlying: ExtendedOverlyingResponse[];
+    token: Token
+    balance: bigint
+  }[]
+  overlying: ExtendedOverlyingResponse[]
   logicBalances: {
-    token: Token;
-    logic: TLogics[number];
-    balance: bigint;
-  }[];
-};
+    token: Token
+    logic: TLogics[number]
+    balance: bigint
+  }[]
+}
 
 export async function getBalances<TLogics extends Logic[] = Logic[]>(
   client: Client,
   args: GetBalancesArgs<TLogics>,
 ): Promise<GetBalanceResult<TLogics>> {
-  const { logics, markets, ...multicallArgs } = args;
+  const { logics, markets, ...multicallArgs } = args
   const tokens = markets.reduce((acc, market) => {
     if (!acc.find((t) => isAddressEqual(t.address, market.base.address))) {
-      acc.push(market.base);
+      acc.push(market.base)
     }
     if (!acc.find((t) => isAddressEqual(t.address, market.quote.address))) {
-      acc.push(market.quote);
+      acc.push(market.quote)
     }
-    return acc;
-  }, [] as Token[]);
+    return acc
+  }, [] as Token[])
 
   const tokenBalanceCalls = tokens.map(
     (token) =>
       ({
         address: token.address,
         abi: erc20Abi,
-        functionName: "balanceOf",
+        functionName: 'balanceOf',
         args: [args.user],
       }) as const,
-  );
+  )
 
   const overlyingCalls = tokens.flatMap((token) =>
     logics.map((logic) =>
@@ -77,7 +77,7 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
         name: logic.name,
       }),
     ),
-  ) as ContractFunctionParameters[];
+  ) as ContractFunctionParameters[]
 
   const logicBalancesCalls = tokens.flatMap((token) =>
     logics.map((logic) =>
@@ -88,50 +88,50 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
         user: args.user,
       }),
     ),
-  ) as ContractFunctionParameters[];
+  ) as ContractFunctionParameters[]
 
   const result = await getAction(
     client,
     multicall,
-    "multicall",
+    'multicall',
   )({
     ...multicallArgs,
     contracts: [...tokenBalanceCalls, ...overlyingCalls, ...logicBalancesCalls],
     allowFailure: true,
-  });
+  })
 
   const tokenBalances = tokens.map((token, i) => {
-    const res = result[i];
-    const balance = res.status === "success" ? (res.result as bigint) : 0n;
-    return { token, balance };
-  });
+    const res = result[i]
+    const balance = res.status === 'success' ? (res.result as bigint) : 0n
+    return { token, balance }
+  })
 
   const overlying = tokens.flatMap((token, i) =>
     logics.map((logic, j) => {
-      const res = result[tokens.length * (i + 1) + j];
+      const res = result[tokens.length * (i + 1) + j]
       const overlying: OverlyingResponse =
-        res.status === "success"
+        res.status === 'success'
           ? logic.logicOverlying.parseOverlyingContractResponse(res.result)
           : {
-              type: "erc20",
+              type: 'erc20',
               overlying: zeroAddress,
               available: false,
-            };
-      return { token, ...overlying };
+            }
+      return { token, ...overlying }
     }),
-  );
+  )
 
   const logicBalances = tokens.flatMap((token, i) =>
     logics.map((logic, j) => {
-      const res = result[overlying.length + tokens.length * (i + 1) + j];
-      const balance = res.status === "success" ? (res.result as bigint) : 0n;
-      return { token, logic, balance };
+      const res = result[overlying.length + tokens.length * (i + 1) + j]
+      const balance = res.status === 'success' ? (res.result as bigint) : 0n
+      return { token, logic, balance }
     }),
-  );
+  )
 
   return {
     tokens: tokenBalances,
     overlying,
     logicBalances,
-  };
+  }
 }

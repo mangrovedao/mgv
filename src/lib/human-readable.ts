@@ -1,4 +1,5 @@
 import { formatUnits } from 'viem'
+import type { MarketParams } from '../types/index.js'
 import type { BA } from './enums.js'
 import {
   inboundFromOutbound,
@@ -6,7 +7,6 @@ import {
   tickFromPrice,
   tickFromVolumes,
 } from './tick.js'
-import type { MarketParams } from '../types/index.js'
 
 // if ask, then outbound is the base, inbound is the quote
 // if bid, then outbound is the quote, inbound is the base
@@ -107,8 +107,15 @@ export function amounts(
   // quote is inbound, base is outbound
   const tick =
     'humanPrice' in params
-      ? tickFromPrice(humanPriceToRawPrice(params.humanPrice, market), market.tickSpacing)
-      : tickFromVolumes(params.quoteAmount, params.baseAmount, market.tickSpacing)
+      ? tickFromPrice(
+          humanPriceToRawPrice(params.humanPrice, market),
+          market.tickSpacing,
+        )
+      : tickFromVolumes(
+          params.quoteAmount,
+          params.baseAmount,
+          market.tickSpacing,
+        )
   const baseAmount =
     'baseAmount' in params
       ? params.baseAmount

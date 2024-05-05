@@ -2,5 +2,5 @@ export {
   blastOrbitLogic,
   blastZeroLendLogic,
   blastPacFinanceLogic,
-  blastLogics
+  blastLogics,
 } from './blast.js'

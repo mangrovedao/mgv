@@ -1,10 +1,10 @@
-import type { Client } from "viem";
+import type { Client } from 'viem'
 import {
-  getBalances,
   type GetBalanceResult,
   type GetBalancesArgs,
-} from "../../actions/balances.js";
-import type { Logic } from "../../addresses/logics/utils.js";
+  getBalances,
+} from '../../actions/balances.js'
+import type { Logic } from '../../addresses/logics/utils.js'
 
 export type GeneralActions = {
   /**
@@ -16,9 +16,9 @@ export type GeneralActions = {
    */
   getBalances: <TLogics extends Logic[] = Logic[]>(
     args: GetBalancesArgs<TLogics>,
-  ) => Promise<GetBalanceResult<TLogics>>;
-};
+  ) => Promise<GetBalanceResult<TLogics>>
+}
 
 export const generalActions = (client: Client): GeneralActions => ({
   getBalances: (args) => getBalances(client, args),
-});
+})
