@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.5.1
+
+### Patch Changes
+
+- 9f28bcb: Added logic inside of the overlying in `GetBalanceResult`
+
 ## 0.5.0
 
 ### Minor Changes
