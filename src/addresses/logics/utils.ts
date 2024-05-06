@@ -63,6 +63,7 @@ export type RoutingLogicBalance<
 export function buildLogic<
   TName extends string = string,
   TLogicAddress extends Address = Address,
+  TLogicGasreq extends bigint = bigint,
   abiOverlying extends Abi | readonly unknown[] = Abi,
   mutabilityOverlying extends AbiStateMutability = AbiStateMutability,
   functionNameOverlying extends ContractFunctionName<
@@ -78,6 +79,7 @@ export function buildLogic<
 >(
   name: TName,
   logic: TLogicAddress,
+  gasreq: TLogicGasreq,
   logicOverlying: RoutingLogicOverlying<
     abiOverlying,
     mutabilityOverlying,
@@ -92,6 +94,7 @@ export function buildLogic<
   return {
     name,
     logic,
+    gasreq,
     logicOverlying,
     logicBalance,
   }

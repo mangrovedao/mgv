@@ -64,7 +64,11 @@ export type {
 
 // --- bundles ---
 
-export { publicMarketActions, generalActions } from './bundle/index.js'
+export {
+  publicMarketActions,
+  generalActions,
+  mangroveActions,
+} from './bundle/index.js'
 
 // --- addresses ---
 
@@ -77,4 +81,5 @@ export type {
   LogicBalanceParams,
   LogicBalanceResponse,
   RoutingLogicBalance,
+  Logic,
 } from './addresses/index.js'

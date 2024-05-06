@@ -27,12 +27,14 @@ export type {
   LogicBalanceParams,
   LogicBalanceResponse,
   RoutingLogicBalance,
+  Logic,
 } from './logics/index.js'
 
 export {
   blastOrbitLogic,
   blastZeroLendLogic,
   blastPacFinanceLogic,
+  blastLogics,
   balanceLogicABI,
   baseBalance,
   aaveLogicABI,

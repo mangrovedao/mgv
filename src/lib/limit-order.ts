@@ -96,3 +96,15 @@ export function limitOrderResultFromLogs(
     olKey,
   })
 }
+
+export type GetDefaultLimitOrderGasreqParams = {
+  chainId?: bigint
+  mgvOrder?: Address
+}
+
+export function getDefaultLimitOrderGasreq(
+  // biome-ignore lint/correctness/noUnusedVariables: not used yet
+  params?: GetDefaultLimitOrderGasreqParams,
+): bigint {
+  return 250_000n
+}
