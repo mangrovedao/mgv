@@ -10,7 +10,6 @@ import { multicall } from 'viem/actions'
 import type { Logic, OverlyingResponse } from '../addresses/logics/utils.js'
 import type { Token } from '../addresses/tokens/utils.js'
 import type { MarketParams } from '../types/actions/index.js'
-import type { Prettify } from '../types/lib.js'
 import { getAction } from '../utils/getAction.js'
 
 /**
@@ -29,14 +28,18 @@ export type GetBalancesArgs<TLogics extends Logic[] = Logic[]> =
   GetBalancesParams<TLogics> &
     Omit<MulticallParameters, 'allowFailure' | 'contracts'>
 
-type ExtendedOverlyingResponse = Prettify<OverlyingResponse & { token: Token }>
-
 export type GetBalanceResult<TLogics extends Logic[] = Logic[]> = {
   tokens: {
     token: Token
     balance: bigint
   }[]
-  overlying: ExtendedOverlyingResponse[]
+  overlying: {
+    type: 'erc20' | 'erc721'
+    overlying: Address
+    available: boolean
+    token: Token
+    logic: TLogics[number]
+  }[]
   logicBalances: {
     token: Token
     logic: TLogics[number]
@@ -117,7 +120,7 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
               overlying: zeroAddress,
               available: false,
             }
-      return { token, ...overlying }
+      return { token, logic, ...overlying }
     }),
   )
 
