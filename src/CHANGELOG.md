@@ -1,5 +1,15 @@
 # @mangrovedao/mgv
 
+## 0.5.0
+
+### Minor Changes
+
+- b7eeffd: Add gasreq defaults and to logics
+
+### Patch Changes
+
+- b7eeffd: Added exports for logic
+
 ## 0.4.0
 
 ### Minor Changes
