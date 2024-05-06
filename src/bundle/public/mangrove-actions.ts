@@ -1,7 +1,7 @@
 import type { Address, Client } from 'viem'
-import type { GetUserRouterArgs } from '~mgv/actions/index.js'
-import { getUserRouter } from '~mgv/actions/index.js'
-import type { MangroveActionsDefaultParams } from '~mgv/types/index.js'
+import type { GetUserRouterArgs } from '../../actions/index.js'
+import { getUserRouter } from '../../actions/index.js'
+import type { MangroveActionsDefaultParams } from '../../types/index.js'
 
 export type MangroveActions = {
   /**

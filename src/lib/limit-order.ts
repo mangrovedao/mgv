@@ -102,9 +102,6 @@ export type GetDefaultLimitOrderGasreqParams = {
   mgvOrder?: Address
 }
 
-export function getDefaultLimitOrderGasreq(
-  // biome-ignore lint/correctness/noUnusedVariables: not used yet
-  params?: GetDefaultLimitOrderGasreqParams,
-): bigint {
+export function getDefaultLimitOrderGasreq(): bigint {
   return 250_000n
 }
