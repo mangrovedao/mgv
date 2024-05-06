@@ -37,11 +37,13 @@ export type {
   RawLimitOrderResultFromLogsParams,
   LimitOrderResultFromLogsParams,
   LimitOrderResult,
+  GetDefaultLimitOrderGasreqParams,
 } from './limit-order.js'
 
 export {
   rawLimitOrderResultFromLogs,
   limitOrderResultFromLogs,
+  getDefaultLimitOrderGasreq,
 } from './limit-order.js'
 
 // local
