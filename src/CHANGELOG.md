@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.5.2
+
+### Patch Changes
+
+- 94fdc5d: Add orderLabel function to lib to get the label of an order
+
 ## 0.5.1
 
 ### Patch Changes
