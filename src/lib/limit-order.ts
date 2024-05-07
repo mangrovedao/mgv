@@ -4,7 +4,7 @@ import type {
   MarketParams,
 } from '../types/index.js'
 import type { OLKey } from '../types/lib.js'
-import { BS } from './enums.js'
+import { BS, Order } from './enums.js'
 import { mgvEventsABI, rawMarketOrderResultFromLogs } from './market-order.js'
 import { flip, hash } from './ol-key.js'
 import { inboundFromOutbound } from './tick.js'
@@ -104,4 +104,18 @@ export type GetDefaultLimitOrderGasreqParams = {
 
 export function getDefaultLimitOrderGasreq(): bigint {
   return 250_000n
+}
+
+const _orderLabel = {
+  [Order.GTC]: 'Good Til Cancelled',
+  [Order.GTCE]: 'Good Til Cancelled Enforced',
+  [Order.PO]: 'Post Only',
+  [Order.IOC]: 'Immediate Or Cancel',
+  [Order.FOK]: 'Fill Or Kill',
+} as const satisfies { [key in Order]: string }
+
+export function orderLabel<TOrder extends Order = Order>(
+  order: TOrder,
+): (typeof _orderLabel)[TOrder] {
+  return _orderLabel[order]
 }
