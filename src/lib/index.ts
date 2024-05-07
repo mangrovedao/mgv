@@ -44,6 +44,7 @@ export {
   rawLimitOrderResultFromLogs,
   limitOrderResultFromLogs,
   getDefaultLimitOrderGasreq,
+  orderLabel,
 } from './limit-order.js'
 
 // local
