@@ -1,4 +1,4 @@
-import { parseAbi, type ContractFunctionParameters } from 'viem'
+import { type ContractFunctionParameters, parseAbi } from 'viem'
 
 export const populateABI = parseAbi([
   'struct Params { uint32 gasprice; uint24 gasreq; uint32 stepSize; uint32 pricePoints; }',

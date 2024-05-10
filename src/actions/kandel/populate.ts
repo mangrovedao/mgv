@@ -1,18 +1,18 @@
+import type { Address, Client } from 'viem'
 import {
-  simulateContract,
   type SimulateContractParameters,
   type SimulateContractReturnType,
+  simulateContract,
 } from 'viem/actions'
+import { getAction } from '~mgv/utils/getAction.js'
 import {
-  type populateABI,
-  type PopulateFromOffsetParams,
-  populateFromOffsetParams,
   type PopulateChunkFromOffsetParams,
+  type PopulateFromOffsetParams,
+  type populateABI,
   populateChunkFromOffsetParams,
+  populateFromOffsetParams,
 } from '../../builder/kandel/populate.js'
 import type { BuiltArgsWithValue } from '../../index.js'
-import type { Address, Client } from 'viem'
-import { getAction } from '~mgv/utils/getAction.js'
 
 type SimulationPopulateParams = SimulateContractParameters<
   typeof populateABI,

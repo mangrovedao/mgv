@@ -1,4 +1,4 @@
-import { parseAbi, type Address, type ContractFunctionParameters } from 'viem'
+import { type Address, type ContractFunctionParameters, parseAbi } from 'viem'
 
 export const logicsABI = parseAbi([
   'function setLogics(address baseLogic, address quoteLogic, uint gasreq) public',

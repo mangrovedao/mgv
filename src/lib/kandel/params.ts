@@ -1,12 +1,12 @@
-import { minVolume, type LocalConfig, type MarketParams } from '../../index.js'
+import { type LocalConfig, type MarketParams, minVolume } from '../../index.js'
 import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
 } from '../human-readable.js'
 import { priceFromTick, tickFromPrice } from '../tick.js'
 import {
-  createGeometricDistribution,
   type Distribution,
+  createGeometricDistribution,
 } from './distribution.js'
 
 export type RawKandelPositionParams = {
