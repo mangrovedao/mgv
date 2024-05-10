@@ -4,13 +4,13 @@ import type {
   SimulateContractParameters,
   SimulateContractReturnType,
 } from 'viem'
+import { simulateContract } from 'viem/actions'
 import {
-  setLogicsParams,
   type SetLogicsParams,
   type logicsABI,
+  setLogicsParams,
 } from '../../builder/kandel/logic.js'
 import type { BuiltArgs } from '../../types/actions/index.js'
-import { simulateContract } from 'viem/actions'
 import { getAction } from '../../utils/getAction.js'
 
 type SimulationParams = SimulateContractParameters<
