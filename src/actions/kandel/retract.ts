@@ -9,9 +9,9 @@ import {
   type RetractParams,
   type restractKandelABI,
   retractParams,
-} from '~mgv/builder/kandel/retract.js'
-import type { BuiltArgs } from '~mgv/index.js'
-import { getAction } from '~mgv/utils/getAction.js'
+} from '../../builder/kandel/retract.js'
+import type { BuiltArgs } from '../../index.js'
+import { getAction } from '../../utils/getAction.js'
 
 type SimulationParams = SimulateContractParameters<
   typeof restractKandelABI,
