@@ -1,6 +1,5 @@
 import type { Address, Client, MulticallParameters } from 'viem'
 import { multicall } from 'viem/actions'
-import { rawPriceToHumanPrice } from '~mgv/lib/human-readable.js'
 import {
   baseQuoteTickOffsetParams,
   getOfferParams,
@@ -9,6 +8,7 @@ import {
 } from '../../builder/kandel/view.js'
 import { type MarketParams, priceFromTick } from '../../index.js'
 import { BA } from '../../lib/enums.js'
+import { rawPriceToHumanPrice } from '../../lib/human-readable.js'
 import { unpackOffer } from '../../lib/offer.js'
 import { getAction } from '../../utils/getAction.js'
 
