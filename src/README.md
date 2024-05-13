@@ -488,6 +488,7 @@ const {
   minBaseAmount,
   minQuoteAmount,
   minProvision,
+  isValid
 } = validateKandelParams({
   baseAmount: parseEther('1'),
   quoteAmount: parseEther('3000'),
@@ -504,17 +505,76 @@ const {
 })
 ```
 
-This function returns 4 params :
+This function returns 5 params :
 - `params` : the params to pass to the `populate` function
 - `rawParams` : the raw params that have been adjusted. These have the same structure as the input params, but have been adjusted to fit the kandel constraints.
 - `minBaseAmount` : the minimum base amount that can be used to populate the kandel
 - `minQuoteAmount` : the minimum quote amount that can be used to populate the kandel
 - `minProvision` : the minimum provision that can be used to populate the kandel
+- `isValid` : a boolean that tells if the params are valid or not (amuont greater than min amount)
 
 ### Getting the kandel steps
 
 In order to populate a kandel, we need to get the steps to do before calling the populate function.
 
 ```ts
-const steps = await kandelClient.getKandelSteps
+const steps = await kandelClient.getKandelSteps({
+  userRouter,
+  user,
+  gasreq: 250_000n,
+})
+
+steps[0] // wether to deploy or not the user router
+steps[1] // wether to bind or not the user router to kandel
+steps[2] // wether to set the logic or not on the contract
+steps[3] // the approval needed for the base logic
+steps[4] // the approval needed for the quote logic
+```
+
+### Populating a kandel
+
+To populate a kandel, we need to call the `populate` function from the kandel client.
+
+```ts
+const {
+  params,
+  isValid
+} = validateKandelParams({
+  ...
+})
+
+if (!isValid) {
+  // custom logic
+  return
+}
+
+
+// Logics of the steps in there
+// ...
+
+const { request } = await kandelClient.simulatePopulate({
+  ...params,
+  account: '0x...',
+})
+
+const tx = await walletClient.writeContract(request)
+
+const receipt = await publicClient.waitForTransactionReceipt({
+  hash: tx
+})
+```
+
+### Retracting a kandel
+
+To retract a kandel, you can call the `simulateRetract` function. You have to know the number of price points in order to retract and pass it as the `to` parameter. `baseAmount` and/or `quoteAmount` can be specified if any amount is inside the kandel and to be removed from it.
+
+```ts
+const { request } = await kandelClient.simulateRetract({
+  to: pricePoints,
+  baseAmount: parseEther('1'),
+  quoteAmount: parseEther('3000'),
+  // both of these addresses are suppoesedly the same
+  recipient: '0x...',
+  account: '0x...',
+})
 ```

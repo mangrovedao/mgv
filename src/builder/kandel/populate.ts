@@ -1,8 +1,6 @@
 import { type ContractFunctionParameters, parseAbi } from 'viem'
 
 export const populateABI = parseAbi([
-  'struct Params { uint32 gasprice; uint24 gasreq; uint32 stepSize; uint32 pricePoints; }',
-  'function params() public view returns (Params memory)',
   'function populateFromOffset(uint from, uint to, int baseQuoteTickIndex0, uint _baseQuoteTickOffset, uint firstAskIndex, uint bidGives, uint askGives, Params calldata parameters, uint baseAmount, uint quoteAmount) public payable',
   'function populateChunkFromOffset(uint from, uint to, int baseQuoteTickIndex0, uint firstAskIndex, uint bidGives, uint askGives) public payable',
 ])
@@ -30,17 +28,6 @@ export type PopulateChunkFromOffsetParams = {
   bidGives: bigint
   askGives: bigint
 }
-
-export function getParamsParams() {
-  return {
-    abi: populateABI,
-    functionName: 'params',
-  } satisfies Omit<
-    ContractFunctionParameters<typeof populateABI, 'view', 'params'>,
-    'address'
-  >
-}
-
 export function populateFromOffsetParams(params: PopulateFromOffsetParams) {
   const {
     baseQuoteTickIndex0,

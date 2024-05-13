@@ -1,4 +1,9 @@
-import { type LocalConfig, type MarketParams, minVolume } from '../../index.js'
+import {
+  type LocalConfig,
+  type MarketParams,
+  minVolume,
+  type GlobalConfig,
+} from '../../index.js'
 import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
@@ -21,6 +26,7 @@ export type PositionKandelParams = {
   baseQuoteTickIndex0: bigint
   baseQuoteTickOffset: bigint
   firstAskIndex: bigint
+  pricePoints: bigint
 }
 
 function getKandelPositionRawParams(
@@ -56,6 +62,7 @@ function getKandelPositionRawParams(
     baseQuoteTickIndex0,
     baseQuoteTickOffset,
     firstAskIndex,
+    pricePoints,
   }
 }
 
@@ -67,6 +74,7 @@ export type RawKandelParams = RawKandelPositionParams & {
   factor: number
   asksLocalConfig: LocalConfig
   bidsLocalConfig: LocalConfig
+  marketConfig: GlobalConfig
 }
 
 export type KandelParams = PositionKandelParams & {
@@ -82,6 +90,7 @@ export type ValidateParamsResult = {
   minBaseAmount: bigint
   minQuoteAmount: bigint
   minProvision: bigint
+  isValid: boolean
 }
 
 function countBidsAndAsks(distribution: Distribution) {
@@ -123,6 +132,7 @@ export function validateKandelParams(
     factor,
     asksLocalConfig,
     bidsLocalConfig,
+    marketConfig,
   } = params
 
   let distribution = createGeometricDistribution({
@@ -159,13 +169,18 @@ export function validateKandelParams(
 
   const bigintFactor = BigInt(factor * 10_000)
 
-  const minBaseAmount =
-    (minVolume(asksLocalConfig, gasreq) * nAsks * bigintFactor) / 10_000n
-  const minQuoteAmount =
-    (minVolume(bidsLocalConfig, gasreq) * nBids * bigintFactor) / 10_000n
+  const minAsk = (minVolume(asksLocalConfig, gasreq) * bigintFactor) / 10_000n
+  const minBid = (minVolume(bidsLocalConfig, gasreq) * bigintFactor) / 10_000n
+
+  const minBaseAmount = minAsk * nAsks
+  const minQuoteAmount = minBid * nBids
   const minProvision =
-    (gasreq + asksLocalConfig.offer_gasbase) * nAsks +
-    (gasreq + bidsLocalConfig.offer_gasbase) * nBids
+    ((gasreq + asksLocalConfig.offer_gasbase) * nAsks +
+      (gasreq + bidsLocalConfig.offer_gasbase) * nBids) *
+    marketConfig.gasprice *
+    BigInt(1e6)
+
+  const isValid = askGives >= minAsk && bidGives >= minBid
 
   return {
     params: {
@@ -176,6 +191,7 @@ export function validateKandelParams(
       askGives,
       bidGives,
       gasreq,
+      pricePoints,
     },
     rawParams: {
       ...params,
@@ -187,5 +203,6 @@ export function validateKandelParams(
     minBaseAmount,
     minQuoteAmount,
     minProvision,
+    isValid,
   }
 }

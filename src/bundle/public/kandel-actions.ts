@@ -27,6 +27,11 @@ import {
   getKandelSteps,
 } from '../../actions/kandel/steps.js'
 import type { KandelSteps, MarketParams } from '../../index.js'
+import {
+  getKandelState,
+  type GetKandelStateArgs,
+  type GetKandelStateResult,
+} from '../../actions/kandel/view.js'
 
 export type KandelSeederActions = {
   simulateSow: (args?: SowArgs) => Promise<SimulateSowResult>
@@ -46,6 +51,7 @@ export type KandelActions = {
     args: PopulateChunkArgs,
   ) => Promise<PopulateChunkResult>
   simulateRetract: (args: RetractArgs) => Promise<SimulateRetractResult>
+  getKandelState: (args: GetKandelStateArgs) => Promise<GetKandelStateResult>
 }
 
 export function kandelActions(market: MarketParams, kandel: Address) {
@@ -60,5 +66,7 @@ export function kandelActions(market: MarketParams, kandel: Address) {
       simulatePopulateChunk(client, kandel, args),
     simulateRetract: (args: RetractArgs) =>
       simulateRetract(client, kandel, args),
+    getKandelState: (args: GetKandelStateArgs) =>
+      getKandelState(client, market, kandel, args),
   })
 }

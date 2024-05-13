@@ -134,7 +134,10 @@ export async function getKandelSteps(
     {
       type: 'erc20Approval',
       params: {
-        token: market.base,
+        token:
+          args.baseOverlying?.available && args.baseOverlying.overlying
+            ? args.baseOverlying.overlying
+            : market.base,
         from: args.user,
         spender: args.userRouter,
         amount: maxUint256,
@@ -145,7 +148,10 @@ export async function getKandelSteps(
     {
       type: 'erc20Approval',
       params: {
-        token: market.quote,
+        token:
+          args.quoteOverlying?.available && args.quoteOverlying.overlying
+            ? args.quoteOverlying.overlying
+            : market.quote,
         from: args.user,
         spender: args.userRouter,
         amount: maxUint256,
