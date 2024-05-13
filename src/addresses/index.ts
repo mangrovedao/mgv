@@ -12,6 +12,7 @@ export {
   blastUSDB,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
+  buildToken,
 } from './tokens/index.js'
 
 // --- mangrove ---

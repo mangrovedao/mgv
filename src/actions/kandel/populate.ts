@@ -4,7 +4,6 @@ import {
   type SimulateContractReturnType,
   simulateContract,
 } from 'viem/actions'
-import { getAction } from '~mgv/utils/getAction.js'
 import {
   type PopulateChunkFromOffsetParams,
   type PopulateFromOffsetParams,
@@ -13,6 +12,7 @@ import {
   populateFromOffsetParams,
 } from '../../builder/kandel/populate.js'
 import type { BuiltArgsWithValue } from '../../index.js'
+import { getAction } from '../../utils/getAction.js'
 
 type SimulationPopulateParams = SimulateContractParameters<
   typeof populateABI,

@@ -31,6 +31,16 @@ export type PopulateChunkFromOffsetParams = {
   askGives: bigint
 }
 
+export function getParamsParams() {
+  return {
+    abi: populateABI,
+    functionName: 'params',
+  } satisfies Omit<
+    ContractFunctionParameters<typeof populateABI, 'view', 'params'>,
+    'address'
+  >
+}
+
 export function populateFromOffsetParams(params: PopulateFromOffsetParams) {
   const {
     baseQuoteTickIndex0,

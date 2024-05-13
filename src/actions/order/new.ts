@@ -29,13 +29,14 @@ import type {
 import type { LimitOrderSteps } from '../../types/actions/steps.js'
 import type { Prettify } from '../../types/lib.js'
 import { getAction } from '../../utils/getAction.js'
+import type { OverlyingResult } from '../balances.js'
 
 export type GetLimitOrderStepsParams = {
   user: Address
   userRouter: Address
   bs: BS
   sendAmount?: bigint
-  logicToken?: Address
+  logic?: OverlyingResult
 }
 
 export type GetLimitOrderStepsArgs = Prettify<
@@ -49,11 +50,12 @@ export async function getLimitOrderSteps(
   args: GetLimitOrderStepsArgs,
 ): Promise<LimitOrderSteps> {
   const { sendAmount: amount = maxUint256 } = args
-  const tokenToApprove = args.logicToken
-    ? args.logicToken
-    : args.bs === BS.buy
-      ? market.quote.address
-      : market.base.address
+  const tokenToApprove =
+    args.logic?.available && args.logic.overlying
+      ? args.logic.overlying
+      : args.bs === BS.buy
+        ? market.quote
+        : market.base
 
   const allowance = await getAction(
     client,
@@ -63,7 +65,7 @@ export async function getLimitOrderSteps(
     ...tokenAllowanceParams({
       owner: args.user,
       spender: args.userRouter,
-      token: tokenToApprove,
+      token: tokenToApprove.address,
     }),
     ...args,
   })

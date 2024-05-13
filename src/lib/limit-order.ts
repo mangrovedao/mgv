@@ -46,7 +46,7 @@ export function rawLimitOrderResultFromLogs(
   const loKeyHash = hash(flip(params.olKey)).toLowerCase()
   for (const event of events) {
     if (
-      event.args.olKeyHash !== loKeyHash ||
+      event.args.olKeyHash.toLowerCase() !== loKeyHash ||
       !isAddressEqual(params.user, event.args.maker)
     )
       continue

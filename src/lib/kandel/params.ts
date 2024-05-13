@@ -119,7 +119,7 @@ export function validateKandelParams(
     pricePoints,
     stepSize,
     market,
-    gasreq: _gasreq,
+    gasreq,
     factor,
     asksLocalConfig,
     bidsLocalConfig,
@@ -131,6 +131,7 @@ export function validateKandelParams(
     firstAskIndex,
     pricePoints,
     stepSize,
+    market,
     askGives: 1n,
     bidGives: 1n,
   })
@@ -156,9 +157,12 @@ export function validateKandelParams(
     market,
   )
 
-  const gasreq = BigInt(Number(_gasreq) * factor)
-  const minBaseAmount = minVolume(asksLocalConfig, gasreq) * nAsks
-  const minQuoteAmount = minVolume(bidsLocalConfig, gasreq) * nBids
+  const bigintFactor = BigInt(factor * 10_000)
+
+  const minBaseAmount =
+    (minVolume(asksLocalConfig, gasreq) * nAsks * bigintFactor) / 10_000n
+  const minQuoteAmount =
+    (minVolume(bidsLocalConfig, gasreq) * nBids * bigintFactor) / 10_000n
   const minProvision =
     (gasreq + asksLocalConfig.offer_gasbase) * nAsks +
     (gasreq + bidsLocalConfig.offer_gasbase) * nBids

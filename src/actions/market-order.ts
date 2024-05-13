@@ -49,8 +49,7 @@ export async function getMarketOrderSteps(
   args: GetMarketOrderStepsArgs,
 ): Promise<MarketOrderSteps> {
   const { sendAmount: amount = maxUint256 } = args
-  const tokenToApprove =
-    args.bs === BS.buy ? market.quote.address : market.base.address
+  const tokenToApprove = args.bs === BS.buy ? market.quote : market.base
 
   const allowance = await getAction(
     client,
@@ -61,7 +60,7 @@ export async function getMarketOrderSteps(
     ...tokenAllowanceParams({
       owner: args.user,
       spender: actionParams.mgv,
-      token: tokenToApprove,
+      token: tokenToApprove.address,
     }),
   })
 

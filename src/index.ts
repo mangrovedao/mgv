@@ -8,6 +8,15 @@ export type {
   AmountsToHumanPriceParams,
   AmountsParams,
   AmountsOutput,
+  CreateGeometricDistributionParams,
+  DistributionOffer,
+  Distribution,
+  KandelFromLogsResult,
+  RawKandelPositionParams,
+  PositionKandelParams,
+  RawKandelParams,
+  KandelParams,
+  ValidateParamsResult,
 } from './lib/index.js'
 
 export {
@@ -32,6 +41,11 @@ export {
   marketOrderSimulation,
   marketOrderResultFromLogs,
   limitOrderResultFromLogs,
+  CreateDistributionError,
+  createGeometricDistribution,
+  seederEventsABI,
+  getKandelsFromLogs,
+  validateKandelParams,
 } from './lib/index.js'
 
 // --- Types ---
@@ -64,10 +78,20 @@ export type {
 
 // --- bundles ---
 
+export type {
+  PublicMarketActions,
+  GeneralActions,
+  MangroveActions,
+  KandelActions,
+  KandelSeederActions,
+} from './bundle/index.js'
+
 export {
   publicMarketActions,
   generalActions,
   mangroveActions,
+  kandelActions,
+  kandelSeederActions,
 } from './bundle/index.js'
 
 // --- addresses ---

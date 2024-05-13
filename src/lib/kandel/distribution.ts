@@ -1,5 +1,7 @@
+import type { MarketParams } from '../../index.js'
 import { BA } from '../enums.js'
-import { outboundFromInbound } from '../tick.js'
+import { rawPriceToHumanPrice } from '../human-readable.js'
+import { outboundFromInbound, priceFromTick } from '../tick.js'
 
 export type CreateGeometricDistributionParams = {
   baseQuoteTickIndex0: bigint
@@ -7,6 +9,7 @@ export type CreateGeometricDistributionParams = {
   firstAskIndex: bigint
   pricePoints: bigint
   stepSize: bigint
+  market: MarketParams
   from?: bigint
   to?: bigint
 } & (
@@ -28,6 +31,7 @@ export type DistributionOffer = {
   index: bigint
   tick: bigint
   gives: bigint
+  price: number
 }
 
 export type Distribution = {
@@ -98,6 +102,7 @@ export function createGeometricDistribution(
     askGives,
     stepSize,
     pricePoints,
+    market,
   } = params
 
   if (!bidGives && !askGives) {
@@ -114,10 +119,14 @@ export function createGeometricDistribution(
   let tick = -(baseQuoteTickIndex0 + baseQuoteTickOffset * index)
 
   for (; index < bidBound; ++index) {
+    const price = market
+      ? rawPriceToHumanPrice(priceFromTick(-tick), market)
+      : priceFromTick(-tick)
     bids.push({
       index,
       tick,
       gives: !bidGives ? outboundFromInbound(tick, askGives!) : bidGives,
+      price,
     })
 
     const dualIndex = transportDestination(
@@ -131,6 +140,7 @@ export function createGeometricDistribution(
       index: dualIndex,
       tick: baseQuoteTickIndex0 + baseQuoteTickOffset * dualIndex,
       gives: 0n,
+      price,
     })
 
     tick -= baseQuoteTickOffset
@@ -140,10 +150,14 @@ export function createGeometricDistribution(
   tick = baseQuoteTickIndex0 + baseQuoteTickOffset * index
 
   for (; index < to; ++index) {
+    const price = market
+      ? rawPriceToHumanPrice(priceFromTick(tick), market)
+      : priceFromTick(tick)
     asks.push({
       index,
       tick,
       gives: !askGives ? outboundFromInbound(tick, bidGives!) : askGives,
+      price,
     })
 
     const dualIndex = transportDestination(
@@ -157,6 +171,7 @@ export function createGeometricDistribution(
       index: dualIndex,
       tick: -(baseQuoteTickIndex0 + baseQuoteTickOffset * dualIndex),
       gives: 0n,
+      price,
     })
 
     tick += baseQuoteTickOffset
