@@ -1,16 +1,16 @@
 import type { Address, Client, MulticallParameters } from 'viem'
-import { getAction } from '../../utils/getAction.js'
 import { multicall } from 'viem/actions'
+import { rawPriceToHumanPrice } from '~mgv/lib/human-readable.js'
 import {
   baseQuoteTickOffsetParams,
+  getOfferParams,
   kandelParamsParams,
   offeredVolumeParams,
-  getOfferParams,
 } from '../../builder/kandel/view.js'
+import { type MarketParams, priceFromTick } from '../../index.js'
 import { BA } from '../../lib/enums.js'
-import { priceFromTick, type MarketParams } from '../../index.js'
 import { unpackOffer } from '../../lib/offer.js'
-import { rawPriceToHumanPrice } from '~mgv/lib/human-readable.js'
+import { getAction } from '../../utils/getAction.js'
 
 export type GetKandelStateParams = {}
 

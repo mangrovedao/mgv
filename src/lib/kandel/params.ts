@@ -1,8 +1,8 @@
 import {
+  type GlobalConfig,
   type LocalConfig,
   type MarketParams,
   minVolume,
-  type GlobalConfig,
 } from '../../index.js'
 import {
   humanPriceToRawPrice,

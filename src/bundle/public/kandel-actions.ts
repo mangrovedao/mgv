@@ -26,12 +26,12 @@ import {
   type GetKandelStepsArgs,
   getKandelSteps,
 } from '../../actions/kandel/steps.js'
-import type { KandelSteps, MarketParams } from '../../index.js'
 import {
-  getKandelState,
   type GetKandelStateArgs,
   type GetKandelStateResult,
+  getKandelState,
 } from '../../actions/kandel/view.js'
+import type { KandelSteps, MarketParams } from '../../index.js'
 
 export type KandelSeederActions = {
   simulateSow: (args?: SowArgs) => Promise<SimulateSowResult>

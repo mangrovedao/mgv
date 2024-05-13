@@ -1,4 +1,4 @@
-import { parseAbi, type ContractFunctionParameters } from 'viem'
+import { type ContractFunctionParameters, parseAbi } from 'viem'
 import { BA } from '../../lib/enums.js'
 
 // ba: 0 is bid, 1 is ask
