@@ -1,4 +1,5 @@
 import { isAddressEqual, parseAbi, zeroAddress } from 'viem'
+import { buildToken } from '../../tokens/utils.js'
 import type { RoutingLogicOverlying } from '../utils.js'
 import { baseBalance } from './base.js'
 
@@ -13,16 +14,19 @@ export const aaveOverLying: RoutingLogicOverlying<
 > = {
   getOverlyingContractParams(params) {
     return {
-      address: params.token,
+      address: params.logic.logic,
       abi: aaveLogicABI,
       functionName: 'overlying',
-      args: [params.token],
+      args: [params.token.address],
     }
   },
-  parseOverlyingContractResponse(response) {
+  parseOverlyingContractResponse(params, response) {
     return {
       type: 'erc20',
-      overlying: response,
+      overlying: buildToken({
+        symbol: `${params.token.symbol} overlying`,
+        address: response,
+      }),
       available: !isAddressEqual(response, zeroAddress),
     }
   },

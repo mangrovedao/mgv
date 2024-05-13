@@ -132,6 +132,7 @@ export type MarketOrderSimulationParams = {
  * @param feePaid the total fee paid in the base token if buying, or quote token if selling
  * @param maxTickEncountered the highest tick encountered
  * @param minSlippage the minimum slippage to specify
+ * @param price the price of the market order
  */
 export type MarketOrderSimulationResult = {
   baseAmount: bigint
@@ -141,6 +142,7 @@ export type MarketOrderSimulationResult = {
   maxTickEncountered: bigint
   minSlippage: number
   fillWants: boolean
+  price: number
 }
 
 /**
@@ -192,6 +194,7 @@ export function marketOrderSimulation(
     feePaid: raw.feePaid,
     maxTickEncountered: raw.maxTickEncountered,
     minSlippage: slippage,
+    price,
     fillWants,
   }
 }

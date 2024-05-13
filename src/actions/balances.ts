@@ -1,10 +1,4 @@
-import {
-  type Address,
-  type Client,
-  erc20Abi,
-  isAddressEqual,
-  zeroAddress,
-} from 'viem'
+import { type Address, type Client, erc20Abi, isAddressEqual } from 'viem'
 import type { ContractFunctionParameters, MulticallParameters } from 'viem'
 import { multicall } from 'viem/actions'
 import type { Logic, OverlyingResponse } from '../addresses/logics/utils.js'
@@ -28,18 +22,20 @@ export type GetBalancesArgs<TLogics extends Logic[] = Logic[]> =
   GetBalancesParams<TLogics> &
     Omit<MulticallParameters, 'allowFailure' | 'contracts'>
 
+export type OverlyingResult<TLogic extends Logic = Logic> = {
+  type: 'erc20' | 'erc721'
+  overlying?: Token
+  available: boolean
+  token: Token
+  logic: TLogic
+}
+
 export type GetBalanceResult<TLogics extends Logic[] = Logic[]> = {
   tokens: {
     token: Token
     balance: bigint
   }[]
-  overlying: {
-    type: 'erc20' | 'erc721'
-    overlying: Address
-    available: boolean
-    token: Token
-    logic: TLogics[number]
-  }[]
+  overlying: OverlyingResult<TLogics[number]>[]
   logicBalances: {
     token: Token
     logic: TLogics[number]
@@ -75,8 +71,8 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
   const overlyingCalls = tokens.flatMap((token) =>
     logics.map((logic) =>
       logic.logicOverlying.getOverlyingContractParams({
-        token: token.address,
-        logic: logic.logic,
+        token: token,
+        logic: logic,
         name: logic.name,
       }),
     ),
@@ -114,10 +110,17 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
       const res = result[tokens.length * (i + 1) + j]
       const overlying: OverlyingResponse =
         res.status === 'success'
-          ? logic.logicOverlying.parseOverlyingContractResponse(res.result)
+          ? logic.logicOverlying.parseOverlyingContractResponse(
+              {
+                token: token,
+                logic: logic,
+                name: logic.name,
+              },
+              res.result,
+            )
           : {
               type: 'erc20',
-              overlying: zeroAddress,
+              overlying: undefined,
               available: false,
             }
       return { token, logic, ...overlying }

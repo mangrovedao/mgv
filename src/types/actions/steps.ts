@@ -1,4 +1,5 @@
 import type { Address } from 'viem'
+import type { Logic, Token } from '../../index.js'
 import type { OLKey } from '../lib.js'
 
 export type Step<
@@ -12,7 +13,7 @@ export type Step<
 
 export type ERC20ApprovalStep = Step<
   'erc20Approval',
-  { token: Address; from: Address; spender: Address; amount: bigint }
+  { token: Token; from: Address; spender: Address; amount: bigint }
 >
 
 export type DeployRouterStep = Step<'deployRouter', { owner: Address }>
@@ -25,8 +26,8 @@ export type SetKandelLogicsStep = Step<
   'setKandelLogics',
   {
     kandel: Address
-    baseLogic: Address
-    quoteLogic: Address
+    baseLogic?: Logic
+    quoteLogic?: Logic
     gasRequirement: bigint
   }
 >
@@ -42,7 +43,6 @@ export type AmplifiedOrderSteps = readonly [
 ]
 export type KandelSteps = readonly [
   DeployRouterStep,
-  SowKandelStep,
   BindStep,
   SetKandelLogicsStep,
   ERC20ApprovalStep,

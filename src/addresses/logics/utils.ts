@@ -6,16 +6,17 @@ import type {
   ContractFunctionParameters,
   ContractFunctionReturnType,
 } from 'viem'
+import type { Token } from '../index.js'
 
 export type OverlyingParams = {
-  token: Address
-  logic: Address
+  token: Token
+  logic: Logic
   name: string
 }
 
 export type OverlyingResponse = {
   type: 'erc20' | 'erc721'
-  overlying: Address
+  overlying?: Token
   available: boolean
 }
 
@@ -31,6 +32,7 @@ export type RoutingLogicOverlying<
     params: OverlyingParams,
   ) => ContractFunctionParameters<abi, mutability, functionName>
   parseOverlyingContractResponse: (
+    params: OverlyingParams,
     response: ContractFunctionReturnType<abi, mutability, functionName>,
   ) => OverlyingResponse
 }

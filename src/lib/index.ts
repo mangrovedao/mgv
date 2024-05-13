@@ -31,6 +31,28 @@ export {
   amounts,
 } from './human-readable.js'
 
+// kandel
+
+export type {
+  CreateGeometricDistributionParams,
+  DistributionOffer,
+  Distribution,
+  KandelFromLogsResult,
+  RawKandelPositionParams,
+  PositionKandelParams,
+  RawKandelParams,
+  KandelParams,
+  ValidateParamsResult,
+} from './kandel/index.js'
+
+export {
+  CreateDistributionError,
+  createGeometricDistribution,
+  seederEventsABI,
+  getKandelsFromLogs,
+  validateKandelParams,
+} from './kandel/index.js'
+
 // limit-order
 
 export type {

@@ -66,7 +66,7 @@ export function rawMarketOrderResultFromLogs(
     // check if the event is related to the order
     if (
       !isAddressEqual(taker, params.taker) ||
-      olKeyHash.toLowerCase() !== olKeyHash
+      event.args.olKeyHash.toLowerCase() !== olKeyHash
     )
       continue
 
