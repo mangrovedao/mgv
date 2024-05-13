@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.0
+
+### Minor Changes
+
+- a93d1aa: Add kandel to the SDK
+
 ## 0.5.2
 
 ### Patch Changes
