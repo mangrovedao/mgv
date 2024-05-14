@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.2
+
+### Patch Changes
+
+- 54bebda: Fix tick in ABI
+
 ## 0.6.1
 
 ### Patch Changes
