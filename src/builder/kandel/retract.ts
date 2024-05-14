@@ -6,7 +6,7 @@ import {
 } from 'viem'
 
 export const restractKandelABI = parseAbi([
-  'function retractAndWithdraw(uint from, uint to, uint baseAmount, uint quoteAmount, uint freeWei, address payable recipient) external',
+  'function retractAndWithdraw(uint from, uint to, uint baseAmount, uint quoteAmount, uint freeWei, address recipient) external',
 ])
 
 export type RetractParams = {
