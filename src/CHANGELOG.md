@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.3
+
+### Patch Changes
+
+- 1d2a6a9: Fixed Params not valid ABI type
+
 ## 0.6.2
 
 ### Patch Changes
