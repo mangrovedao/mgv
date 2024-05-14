@@ -15,7 +15,7 @@ import { BS } from './enums.js'
 import { hash } from './ol-key.js'
 
 export const mgvEventsABI = parseAbi([
-  'event OrderStart(bytes32 indexed olKeyHash, address indexed taker, Tick maxTick, uint fillVolume, bool fillWants)',
+  'event OrderStart(bytes32 indexed olKeyHash, address indexed taker, int maxTick, uint fillVolume, bool fillWants)',
   'event OrderComplete(bytes32 indexed olKeyHash, address indexed taker, uint fee)',
   'event OfferSuccess(bytes32 indexed olKeyHash, address indexed taker, uint indexed id, uint takerWants, uint takerGives)',
   'event OfferSuccessWithPosthookData(bytes32 indexed olKeyHash, address indexed taker, uint indexed id, uint takerWants, uint takerGives, bytes32 posthookData)',
