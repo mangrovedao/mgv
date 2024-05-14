@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.1
+
+### Patch Changes
+
+- edd73fd: Fix the tick not being an ABI type
+
 ## 0.6.0
 
 ### Minor Changes
