@@ -58,35 +58,34 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
     return acc
   }, [] as Token[])
 
-  const tokenBalanceCalls = tokens.map(
-    (token) =>
-      ({
-        address: token.address,
-        abi: erc20Abi,
-        functionName: 'balanceOf',
-        args: [args.user],
-      }) as const,
-  )
+  const tokenBalanceCalls = tokens.map((token) => {
+    return {
+      address: token.address,
+      abi: erc20Abi,
+      functionName: 'balanceOf',
+      args: [args.user],
+    } as const
+  })
 
   const overlyingCalls = tokens.flatMap((token) =>
-    logics.map((logic) =>
-      logic.logicOverlying.getOverlyingContractParams({
+    logics.map((logic) => {
+      return logic.logicOverlying.getOverlyingContractParams({
         token: token,
         logic: logic,
         name: logic.name,
-      }),
-    ),
+      })
+    }),
   ) as ContractFunctionParameters[]
 
   const logicBalancesCalls = tokens.flatMap((token) =>
-    logics.map((logic) =>
-      logic.logicBalance.getRoutingLogicBalanceParams({
+    logics.map((logic) => {
+      return logic.logicBalance.getRoutingLogicBalanceParams({
         token: token.address,
         logic: logic.logic,
         name: logic.name,
         user: args.user,
-      }),
-    ),
+      })
+    }),
   ) as ContractFunctionParameters[]
 
   const result = await getAction(
@@ -107,7 +106,7 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
 
   const overlying = tokens.flatMap((token, i) =>
     logics.map((logic, j) => {
-      const res = result[tokens.length * (i + 1) + j]
+      const res = result[tokenBalanceCalls.length + i * logics.length + j]
       const overlying: OverlyingResponse =
         res.status === 'success'
           ? logic.logicOverlying.parseOverlyingContractResponse(
@@ -129,7 +128,13 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
 
   const logicBalances = tokens.flatMap((token, i) =>
     logics.map((logic, j) => {
-      const res = result[overlying.length + tokens.length * (i + 1) + j]
+      const res =
+        result[
+          tokenBalanceCalls.length +
+            overlyingCalls.length +
+            logics.length * i +
+            j
+        ]
       const balance = res.status === 'success' ? (res.result as bigint) : 0n
       return { token, logic, balance }
     }),
