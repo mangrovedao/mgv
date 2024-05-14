@@ -1,10 +1,13 @@
 import { type ContractFunctionParameters, parseAbi } from 'viem'
 import { BA } from '../../lib/enums.js'
 
+export const paramsStruct =
+  'struct Params { uint32 gasprice; uint24 gasreq; uint32 stepSize; uint32 pricePoints; }' as const
+
 // ba: 0 is bid, 1 is ask
 export const viewKandelABI = parseAbi([
+  paramsStruct,
   'function baseQuoteTickOffset() public view returns (uint)',
-  'struct Params { uint32 gasprice; uint24 gasreq; uint32 stepSize; uint32 pricePoints; }',
   'function params() public view returns (Params memory)',
   'function offeredVolume(uint8 ba) public view returns (uint volume)',
   'function getOffer(uint8 ba, uint index) public view returns (uint offer)',

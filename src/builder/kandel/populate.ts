@@ -1,6 +1,8 @@
 import { type ContractFunctionParameters, parseAbi } from 'viem'
+import { paramsStruct } from './view.js'
 
 export const populateABI = parseAbi([
+  paramsStruct,
   'function populateFromOffset(uint from, uint to, int baseQuoteTickIndex0, uint _baseQuoteTickOffset, uint firstAskIndex, uint bidGives, uint askGives, Params calldata parameters, uint baseAmount, uint quoteAmount) public payable',
   'function populateChunkFromOffset(uint from, uint to, int baseQuoteTickIndex0, uint firstAskIndex, uint bidGives, uint askGives) public payable',
 ])
