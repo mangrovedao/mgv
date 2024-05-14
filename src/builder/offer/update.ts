@@ -8,7 +8,7 @@ import { olKeyABIRaw } from '../structs.js'
 
 export const updateOfferByTickABI = parseAbi([
   olKeyABIRaw,
-  'function updateOfferByTick(OLKey memory olKey, Tick tick, uint gives, uint gasreq, uint gasprice, uint offerId) public payable',
+  'function updateOfferByTick(OLKey memory olKey, int tick, uint gives, uint gasreq, uint gasprice, uint offerId) public payable',
 ])
 
 export type UpdateOfferByTickParams = {
