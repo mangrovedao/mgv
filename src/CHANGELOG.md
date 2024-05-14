@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.4
+
+### Patch Changes
+
+- 637a4a9: Fix payable not valid ABI
+
 ## 0.6.3
 
 ### Patch Changes
