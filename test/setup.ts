@@ -4,7 +4,7 @@ expect.extend({
   toApproximateEqual: (
     received: bigint | number,
     expected: bigint | number,
-    percentage: number = 0.001,
+    percentage = 0.001,
   ) => {
     // const diff = expected > received ? expected - received : received - expected
     // const maxDiff = BigInt(10) ** BigInt(decimalPrecision)

@@ -1,4 +1,6 @@
-import { describe, it, inject, expect } from 'vitest'
+import { parseUnits } from 'viem'
+import { describe, expect, inject, it } from 'vitest'
+import { BA } from './enums.js'
 import {
   amounts,
   amountsToHumanPrice,
@@ -6,9 +8,7 @@ import {
   rawPriceToHumanPrice,
   rpcOfferToHumanOffer,
 } from './human-readable.js'
-import { parseUnits } from 'viem'
 import { tickFromVolumes } from './tick.js'
-import { BA } from './enums.js'
 
 const { wethUSDC } = inject('markets')
 const { USDC, WETH } = inject('tokens')

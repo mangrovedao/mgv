@@ -2,6 +2,7 @@ import { createAnvil, startProxy } from '@viem/anvil'
 import { type Address, parseEther, parseUnits } from 'viem'
 import { foundry } from 'viem/chains'
 import type { GlobalSetupContext } from 'vitest/node'
+import type { MarketParams, Token } from '~mgv/index.js'
 import { globalTestClient } from '~test/src/client.js'
 import { accounts } from './src/constants.js'
 import {
@@ -14,7 +15,6 @@ import {
   setMulticall,
 } from './src/contracts/index.js'
 import { getMangroveBytecodes } from './src/contracts/mangrove.js'
-import { MarketParams, Token } from '~mgv/index.js'
 
 export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
