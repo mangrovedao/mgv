@@ -9,9 +9,9 @@ const client = getClient()
 
 describe('market-order', () => {
   it('should deal balance', async () => {
-    await mint(client, WETH, client.account.address, 100n)
+    await mint(client, WETH.address, client.account.address, 100n)
     const balance = await client.readContract({
-      address: WETH,
+      address: WETH.address,
       abi: erc20Abi,
       functionName: 'balanceOf',
       args: [client.account.address],

@@ -14,6 +14,7 @@ import {
   setMulticall,
 } from './src/contracts/index.js'
 import { getMangroveBytecodes } from './src/contracts/mangrove.js'
+import { MarketParams, Token } from '~mgv/index.js'
 
 export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
@@ -66,11 +67,12 @@ export default async function ({ provide }: GlobalSetupContext) {
     order: mangroveOrder,
     routerProxyFactory,
     multicall,
+    tickSpacing: 60n,
   })
 
   // open markets
 
-  await openMarket(
+  const wethUSDC = await openMarket(
     mangrove,
     mangroveReader,
     WETH,
@@ -81,7 +83,7 @@ export default async function ({ provide }: GlobalSetupContext) {
     parseUnits('0.0001', 6),
   )
 
-  await openMarket(
+  const wethDAI = await openMarket(
     mangrove,
     mangroveReader,
     WETH,
@@ -91,6 +93,8 @@ export default async function ({ provide }: GlobalSetupContext) {
     parseEther('0.00000001'),
     parseEther('0.0001'),
   )
+
+  provide('markets', { wethUSDC, wethDAI })
 
   // starts a proxy pool from there
   const shutdown = await startProxy({
@@ -106,12 +110,18 @@ export default async function ({ provide }: GlobalSetupContext) {
   }
 }
 
+interface CustomMatchers<R = unknown> {
+  toApproximateEqual: (expected: number, percentage?: number) => R
+}
+
 declare module 'vitest' {
+  interface Assertion<T = any> extends CustomMatchers<T> {}
+  interface AsymmetricMatchersContaining extends CustomMatchers {}
   export interface ProvidedContext {
     tokens: {
-      WETH: Address
-      USDC: Address
-      DAI: Address
+      WETH: Token
+      USDC: Token
+      DAI: Token
     }
     mangrove: {
       mangrove: Address
@@ -119,6 +129,11 @@ declare module 'vitest' {
       order: Address
       routerProxyFactory: Address
       multicall: Address
+      tickSpacing: bigint
+    }
+    markets: {
+      wethUSDC: MarketParams
+      wethDAI: MarketParams
     }
   }
 }

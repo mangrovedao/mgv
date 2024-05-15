@@ -7,12 +7,14 @@ import type { OLKey } from "~mgv/types/lib.js";
 import { flip } from "~mgv/lib/ol-key.js";
 import { olKeyABIRaw } from "~mgv/builder/structs.js";
 import { bytecode as multicallBytecode } from "./multicall.deployed.bytecode.js";
+import { Token, buildToken } from "~mgv/addresses/index.js";
+import { MarketParams } from "~mgv/index.js";
 
 export async function deployERC20(
   name: string,
   symbol: string,
   decimals: number
-): Promise<Address> {
+): Promise<Token> {
   const res = await globalTestClient.deployContract({
     account: globalTestClient.account,
     chain: globalTestClient.chain,
@@ -23,7 +25,11 @@ export async function deployERC20(
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
-  return receipt.contractAddress;
+  return buildToken({
+    symbol,
+    address: receipt.contractAddress,
+    decimals
+  })
 }
 
 export async function deployMangroveCore(bytecode: Hex): Promise<Address> {
@@ -108,17 +114,17 @@ const updateMarketABI = parseAbi([
 export async function openMarket(
   mangrove: Address,
   reader: Address,
-  base: Address,
-  quote: Address,
+  base: Token,
+  quote: Token,
   tickSpacing: bigint,
   fee: bigint,
   baseVolumePerGasUnit: bigint,
   quoteVolumePerGasUnit: bigint,
   offerGasBase: bigint = 170_000n
-) {
+): Promise<MarketParams> {
   const market1: OLKey = {
-    outbound_tkn: base,
-    inbound_tkn: quote,
+    outbound_tkn: base.address,
+    inbound_tkn: quote.address,
     tickSpacing,
   };
 
@@ -153,6 +159,11 @@ export async function openMarket(
     args: [market1],
   });
   await globalTestClient.waitForTransactionReceipt({ hash: tx });
+  return {
+    base,
+    quote,
+    tickSpacing,
+  }
 }
 
 export async function setMulticall(address: Address) {
