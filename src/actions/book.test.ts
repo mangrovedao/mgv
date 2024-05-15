@@ -1,10 +1,8 @@
-import { http, createPublicClient } from 'viem'
-import { blast } from 'viem/chains'
 import { describe, expect, inject, it } from 'vitest'
 import { getClient } from '~test/src/client.js'
 import { getBook } from './book.js'
 
-const { WETH, DAI } = inject('tokens')
+const { wethDAI } = inject('markets')
 const { mangrove, reader, order } = inject('mangrove')
 
 describe('Getting the book', () => {
@@ -17,11 +15,7 @@ describe('Getting the book', () => {
         mgvReader: reader,
         mgvOrder: order,
       },
-      {
-        base: { address: WETH, decimals: 18 },
-        quote: { address: DAI, decimals: 18 },
-        tickSpacing: 1n,
-      },
+      wethDAI,
     )
     expect(book.marketConfig).toEqual({
       monitor: '0x0000000000000000000000000000000000000000',
