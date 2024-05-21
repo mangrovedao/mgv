@@ -98,6 +98,13 @@ export async function getKandelSteps(
 
   return [
     {
+      type: 'sowKandel',
+      params: {
+        market,
+      },
+      done: !isAddressEqual(kandel, zeroAddress),
+    },
+    {
       type: 'deployRouter',
       params: {
         owner: args.user,
@@ -110,7 +117,10 @@ export async function getKandelSteps(
       params: {
         makerContract: kandel,
       },
-      done: bound.status === 'success' && bound.result,
+      done:
+        bound.status === 'success' &&
+        bound.result &&
+        !isAddressEqual(kandel, zeroAddress),
     },
     {
       type: 'setKandelLogics',
@@ -121,15 +131,24 @@ export async function getKandelSteps(
         gasRequirement: args.gasreq,
       },
       done:
-        logics.status === 'success' &&
-        isAddressEqual(
-          logics.result[0],
-          args.baseOverlying?.logic.logic || zeroAddress,
-        ) &&
-        isAddressEqual(
-          logics.result[1],
-          args.quoteOverlying?.logic.logic || zeroAddress,
-        ), // setting the gasreq in the populate instead of set logic
+        (logics.status === 'success' &&
+          isAddressEqual(
+            logics.result[0],
+            args.baseOverlying?.logic.logic || zeroAddress,
+          ) &&
+          isAddressEqual(
+            logics.result[1],
+            args.quoteOverlying?.logic.logic || zeroAddress,
+          )) ||
+        (logics.status === 'failure' &&
+          isAddressEqual(
+            args.baseOverlying?.logic.logic || zeroAddress,
+            zeroAddress,
+          ) &&
+          isAddressEqual(
+            args.quoteOverlying?.logic.logic || zeroAddress,
+            zeroAddress,
+          )), // setting the gasreq in the populate instead of set logic
     },
     {
       type: 'erc20Approval',

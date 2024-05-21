@@ -1,6 +1,5 @@
 import type { Address } from 'viem'
-import type { Logic, Token } from '../../index.js'
-import type { OLKey } from '../lib.js'
+import type { Logic, MarketParams, Token } from '../../index.js'
 
 export type Step<
   TType extends string,
@@ -18,7 +17,7 @@ export type ERC20ApprovalStep = Step<
 
 export type DeployRouterStep = Step<'deployRouter', { owner: Address }>
 
-export type SowKandelStep = Step<'sowKandel', { olKey: OLKey }>
+export type SowKandelStep = Step<'sowKandel', { market: MarketParams }>
 
 export type BindStep = Step<'bind', { makerContract: Address }>
 
@@ -42,6 +41,7 @@ export type AmplifiedOrderSteps = readonly [
   ERC20ApprovalStep,
 ]
 export type KandelSteps = readonly [
+  SowKandelStep,
   DeployRouterStep,
   BindStep,
   SetKandelLogicsStep,
