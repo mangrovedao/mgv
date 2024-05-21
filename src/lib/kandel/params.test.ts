@@ -1,10 +1,10 @@
-import { describe, it, inject, expect } from 'vitest'
-import { getKandelPositionRawParams } from './params.js'
-import { priceFromTick, tickFromPrice } from '../tick.js'
+import { describe, expect, inject, it } from 'vitest'
 import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
 } from '../human-readable.js'
+import { priceFromTick, tickFromPrice } from '../tick.js'
+import { getKandelPositionRawParams } from './params.js'
 
 const { wethUSDC } = inject('markets')
 
