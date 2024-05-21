@@ -21,3 +21,10 @@ export const blastMetaStreetWETHPUNKS40 = buildToken({
   address: '0x999f220296b5843b2909cc5f8b4204aaca5341d8',
   symbol: 'mwstETH-WPUNKS:40',
 })
+
+export const blastTokens = [
+  blastWETH,
+  blastUSDB,
+  blastMetaStreetWETHPUNKS20,
+  blastMetaStreetWETHPUNKS40,
+] as const

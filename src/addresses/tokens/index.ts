@@ -3,6 +3,7 @@ export {
   blastUSDB,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
+  blastTokens,
 } from './blast.js'
 
 export type {
