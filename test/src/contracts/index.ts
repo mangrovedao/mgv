@@ -32,6 +32,22 @@ export async function deployERC20(
   })
 }
 
+export async function deploySmartKandel(
+  mgv: Address,
+  kandelGasreq: bigint,
+  routerProxyFactory: Address,
+  routerImplementation: Address,
+  kandelLibBytecode: Hex,
+  smartKandelSeederBytecode: Hex
+): Promise<{kandelLib: Address, smartKandelSeeder: Address}> {
+  const libTx = await globalTestClient.deployContract({
+    account: globalTestClient.account,
+    chain: globalTestClient.chain,
+    bytecode: kandelLibBytecode,
+    abi: parseAbi(["constructor()"]),
+  })
+}
+
 export async function deployMangroveCore(bytecode: Hex): Promise<Address> {
   const gasprice = await globalTestClient.getGasPrice();
   const res = await globalTestClient.deployContract({

@@ -29,7 +29,7 @@ export type PositionKandelParams = {
   pricePoints: bigint
 }
 
-function getKandelPositionRawParams(
+export function getKandelPositionRawParams(
   params: RawKandelPositionParams,
 ): PositionKandelParams {
   const { market, pricePoints } = params
@@ -90,10 +90,11 @@ export type ValidateParamsResult = {
   minBaseAmount: bigint
   minQuoteAmount: bigint
   minProvision: bigint
+  distribution: Distribution
   isValid: boolean
 }
 
-function countBidsAndAsks(distribution: Distribution) {
+export function countBidsAndAsks(distribution: Distribution) {
   let nBids = 0n
   let nAsks = 0n
   for (let i = 0; i < distribution.asks.length; i++) {
@@ -106,7 +107,7 @@ function countBidsAndAsks(distribution: Distribution) {
   }
 }
 
-function changeGives(
+export function changeGives(
   distribution: Distribution,
   bidGives: bigint,
   askGives: bigint,
@@ -204,5 +205,6 @@ export function validateKandelParams(
     minQuoteAmount,
     minProvision,
     isValid,
+    distribution,
   }
 }
