@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.6
+
+### Patch Changes
+
+- 8fba08b: Added list of tokens export (blast)
+
 ## 0.6.5
 
 ### Patch Changes
