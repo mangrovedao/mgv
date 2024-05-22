@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.9
+
+### Patch Changes
+
+- 185dadb: Add default gasreq to kandel
+
 ## 0.6.8
 
 ### Patch Changes
