@@ -31,6 +31,13 @@ export type SetKandelLogicsStep = Step<
   }
 >
 
+export type PopulateKandelSteps = Step<
+  'populate',
+  {
+    gasreq: bigint
+  }
+>
+
 export type MarketOrderSteps = readonly [ERC20ApprovalStep]
 export type LimitOrderSteps = readonly [ERC20ApprovalStep]
 export type NewOfferSteps = readonly [ERC20ApprovalStep]
@@ -47,4 +54,5 @@ export type KandelSteps = readonly [
   SetKandelLogicsStep,
   ERC20ApprovalStep,
   ERC20ApprovalStep,
+  PopulateKandelSteps,
 ]

@@ -13,6 +13,7 @@ import { getLogicsParams } from '../../builder/kandel/logic.js'
 // import { getParamsParams } from '../../builder/kandel/populate.js'
 import { tokenAllowanceParams } from '../../builder/tokens.js'
 import type { KandelSteps, MarketParams } from '../../index.js'
+import { getKandelGasReq } from '../../lib/kandel/params.js'
 import { getAction } from '../../utils/getAction.js'
 import type { OverlyingResult } from '../balances.js'
 
@@ -33,7 +34,6 @@ export type GetKandelStepsParams = {
   user: Address
   baseOverlying?: OverlyingResult
   quoteOverlying?: OverlyingResult
-  gasreq: bigint
 }
 
 export type GetKandelStepsArgs = GetKandelStepsParams &
@@ -96,6 +96,11 @@ export async function getKandelSteps(
       allowFailure: true,
     })
 
+  const gasreq = getKandelGasReq({
+    baseLogic: args.baseOverlying?.logic,
+    quoteLogic: args.quoteOverlying?.logic,
+  })
+
   return [
     {
       type: 'sowKandel',
@@ -128,7 +133,7 @@ export async function getKandelSteps(
         kandel,
         baseLogic: args.baseOverlying?.logic,
         quoteLogic: args.quoteOverlying?.logic,
-        gasRequirement: args.gasreq,
+        gasRequirement: gasreq,
       },
       done:
         (logics.status === 'success' &&
@@ -178,6 +183,13 @@ export async function getKandelSteps(
       done:
         quoteAllowance.status === 'success' &&
         quoteAllowance.result > maxUint128,
+    },
+    {
+      type: 'populate',
+      params: {
+        gasreq,
+      },
+      done: false,
     },
   ]
 }

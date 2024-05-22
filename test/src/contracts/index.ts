@@ -7,12 +7,14 @@ import type { OLKey } from "~mgv/types/lib.js";
 import { flip } from "~mgv/lib/ol-key.js";
 import { olKeyABIRaw } from "~mgv/builder/structs.js";
 import { bytecode as multicallBytecode } from "./multicall.deployed.bytecode.js";
+import { Token, buildToken } from "~mgv/addresses/index.js";
+import { MarketParams } from "~mgv/index.js";
 
 export async function deployERC20(
   name: string,
   symbol: string,
   decimals: number
-): Promise<Address> {
+): Promise<Token> {
   const res = await globalTestClient.deployContract({
     account: globalTestClient.account,
     chain: globalTestClient.chain,
@@ -23,7 +25,45 @@ export async function deployERC20(
   const receipt = await globalTestClient.waitForTransactionReceipt({
     hash: res,
   });
-  return receipt.contractAddress;
+  return buildToken({
+    symbol,
+    address: receipt.contractAddress,
+    decimals
+  })
+}
+
+export async function deploySmartKandel(
+  mgv: Address,
+  kandelGasreq: bigint,
+  routerProxyFactory: Address,
+  routerImplementation: Address,
+  kandelLibBytecode: Hex,
+  smartKandelSeederBytecode: Hex
+): Promise<{kandelLib: Address, smartKandelSeeder: Address}> {
+  const libTx = await globalTestClient.deployContract({
+    account: globalTestClient.account,
+    chain: globalTestClient.chain,
+    bytecode: kandelLibBytecode,
+    abi: parseAbi(["constructor()"]),
+  } as any)
+  const libReceipt = await globalTestClient.waitForTransactionReceipt({
+    hash: libTx,
+  });
+  const libAddress = libReceipt.contractAddress;
+  const seederTx = await globalTestClient.deployContract({
+    account: globalTestClient.account,
+    chain: globalTestClient.chain,
+    bytecode: smartKandelSeederBytecode.replace(/__\$[a-fA-F0-9]{34}\$__/g, libAddress.slice(2)),
+    abi: parseAbi([
+      "constructor(address mgv, uint gasreq, address routerProxyFactory, address routerImplementation)",
+    ]),
+    args: [mgv, kandelGasreq, routerProxyFactory, routerImplementation],
+  } as any);
+  const seederReceipt = await globalTestClient.waitForTransactionReceipt({
+    hash: seederTx,
+  });
+  const seederAddress = seederReceipt.contractAddress;
+  return {kandelLib: libAddress, smartKandelSeeder: seederAddress};
 }
 
 export async function deployMangroveCore(bytecode: Hex): Promise<Address> {
@@ -108,17 +148,17 @@ const updateMarketABI = parseAbi([
 export async function openMarket(
   mangrove: Address,
   reader: Address,
-  base: Address,
-  quote: Address,
+  base: Token,
+  quote: Token,
   tickSpacing: bigint,
   fee: bigint,
   baseVolumePerGasUnit: bigint,
   quoteVolumePerGasUnit: bigint,
   offerGasBase: bigint = 170_000n
-) {
+): Promise<MarketParams> {
   const market1: OLKey = {
-    outbound_tkn: base,
-    inbound_tkn: quote,
+    outbound_tkn: base.address,
+    inbound_tkn: quote.address,
     tickSpacing,
   };
 
@@ -153,6 +193,11 @@ export async function openMarket(
     args: [market1],
   });
   await globalTestClient.waitForTransactionReceipt({ hash: tx });
+  return {
+    base,
+    quote,
+    tickSpacing,
+  }
 }
 
 export async function setMulticall(address: Address) {
