@@ -45,7 +45,25 @@ export async function deploySmartKandel(
     chain: globalTestClient.chain,
     bytecode: kandelLibBytecode,
     abi: parseAbi(["constructor()"]),
-  })
+  } as any)
+  const libReceipt = await globalTestClient.waitForTransactionReceipt({
+    hash: libTx,
+  });
+  const libAddress = libReceipt.contractAddress;
+  const seederTx = await globalTestClient.deployContract({
+    account: globalTestClient.account,
+    chain: globalTestClient.chain,
+    bytecode: smartKandelSeederBytecode.replace(/__\$[a-fA-F0-9]{34}\$__/g, libAddress.slice(2)),
+    abi: parseAbi([
+      "constructor(address mgv, uint gasreq, address routerProxyFactory, address routerImplementation)",
+    ]),
+    args: [mgv, kandelGasreq, routerProxyFactory, routerImplementation],
+  } as any);
+  const seederReceipt = await globalTestClient.waitForTransactionReceipt({
+    hash: seederTx,
+  });
+  const seederAddress = seederReceipt.contractAddress;
+  return {kandelLib: libAddress, smartKandelSeeder: seederAddress};
 }
 
 export async function deployMangroveCore(bytecode: Hex): Promise<Address> {

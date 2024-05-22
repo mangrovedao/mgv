@@ -1,5 +1,5 @@
 import { createAnvil, startProxy } from '@viem/anvil'
-import { type Address, parseEther, parseUnits } from 'viem'
+import { type Address, parseEther, parseUnits, parseAbi } from 'viem'
 import { foundry } from 'viem/chains'
 import type { GlobalSetupContext } from 'vitest/node'
 import type { MarketParams, Token } from '~mgv/index.js'
@@ -11,10 +11,13 @@ import {
   deployMangroveOrder,
   deployMangroveReader,
   deployRouterProxyFactory,
+  deploySmartKandel,
   openMarket,
   setMulticall,
 } from './src/contracts/index.js'
 import { getMangroveBytecodes } from './src/contracts/mangrove.js'
+import { kandellibBytecode } from './src/contracts/kandellib.bytecode.js'
+import { smartKandelSeederBytecode } from './src/contracts/smart-kandel-seeder.bytecode.js'
 
 export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
@@ -60,15 +63,32 @@ export default async function ({ provide }: GlobalSetupContext) {
     data.mangroveOrder,
   )
 
+  const routerImplementation = await globalTestClient.readContract({
+    address: mangroveOrder,
+    abi: parseAbi(['function ROUTER_IMPLEMENTATION() view returns (address)']),
+    functionName: 'ROUTER_IMPLEMENTATION',
+  })
+
+  const { kandelLib, smartKandelSeeder } = await deploySmartKandel(
+    mangrove,
+    250_000n,
+    routerProxyFactory,
+    routerImplementation,
+    kandellibBytecode,
+    smartKandelSeederBytecode,
+  )
+
   provide('tokens', { WETH, USDC, DAI })
   provide('mangrove', {
     mangrove,
     reader: mangroveReader,
     order: mangroveOrder,
     routerProxyFactory,
+    routerImplementation,
     multicall,
     tickSpacing: 60n,
   })
+  provide('kandel', { kandelLib, smartKandelSeeder })
 
   // open markets
 
@@ -112,6 +132,7 @@ export default async function ({ provide }: GlobalSetupContext) {
 
 interface CustomMatchers<R = unknown> {
   toApproximateEqual: (expected: number, percentage?: number) => R
+  toAddressEqual: (expected: Address) => R
 }
 
 declare module 'vitest' {
@@ -128,12 +149,17 @@ declare module 'vitest' {
       reader: Address
       order: Address
       routerProxyFactory: Address
+      routerImplementation: Address
       multicall: Address
       tickSpacing: bigint
     }
     markets: {
       wethUSDC: MarketParams
       wethDAI: MarketParams
+    }
+    kandel: {
+      kandelLib: Address
+      smartKandelSeeder: Address
     }
   }
 }

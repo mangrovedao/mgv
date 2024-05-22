@@ -1,3 +1,4 @@
+import { Address, isAddressEqual } from 'viem'
 import { expect } from 'vitest'
 
 expect.extend({
@@ -17,6 +18,13 @@ expect.extend({
       pass: diff <= maxDiff,
       message: () =>
         `expected ${received} to be approximately equal to ${expected}`,
+    }
+  },
+
+  toAddressEqual: (received: Address, expected: Address) => {
+    return {
+      pass: isAddressEqual(received, expected),
+      message: () => `expected ${received} to be equal to ${expected}`,
     }
   },
 })
