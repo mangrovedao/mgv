@@ -1,5 +1,5 @@
 import { createAnvil, startProxy } from '@viem/anvil'
-import { type Address, parseEther, parseUnits, parseAbi } from 'viem'
+import { type Address, parseAbi, parseEther, parseUnits } from 'viem'
 import { foundry } from 'viem/chains'
 import type { GlobalSetupContext } from 'vitest/node'
 import type { MarketParams, Token } from '~mgv/index.js'
@@ -15,8 +15,8 @@ import {
   openMarket,
   setMulticall,
 } from './src/contracts/index.js'
-import { getMangroveBytecodes } from './src/contracts/mangrove.js'
 import { kandellibBytecode } from './src/contracts/kandellib.bytecode.js'
+import { getMangroveBytecodes } from './src/contracts/mangrove.js'
 import { smartKandelSeederBytecode } from './src/contracts/smart-kandel-seeder.bytecode.js'
 
 export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'

@@ -2,8 +2,8 @@ import { parseAbi } from 'viem'
 import { expect, it } from 'vitest'
 import { describe, inject } from 'vitest'
 import { getClient } from '~test/src/client.js'
-import { getKandelPositionRawParams } from './params.js'
 import { createGeometricDistribution } from './distribution.js'
+import { getKandelPositionRawParams } from './params.js'
 
 const { kandelLib, smartKandelSeeder } = inject('kandel')
 const { routerProxyFactory, mangrove } = inject('mangrove')
