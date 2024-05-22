@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.8
+
+### Patch Changes
+
+- abaea74: Add SmartKandel address from blast
+
 ## 0.6.7
 
 ### Patch Changes
