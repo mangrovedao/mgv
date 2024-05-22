@@ -1,6 +1,7 @@
 import {
   type GlobalConfig,
   type LocalConfig,
+  type Logic,
   type MarketParams,
   minVolume,
 } from '../../index.js'
@@ -8,6 +9,7 @@ import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
 } from '../human-readable.js'
+import { getDefaultLimitOrderGasreq } from '../limit-order.js'
 import { priceFromTick, tickFromPrice } from '../tick.js'
 import {
   type Distribution,
@@ -207,4 +209,21 @@ export function validateKandelParams(
     isValid,
     distribution,
   }
+}
+
+export type GetKandelGasReqParams = {
+  baseLogic?: Logic
+  quoteLogic?: Logic
+}
+
+export function getKandelGasReq(params: GetKandelGasReqParams) {
+  return (
+    BigInt(
+      Math.max(
+        Number(params.baseLogic?.gasreq || 0),
+        Number(params.quoteLogic?.gasreq || 0),
+        Number(getDefaultLimitOrderGasreq()),
+      ),
+    ) + 100_000n
+  )
 }
