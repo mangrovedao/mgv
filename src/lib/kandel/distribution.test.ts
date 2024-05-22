@@ -73,6 +73,9 @@ describe('distribution', () => {
       ],
     })
 
+    expect(distrib.asks.length).toEqual(fromChain.asks.length)
+    expect(distrib.bids.length).toEqual(fromChain.bids.length)
+
     for (let i = 0; i < distrib.asks.length; i++) {
       expect(distrib.asks[i].gives).toEqual(fromChain.asks[i].gives)
       expect(distrib.asks[i].tick).toEqual(fromChain.asks[i].tick)
