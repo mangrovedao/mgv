@@ -1,9 +1,9 @@
-import { inject, describe, it, expect } from 'vitest'
+import { isAddress } from 'viem'
+import { describe, expect, inject, it } from 'vitest'
 import { simulateSow } from '~mgv/actions/kandel/sow.js'
 import { getClient } from '~test/src/client.js'
-import { getKandelsFromLogs } from './logs.js'
 import { hash } from '../ol-key.js'
-import { isAddress } from 'viem'
+import { getKandelsFromLogs } from './logs.js'
 
 const { smartKandelSeeder } = inject('kandel')
 const { wethUSDC } = inject('markets')
