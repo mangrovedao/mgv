@@ -44,3 +44,7 @@ export {
   aaveOverLying,
   buildLogic,
 } from './logics/index.js'
+
+// --- kandel ---
+
+export { blastSmartKandel } from './kandel/index.js'
