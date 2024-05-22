@@ -29,7 +29,7 @@ export const routerABI = parseAbi([
 // => Approve the tokens for the kandel (2 steps)
 // => populate the kandel
 
-export type GetKandelStepsParams = {
+export type GetKandelStepsParamsTest = {
   userRouter: Address
   user: Address
   baseOverlying?: OverlyingResult
