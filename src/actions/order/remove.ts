@@ -47,7 +47,7 @@ export async function simulateRawRemoveOrder(
     'simulateContract',
   )({
     ...(args as unknown as SimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...rawRemoveOrderParams(args),
   })
   return { provision: result, request }
@@ -69,7 +69,7 @@ export async function simulateRemoveOrder(
     'simulateContract',
   )({
     ...(args as unknown as SimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...removeOrderParams(market, args),
   })
   return { provision: result, request }

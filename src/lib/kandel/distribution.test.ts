@@ -6,7 +6,7 @@ import { createGeometricDistribution } from './distribution.js'
 import { getKandelPositionRawParams } from './params.js'
 
 const { kandelLib, smartKandelSeeder } = inject('kandel')
-const { routerProxyFactory, mangrove } = inject('mangrove')
+const { routerProxyFactory, mgv } = inject('mangrove')
 const { wethUSDC } = inject('markets')
 
 const client = getClient()
@@ -19,7 +19,7 @@ const kandelLibAbi = parseAbi([
 
 describe('distribution', () => {
   it('checks kandel deployment', async () => {
-    const [factory, mgv] = await client.multicall({
+    const [factory, _mgv] = await client.multicall({
       contracts: [
         {
           address: smartKandelSeeder,
@@ -35,8 +35,8 @@ describe('distribution', () => {
     })
     expect(factory.status).toEqual('success')
     expect(factory.result).toAddressEqual(routerProxyFactory)
-    expect(mgv.status).toEqual('success')
-    expect(mgv.result).toAddressEqual(mangrove)
+    expect(_mgv.status).toEqual('success')
+    expect(_mgv.result).toAddressEqual(mgv)
   })
 
   it('checks kandel distribution', async () => {

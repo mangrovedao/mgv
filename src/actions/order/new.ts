@@ -146,6 +146,6 @@ export async function simulateLimitOrder(
   )({
     ...(args as unknown as SimulationParams),
     ...limitOrderParams(marketParams, args),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
   })
 }
