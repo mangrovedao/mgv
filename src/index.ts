@@ -3,8 +3,12 @@
 export type {
   MarketOrderSimulationParams,
   MarketOrderResultFromLogsParams,
+  RawLimitOrderResultFromLogsParams,
   LimitOrderResultFromLogsParams,
   LimitOrderResult,
+  GetDefaultLimitOrderGasreqParams,
+  RawUpdateOrderResultFromLogsParams,
+  UpdateOrderResultFromLogsParams,
   AmountsToHumanPriceParams,
   AmountsParams,
   AmountsOutput,
@@ -17,6 +21,11 @@ export type {
   RawKandelParams,
   KandelParams,
   ValidateParamsResult,
+  RawSetExpirationResultFromLogsParams,
+  SetExpirationResultFromLogsParams,
+  RawRemoveOrderResultFromLogsParams,
+  RemoveOrderResult,
+  RemoveOrderResultFromLogsParams,
 } from './lib/index.js'
 
 export {
@@ -41,11 +50,20 @@ export {
   marketOrderSimulation,
   marketOrderResultFromLogs,
   limitOrderResultFromLogs,
+  orderLabel,
+  rawUpdateOrderResultFromLogs,
+  updateOrderResultFromLogs,
+  ParseUpdateOrderLogsError,
   CreateDistributionError,
   createGeometricDistribution,
   seederEventsABI,
   getKandelsFromLogs,
   validateKandelParams,
+  getDefaultLimitOrderGasreq,
+  rawSetExpirationResultFromLogs,
+  setExpirationResultFromLogs,
+  rawRemoveOrderResultFromLogs,
+  removeOrderResultFromLogs,
 } from './lib/index.js'
 
 // --- Types ---

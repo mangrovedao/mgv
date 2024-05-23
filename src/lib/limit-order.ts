@@ -227,3 +227,202 @@ export function orderLabel<TOrder extends Order = Order>(
 ): (typeof _orderLabel)[TOrder] {
   return _orderLabel[order]
 }
+
+export type RawUpdateOrderResultFromLogsParams = {
+  logs: Log[]
+  mgv: Address
+  mgvOrder: Address
+  olKey: OLKey
+  offerId: bigint
+}
+
+export type UpdateOrderResult = {
+  tick: bigint
+  gives: bigint
+  wants: bigint
+  gasprice: bigint
+  gasreq: bigint
+}
+
+export class ParseUpdateOrderLogsError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ParseUpdateOrderLogsError'
+  }
+}
+
+export function rawUpdateOrderResultFromLogs(
+  params: RawUpdateOrderResultFromLogsParams,
+): UpdateOrderResult {
+  const events = parseEventLogs({
+    abi: mgvEventsABI,
+    eventName: 'OfferWrite',
+    logs: params.logs.filter((log) => {
+      return isAddressEqual(log.address, params.mgv)
+    }),
+  })
+
+  const writeEvent = events.findLast((e) => {
+    return (
+      e.args.olKeyHash.toLowerCase() === hash(params.olKey).toLowerCase() &&
+      isAddressEqual(e.args.maker, params.mgvOrder)
+    )
+  })
+
+  if (!writeEvent)
+    throw new ParseUpdateOrderLogsError('OfferWrite event not found')
+
+  return {
+    tick: writeEvent.args.tick,
+    gives: writeEvent.args.gives,
+    wants: inboundFromOutbound(writeEvent.args.tick, writeEvent.args.gives),
+    gasprice: writeEvent.args.gasprice,
+    gasreq: writeEvent.args.gasreq,
+  }
+}
+
+export type UpdateOrderResultFromLogsParams = {
+  logs: Log[]
+  offerId: bigint
+  bs: BS
+}
+
+export function updateOrderResultFromLogs(
+  actionParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  params: UpdateOrderResultFromLogsParams,
+): UpdateOrderResult {
+  const {
+    base: { address: base },
+    quote: { address: quote },
+    tickSpacing,
+  } = market
+  // if we buy, the resulting order has outbound as quote and inbound as base
+  // if we sell, the resulting order has outbound as base and inbound as quote
+  const olKey: OLKey =
+    params.bs === BS.buy
+      ? { outbound_tkn: quote, inbound_tkn: base, tickSpacing }
+      : { outbound_tkn: base, inbound_tkn: quote, tickSpacing }
+
+  return rawUpdateOrderResultFromLogs({
+    ...params,
+    ...actionParams,
+    olKey,
+  })
+}
+
+export type RawSetExpirationResultFromLogsParams = {
+  logs: Log[]
+  olKey: OLKey
+  offerId: bigint
+  mgvOrder: Address
+}
+
+export function rawSetExpirationResultFromLogs(
+  params: RawSetExpirationResultFromLogsParams,
+): bigint | undefined {
+  const events = parseEventLogs({
+    abi: mgvOrderEventsABI,
+    eventName: 'SetReneging',
+    logs: params.logs.filter((log) => {
+      return isAddressEqual(log.address, params.mgvOrder)
+    }),
+  })
+
+  const expiryEvent = events.findLast((e) => {
+    return (
+      e.args.offerId === params.offerId &&
+      e.args.olKeyHash.toLowerCase() === hash(params.olKey).toLowerCase()
+    )
+  })
+
+  return expiryEvent?.args.date
+}
+
+export type SetExpirationResultFromLogsParams = {
+  logs: Log[]
+  offerId: bigint
+  bs: BS
+}
+
+export function setExpirationResultFromLogs(
+  actionsParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  params: SetExpirationResultFromLogsParams,
+): bigint | undefined {
+  const {
+    base: { address: base },
+    quote: { address: quote },
+    tickSpacing,
+  } = market
+  const olKey: OLKey =
+    params.bs === BS.buy
+      ? { outbound_tkn: quote, inbound_tkn: base, tickSpacing }
+      : { outbound_tkn: base, inbound_tkn: quote, tickSpacing }
+  return rawSetExpirationResultFromLogs({
+    ...params,
+    ...actionsParams,
+    olKey,
+  })
+}
+
+export type RawRemoveOrderResultFromLogsParams = {
+  logs: Log[]
+  mgv: Address
+  olKey: OLKey
+  offerId: bigint
+}
+
+export type RemoveOrderResult = {
+  success: boolean
+  deprovision: boolean
+}
+
+export function rawRemoveOrderResultFromLogs(
+  params: RawRemoveOrderResultFromLogsParams,
+): RemoveOrderResult {
+  const events = parseEventLogs({
+    abi: mgvEventsABI,
+    eventName: 'OfferRetract',
+    logs: params.logs.filter((log) => {
+      return isAddressEqual(log.address, params.mgv)
+    }),
+  })
+  const event = events.findLast((e) => {
+    return (
+      e.args.olKeyHash.toLowerCase() === hash(params.olKey).toLowerCase() &&
+      e.args.id === params.offerId
+    )
+  })
+  return {
+    success: !!event,
+    deprovision: event?.args.deprovision ?? false,
+  }
+}
+
+export type RemoveOrderResultFromLogsParams = {
+  logs: Log[]
+  offerId: bigint
+  bs: BS
+}
+
+export function removeOrderResultFromLogs(
+  actionParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  params: RemoveOrderResultFromLogsParams,
+): RemoveOrderResult {
+  const {
+    base: { address: base },
+    quote: { address: quote },
+    tickSpacing,
+  } = market
+  const olKey: OLKey =
+    params.bs === BS.buy
+      ? { outbound_tkn: quote, inbound_tkn: base, tickSpacing }
+      : { outbound_tkn: base, inbound_tkn: quote, tickSpacing }
+  return rawRemoveOrderResultFromLogs({
+    ...params,
+    ...actionParams,
+    olKey,
+  })
+}
