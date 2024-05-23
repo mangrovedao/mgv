@@ -69,7 +69,6 @@ describe('update order', () => {
     })
     const updateResult = updateOrderResultFromLogs(params, wethUSDC, {
       logs: updateReceipt.logs,
-      user: client.account.address,
       bs: BS.buy,
       offerId: 1n,
     })

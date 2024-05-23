@@ -64,6 +64,9 @@ export type {
   UpdateOrderResultFromLogsParams,
   RawSetExpirationResultFromLogsParams,
   SetExpirationResultFromLogsParams,
+  RawRemoveOrderResultFromLogsParams,
+  RemoveOrderResult,
+  RemoveOrderResultFromLogsParams,
 } from './limit-order.js'
 
 export {
@@ -76,6 +79,8 @@ export {
   ParseUpdateOrderLogsError,
   rawSetExpirationResultFromLogs,
   setExpirationResultFromLogs,
+  rawRemoveOrderResultFromLogs,
+  removeOrderResultFromLogs,
 } from './limit-order.js'
 
 // local

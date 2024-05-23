@@ -365,3 +365,64 @@ export function setExpirationResultFromLogs(
     olKey,
   })
 }
+
+export type RawRemoveOrderResultFromLogsParams = {
+  logs: Log[]
+  mgv: Address
+  olKey: OLKey
+  offerId: bigint
+}
+
+export type RemoveOrderResult = {
+  success: boolean
+  deprovision: boolean
+}
+
+export function rawRemoveOrderResultFromLogs(
+  params: RawRemoveOrderResultFromLogsParams,
+): RemoveOrderResult {
+  const events = parseEventLogs({
+    abi: mgvEventsABI,
+    eventName: 'OfferRetract',
+    logs: params.logs.filter((log) => {
+      return isAddressEqual(log.address, params.mgv)
+    }),
+  })
+  const event = events.findLast((e) => {
+    return (
+      e.args.olKeyHash.toLowerCase() === hash(params.olKey).toLowerCase() &&
+      e.args.id === params.offerId
+    )
+  })
+  return {
+    success: !!event,
+    deprovision: event?.args.deprovision ?? false,
+  }
+}
+
+export type RemoveOrderResultFromLogsParams = {
+  logs: Log[]
+  offerId: bigint
+  bs: BS
+}
+
+export function removeOrderResultFromLogs(
+  actionParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  params: RemoveOrderResultFromLogsParams,
+): RemoveOrderResult {
+  const {
+    base: { address: base },
+    quote: { address: quote },
+    tickSpacing,
+  } = market
+  const olKey: OLKey =
+    params.bs === BS.buy
+      ? { outbound_tkn: quote, inbound_tkn: base, tickSpacing }
+      : { outbound_tkn: base, inbound_tkn: quote, tickSpacing }
+  return rawRemoveOrderResultFromLogs({
+    ...params,
+    ...actionParams,
+    olKey,
+  })
+}

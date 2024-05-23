@@ -23,6 +23,9 @@ export type {
   ValidateParamsResult,
   RawSetExpirationResultFromLogsParams,
   SetExpirationResultFromLogsParams,
+  RawRemoveOrderResultFromLogsParams,
+  RemoveOrderResult,
+  RemoveOrderResultFromLogsParams,
 } from './lib/index.js'
 
 export {
@@ -59,6 +62,8 @@ export {
   getDefaultLimitOrderGasreq,
   rawSetExpirationResultFromLogs,
   setExpirationResultFromLogs,
+  rawRemoveOrderResultFromLogs,
+  removeOrderResultFromLogs,
 } from './lib/index.js'
 
 // --- Types ---
