@@ -2,8 +2,8 @@ import {
   type Address,
   type Log,
   isAddressEqual,
-  parseEventLogs,
   parseAbi,
+  parseEventLogs,
   zeroAddress,
 } from 'viem'
 import type {

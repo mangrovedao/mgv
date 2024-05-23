@@ -1,4 +1,4 @@
-import { type Address, isAddressEqual, isAddress } from 'viem'
+import { type Address, isAddress, isAddressEqual } from 'viem'
 import { expect } from 'vitest'
 
 expect.extend({
