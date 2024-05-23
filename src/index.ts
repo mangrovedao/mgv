@@ -21,6 +21,8 @@ export type {
   RawKandelParams,
   KandelParams,
   ValidateParamsResult,
+  RawSetExpirationResultFromLogsParams,
+  SetExpirationResultFromLogsParams,
 } from './lib/index.js'
 
 export {
@@ -55,6 +57,8 @@ export {
   getKandelsFromLogs,
   validateKandelParams,
   getDefaultLimitOrderGasreq,
+  rawSetExpirationResultFromLogs,
+  setExpirationResultFromLogs,
 } from './lib/index.js'
 
 // --- Types ---
