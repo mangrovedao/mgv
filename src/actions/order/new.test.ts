@@ -1,6 +1,3 @@
-import { inject, describe, it, expect, afterEach } from 'vitest'
-import { getLimitOrderSteps, getUserRouter, simulateLimitOrder } from './new.js'
-import { getClient } from '~test/src/client.js'
 import {
   erc20Abi,
   isAddress,
@@ -10,10 +7,13 @@ import {
   parseUnits,
   zeroAddress,
 } from 'viem'
-import { BS, Order } from '../../lib/enums.js'
-import { getBook } from '../book.js'
+import { afterEach, describe, expect, inject, it } from 'vitest'
 import { limitOrderResultFromLogs } from '~mgv/lib/limit-order.js'
 import { tickFromVolumes } from '~mgv/lib/tick.js'
+import { getClient } from '~test/src/client.js'
+import { BS, Order } from '../../lib/enums.js'
+import { getBook } from '../book.js'
+import { getLimitOrderSteps, getUserRouter, simulateLimitOrder } from './new.js'
 
 const params = inject('mangrove')
 const { wethUSDC } = inject('markets')
