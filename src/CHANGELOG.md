@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.10
+
+### Patch Changes
+
+- cbbc841: Fixed limit order wrong address
+
 ## 0.6.9
 
 ### Patch Changes
