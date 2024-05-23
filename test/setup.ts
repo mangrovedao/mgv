@@ -1,4 +1,4 @@
-import { type Address, isAddressEqual } from 'viem'
+import { type Address, isAddressEqual, isAddress } from 'viem'
 import { expect } from 'vitest'
 
 expect.extend({
@@ -22,6 +22,18 @@ expect.extend({
   },
 
   toAddressEqual: (received: Address, expected: Address) => {
+    if (!isAddress(received)) {
+      return {
+        pass: false,
+        message: () => `expected ${received} to be an address`,
+      }
+    }
+    if (!isAddress(expected)) {
+      return {
+        pass: false,
+        message: () => `the expected value must be an address, got ${expected}`,
+      }
+    }
     return {
       pass: isAddressEqual(received, expected),
       message: () => `expected ${received} to be equal to ${expected}`,

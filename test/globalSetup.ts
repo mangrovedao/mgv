@@ -80,9 +80,9 @@ export default async function ({ provide }: GlobalSetupContext) {
 
   provide('tokens', { WETH, USDC, DAI })
   provide('mangrove', {
-    mangrove,
-    reader: mangroveReader,
-    order: mangroveOrder,
+    mgv: mangrove,
+    mgvReader: mangroveReader,
+    mgvOrder: mangroveOrder,
     routerProxyFactory,
     routerImplementation,
     multicall,
@@ -131,7 +131,7 @@ export default async function ({ provide }: GlobalSetupContext) {
 }
 
 interface CustomMatchers<R = unknown> {
-  toApproximateEqual: (expected: number, percentage?: number) => R
+  toApproximateEqual: (expected: number | bigint, percentage?: number) => R
   toAddressEqual: (expected: Address) => R
 }
 
@@ -145,9 +145,9 @@ declare module 'vitest' {
       DAI: Token
     }
     mangrove: {
-      mangrove: Address
-      reader: Address
-      order: Address
+      mgv: Address
+      mgvReader: Address
+      mgvOrder: Address
       routerProxyFactory: Address
       routerImplementation: Address
       multicall: Address

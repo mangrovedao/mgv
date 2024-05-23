@@ -61,7 +61,7 @@ export async function simulateUpdateOrderByTick(
     'simulateContract',
   )({
     ...(args as unknown as SimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...updateOrderByTickParams(args),
   })
   return { request }
@@ -82,7 +82,7 @@ export async function simulateUpdateOrderByVolume(
     'simulateContract',
   )({
     ...(args as unknown as SimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...updateOrderByVolumeParams(args),
   })
   return { request }
@@ -104,7 +104,7 @@ export async function simulateUpdateOrder(
     'simulateContract',
   )({
     ...(args as unknown as SimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...updateOrderParams(market, args),
   })
   return { request }
@@ -137,7 +137,7 @@ export async function simulateSetRawExpiration(
     'simulateContract',
   )({
     ...(args as unknown as SetExpirationSimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...rawSetExpirationParams(args),
   })
   return { request }
@@ -159,7 +159,7 @@ export async function simulateSetExpiration(
     'simulateContract',
   )({
     ...(args as unknown as SetExpirationSimulationParams),
-    address: actionParams.mgv,
+    address: actionParams.mgvOrder,
     ...setExpirationParams(market, args),
   })
   return { request }

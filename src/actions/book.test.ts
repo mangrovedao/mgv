@@ -3,20 +3,12 @@ import { getClient } from '~test/src/client.js'
 import { getBook } from './book.js'
 
 const { wethDAI } = inject('markets')
-const { mangrove, reader, order } = inject('mangrove')
+const params = inject('mangrove')
 
 describe('Getting the book', () => {
   it('should get the configs', async () => {
     const client = getClient()
-    const book = await getBook(
-      client,
-      {
-        mgv: mangrove,
-        mgvReader: reader,
-        mgvOrder: order,
-      },
-      wethDAI,
-    )
+    const book = await getBook(client, params, wethDAI)
     expect(book.marketConfig).toEqual({
       monitor: '0x0000000000000000000000000000000000000000',
       useOracle: false,

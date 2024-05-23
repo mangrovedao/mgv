@@ -1,4 +1,11 @@
-import { type Address, type Log, isAddressEqual, parseEventLogs } from 'viem'
+import {
+  type Address,
+  type Log,
+  isAddressEqual,
+  parseEventLogs,
+  parseAbi,
+  zeroAddress,
+} from 'viem'
 import type {
   MangroveActionsDefaultParams,
   MarketParams,
@@ -9,11 +16,18 @@ import { mgvEventsABI, rawMarketOrderResultFromLogs } from './market-order.js'
 import { flip, hash } from './ol-key.js'
 import { inboundFromOutbound } from './tick.js'
 
+export const mgvOrderEventsABI = parseAbi([
+  'event MangroveOrderStart(bytes32 indexed olKeyHash,address indexed taker,int tick,uint8 orderType,uint fillVolume,bool fillWants,uint offerId,address takerGivesLogic,address takerWantsLogic)',
+  'event MangroveOrderComplete()',
+  'event SetReneging(bytes32 indexed olKeyHash, uint indexed offerId, uint date, uint volume)',
+])
+
 export type RawLimitOrderResultFromLogsParams = {
   logs: Log[]
   user: Address
   olKey: OLKey
   mgv: Address
+  mgvOrder: Address
 }
 
 export type LimitOrderResult = {
@@ -21,6 +35,8 @@ export type LimitOrderResult = {
   takerGave: bigint
   bounty: bigint
   feePaid: bigint
+  takerGivesLogic?: Address
+  takerWantsLogic?: Address
   offer?: {
     id: bigint
     tick: bigint
@@ -28,6 +44,7 @@ export type LimitOrderResult = {
     wants: bigint
     gasprice: bigint
     gasreq: bigint
+    expiry?: bigint
   }
 }
 
@@ -39,31 +56,121 @@ export function rawLimitOrderResultFromLogs(
     taker: params.user,
   })
   const events = parseEventLogs({
-    abi: mgvEventsABI,
-    eventName: 'OfferWrite',
-    logs: params.logs.filter((log) => isAddressEqual(log.address, params.mgv)),
+    abi: [...mgvEventsABI, ...mgvOrderEventsABI],
+    eventName: [
+      'OfferWrite',
+      'MangroveOrderStart',
+      'MangroveOrderComplete',
+      'SetReneging',
+    ],
+    logs: params.logs.filter((log) => {
+      return (
+        isAddressEqual(log.address, params.mgv) ||
+        isAddressEqual(log.address, params.mgvOrder)
+      )
+    }),
   })
   const loKeyHash = hash(flip(params.olKey)).toLowerCase()
-  for (const event of events) {
-    if (
-      event.args.olKeyHash.toLowerCase() !== loKeyHash ||
-      !isAddressEqual(params.user, event.args.maker)
-    )
-      continue
-    const { tick, gives, gasprice, gasreq, id } = event.args
-    return {
-      ...marketOrderResult,
-      offer: {
-        id,
-        tick,
-        gives,
-        wants: inboundFromOutbound(tick, gives),
-        gasprice,
-        gasreq,
-      },
+  const olKeyHash = hash(params.olKey).toLowerCase()
+  const startIndex = events.findIndex(
+    (event) =>
+      event.eventName === 'MangroveOrderStart' &&
+      event.args.olKeyHash.toLowerCase() === olKeyHash &&
+      isAddressEqual(event.args.taker, params.user),
+  )
+  if (startIndex === -1) return marketOrderResult
+  let endIndex = startIndex + 1
+  let _depth = 0
+  for (; endIndex < events.length; endIndex++) {
+    if (events[endIndex].eventName === 'MangroveOrderStart') {
+      _depth++
+    } else if (events[endIndex].eventName === 'MangroveOrderComplete') {
+      if (_depth === 0) break
+      _depth--
     }
   }
-  return marketOrderResult
+  const mangroveOrderStartEvent = events[startIndex] as Log<
+    bigint,
+    number,
+    false,
+    undefined,
+    true,
+    typeof mgvOrderEventsABI,
+    'MangroveOrderStart'
+  >
+  const offerWriteEventIndex = events
+    .slice(startIndex, endIndex)
+    .findLastIndex((l) => {
+      return (
+        l.eventName === 'OfferWrite' &&
+        l.args.olKeyHash.toLowerCase() === loKeyHash &&
+        isAddressEqual(l.args.maker, params.mgvOrder)
+      )
+    })
+
+  const takerGivesLogic = isAddressEqual(
+    mangroveOrderStartEvent.args.takerGivesLogic,
+    zeroAddress,
+  )
+    ? undefined
+    : mangroveOrderStartEvent.args.takerGivesLogic
+
+  const takerWantsLogic = isAddressEqual(
+    mangroveOrderStartEvent.args.takerWantsLogic,
+    zeroAddress,
+  )
+    ? undefined
+    : mangroveOrderStartEvent.args.takerWantsLogic
+  if (offerWriteEventIndex === -1)
+    return {
+      ...marketOrderResult,
+      takerGivesLogic,
+      takerWantsLogic,
+    }
+  const offerWriteEvent = events[offerWriteEventIndex] as Log<
+    bigint,
+    number,
+    false,
+    undefined,
+    true,
+    typeof mgvEventsABI,
+    'OfferWrite'
+  >
+  const expiryEvent = events
+    .slice(offerWriteEventIndex, endIndex)
+    .findLast((e) => {
+      return (
+        e.eventName === 'SetReneging' &&
+        e.args.offerId === offerWriteEvent.args.id
+      )
+    }) as
+    | Log<
+        bigint,
+        number,
+        false,
+        undefined,
+        true,
+        typeof mgvOrderEventsABI,
+        'SetReneging'
+      >
+    | undefined
+  return {
+    ...marketOrderResult,
+    takerGivesLogic,
+    takerWantsLogic,
+    offer: {
+      id: offerWriteEvent.args.id,
+      tick: offerWriteEvent.args.tick,
+      gives: offerWriteEvent.args.gives,
+      wants: inboundFromOutbound(
+        offerWriteEvent.args.tick,
+        offerWriteEvent.args.gives,
+      ),
+      gasprice: offerWriteEvent.args.gasprice,
+      gasreq: offerWriteEvent.args.gasreq,
+      expiry: expiryEvent?.args.date,
+    },
+  }
 }
 
 export type LimitOrderResultFromLogsParams = {
@@ -93,6 +200,7 @@ export function limitOrderResultFromLogs(
   return rawLimitOrderResultFromLogs({
     ...params,
     mgv: actionParams.mgv,
+    mgvOrder: actionParams.mgvOrder,
     olKey,
   })
 }
