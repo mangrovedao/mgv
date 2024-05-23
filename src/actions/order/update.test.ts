@@ -1,11 +1,11 @@
 import { parseUnits } from 'viem'
-import { describe, it, expect, inject } from 'vitest'
+import { describe, expect, inject, it } from 'vitest'
 import { BS, Order } from '~mgv/lib/enums.js'
 import { limitOrderResultFromLogs } from '~mgv/lib/limit-order.js'
+import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { getClient } from '~test/src/client.js'
 import { getBook } from '../book.js'
 import { simulateLimitOrder } from './new.js'
-import { tickFromVolumes } from '~mgv/lib/tick.js'
 
 const client = getClient()
 const { wethUSDC } = inject('markets')
@@ -16,8 +16,8 @@ describe('update order', () => {
     // create an order
     const book = await getBook(client, params, wethUSDC)
 
-    let baseAmount = parseUnits('1', wethUSDC.base.decimals)
-    let quoteAmount = parseUnits('3000', wethUSDC.quote.decimals)
+    const baseAmount = parseUnits('1', wethUSDC.base.decimals)
+    const quoteAmount = parseUnits('3000', wethUSDC.quote.decimals)
 
     const { request } = await simulateLimitOrder(client, params, wethUSDC, {
       baseAmount,
