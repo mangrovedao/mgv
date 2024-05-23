@@ -3,13 +3,13 @@ import { describe, expect, inject, it } from 'vitest'
 import { BS, Order } from '~mgv/lib/enums.js'
 import {
   limitOrderResultFromLogs,
-  updateOrderResultFromLogs,
   setExpirationResultFromLogs,
+  updateOrderResultFromLogs,
 } from '~mgv/lib/limit-order.js'
+import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { getClient } from '~test/src/client.js'
 import { getBook } from '../book.js'
 import { simulateLimitOrder } from './new.js'
-import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { simulateSetExpiration, simulateUpdateOrder } from './update.js'
 
 const client = getClient()
@@ -21,8 +21,8 @@ describe('update order', () => {
     // create an order
     const book = await getBook(client, params, wethUSDC)
 
-    const baseAmount = parseUnits('1', wethUSDC.base.decimals)
-    const quoteAmount = parseUnits('3000', wethUSDC.quote.decimals)
+    let baseAmount = parseUnits('1', wethUSDC.base.decimals)
+    let quoteAmount = parseUnits('3000', wethUSDC.quote.decimals)
 
     const { request } = await simulateLimitOrder(client, params, wethUSDC, {
       baseAmount,
