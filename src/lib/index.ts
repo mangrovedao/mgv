@@ -60,6 +60,8 @@ export type {
   LimitOrderResultFromLogsParams,
   LimitOrderResult,
   GetDefaultLimitOrderGasreqParams,
+  RawUpdateOrderResultFromLogsParams,
+  UpdateOrderResultFromLogsParams,
 } from './limit-order.js'
 
 export {
@@ -67,6 +69,9 @@ export {
   limitOrderResultFromLogs,
   getDefaultLimitOrderGasreq,
   orderLabel,
+  rawUpdateOrderResultFromLogs,
+  updateOrderResultFromLogs,
+  ParseUpdateOrderLogsError,
 } from './limit-order.js'
 
 // local

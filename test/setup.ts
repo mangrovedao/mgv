@@ -1,5 +1,6 @@
 import { type Address, isAddress, isAddressEqual } from 'viem'
-import { expect } from 'vitest'
+import { afterEach, expect } from 'vitest'
+import { getClient } from './src/client.js'
 
 expect.extend({
   toApproximateEqual: (
@@ -39,4 +40,9 @@ expect.extend({
       message: () => `expected ${received} to be equal to ${expected}`,
     }
   },
+})
+
+afterEach(async () => {
+  const client = getClient()
+  await client.reset()
 })

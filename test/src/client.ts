@@ -5,6 +5,7 @@ import {
   publicActions,
   walletActions,
 } from 'viem'
+// import { ipc } from 'viem/node'
 import { privateKeyToAccount } from 'viem/accounts'
 import { foundry } from 'viem/chains'
 import { multicall } from '~test/globalSetup.js'
@@ -43,11 +44,15 @@ export function getClient() {
     },
   })
 
+  const httpTransport = http(
+    `http://localhost:${process.env.PROXY_PORT || 8545}/${poolId}`,
+  )
+
+  // const ipcTransport = ipc(`/tmp/anvil-${poolId}.ipc`)
+
   return createTestClient({
     chain: mgvTestChain,
-    transport: http(
-      `http://localhost:${process.env.PROXY_PORT || 8545}/${poolId}`,
-    ),
+    transport: httpTransport,
     mode: 'anvil',
     account: privateKeyToAccount(accounts[0].privateKey),
   })
