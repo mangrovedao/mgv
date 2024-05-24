@@ -192,7 +192,7 @@ export async function waitForMarketOrderResult(
   actionParams: MangroveActionsDefaultParams,
   market: MarketParams,
   params: WaitForMarketOrderResultParams,
-): Promise<ResultWithReceipt<MarketOrderResult>> {
+): Promise<ResultWithReceipt<Omit<MarketOrderResult, 'request'>>> {
   const receipt = await getAction(
     client,
     waitForTransactionReceipt,

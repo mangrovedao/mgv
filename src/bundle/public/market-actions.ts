@@ -246,7 +246,7 @@ export type PublicMarketActions = {
    */
   waitForMarketOrderResult: (
     args: WaitForMarketOrderResultParams,
-  ) => Promise<ResultWithReceipt<MarketOrderResult>>
+  ) => Promise<ResultWithReceipt<Omit<MarketOrderResult, 'request'>>>
 }
 
 export function publicMarketActions(
