@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.11
+
+### Patch Changes
+
+- fe28644: Add result from logs on update, and remove
+
 ## 0.6.10
 
 ### Patch Changes
