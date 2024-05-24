@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.12
+
+### Patch Changes
+
+- 1a54eab: Add wait for result on orders
+
 ## 0.6.11
 
 ### Patch Changes
