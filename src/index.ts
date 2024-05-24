@@ -1,3 +1,13 @@
+// -- actions --
+
+export type {
+  WaitForLimitOrderResultParams,
+  WaitForLimitOrderUpdateResultParams,
+  WaitForSetExpirationResultParams,
+  WaitForRemoveLimitOrderResult,
+  WaitForMarketOrderResultParams,
+} from './actions/index.js'
+
 // -- lib functions --
 
 export type {

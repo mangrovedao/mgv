@@ -17,6 +17,10 @@ export type {
   SimulateRawRemoveOrderArgs,
   SimulateRemoveOrderArgs,
   RetractOrderResult,
+  WaitForLimitOrderResultParams,
+  WaitForLimitOrderUpdateResultParams,
+  WaitForSetExpirationResultParams,
+  WaitForRemoveLimitOrderResult,
 } from './order/index.js'
 
 export {
@@ -32,6 +36,10 @@ export {
   simulateSetExpiration,
   simulateRawRemoveOrder,
   simulateRemoveOrder,
+  waitForLimitOrderResult,
+  waitForLimitOrderUpdateResult,
+  waitForSetExpirationResult,
+  waitForRemoveLimitOrderResult,
 } from './order/index.js'
 
 export type {
@@ -71,6 +79,7 @@ export type {
   SimulateMarketOrderByTickArgs,
   SimulateMarketOrderByVolumeArgs,
   SimulateMarketOrderByVolumeAndMarketArgs,
+  WaitForMarketOrderResultParams,
 } from './market-order.js'
 
 export {
@@ -78,4 +87,5 @@ export {
   simulateMarketOrderByTick,
   simulateMarketOrderByVolume,
   simulateMarketOrderByVolumeAndMarket,
+  waitForMarketOrderResult,
 } from './market-order.js'

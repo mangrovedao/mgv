@@ -3,11 +3,16 @@ import {
   type Client,
   type ReadContractParameters,
   type SimulateContractParameters,
+  type WaitForTransactionReceiptParameters,
   type erc20Abi,
   maxUint128,
   maxUint256,
 } from 'viem'
-import { readContract, simulateContract } from 'viem/actions'
+import {
+  readContract,
+  simulateContract,
+  waitForTransactionReceipt,
+} from 'viem/actions'
 import type {
   MarketOrderByTickParams,
   MarketOrderByVolumeAndMarketParams,
@@ -21,6 +26,10 @@ import {
 } from '../builder/market-order.js'
 import { tokenAllowanceParams } from '../builder/tokens.js'
 import { BS } from '../lib/enums.js'
+import {
+  type MarketOrderResultFromLogsParams,
+  marketOrderResultFromLogs,
+} from '../lib/market-order.js'
 import type {
   BuiltArgs,
   MangroveActionsDefaultParams,
@@ -30,6 +39,7 @@ import type { MarketOrderResult } from '../types/actions/market-order.js'
 import type { MarketOrderSteps } from '../types/actions/steps.js'
 import type { Prettify } from '../types/lib.js'
 import { getAction } from '../utils/getAction.js'
+import type { ResultWithReceipt } from './order/results.js'
 
 export type GetMarketOrderStepsParams = {
   user: Address
@@ -171,4 +181,26 @@ export async function simulateMarketOrderByVolumeAndMarket(
     feePaid,
     request,
   }
+}
+
+export type WaitForMarketOrderResultParams =
+  WaitForTransactionReceiptParameters &
+    Omit<MarketOrderResultFromLogsParams, 'logs'>
+
+export async function waitForMarketOrderResult(
+  client: Client,
+  actionParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  params: WaitForMarketOrderResultParams,
+): Promise<ResultWithReceipt<MarketOrderResult>> {
+  const receipt = await getAction(
+    client,
+    waitForTransactionReceipt,
+    'waitForTransactionReceipt',
+  )(params)
+  const result = marketOrderResultFromLogs(actionParams, market, {
+    ...params,
+    logs: receipt.logs,
+  })
+  return { result, receipt }
 }
