@@ -45,3 +45,17 @@ export {
   simulateRawRemoveOrder,
   simulateRemoveOrder,
 } from './remove.js'
+
+export type {
+  WaitForLimitOrderResultParams,
+  WaitForLimitOrderUpdateResultParams,
+  WaitForSetExpirationResultParams,
+  WaitForRemoveLimitOrderResult,
+} from './results.js'
+
+export {
+  waitForLimitOrderResult,
+  waitForLimitOrderUpdateResult,
+  waitForSetExpirationResult,
+  waitForRemoveLimitOrderResult,
+} from './results.js'
