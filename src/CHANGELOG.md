@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.6.13
+
+### Patch Changes
+
+- 68de50e: Add stricter typescript rules
+
 ## 0.6.12
 
 ### Patch Changes

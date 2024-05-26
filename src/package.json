@@ -1,7 +1,7 @@
 {
   "name": "@mangrovedao/mgv",
   "description": "Utils and functions to interact with mangrove protocol",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "repository": {
     "url": "https://github.com/mangrovedao/mgv"
   },
@@ -64,8 +64,17 @@
   },
   "license": "MIT",
   "homepage": "https://mangrove.exchange",
-  "authors": ["maxencerb.eth"],
-  "keywords": ["eth", "ethereum", "dapp", "mangrove", "order", "book"],
+  "authors": [
+    "maxencerb.eth"
+  ],
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapp",
+    "mangrove",
+    "order",
+    "book"
+  ],
   "dependencies": {
     "zod": "^3.22.4"
   }
