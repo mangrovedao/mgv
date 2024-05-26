@@ -100,8 +100,8 @@ export function countBidsAndAsks(distribution: Distribution) {
   let nBids = 0n
   let nAsks = 0n
   for (let i = 0; i < distribution.asks.length; i++) {
-    if (distribution.asks[i].gives !== 0n) nAsks++
-    if (distribution.bids[i].gives !== 0n) nBids++
+    if (distribution.asks[i]!.gives !== 0n) nAsks++
+    if (distribution.bids[i]!.gives !== 0n) nBids++
   }
   return {
     nBids,
@@ -115,8 +115,10 @@ export function changeGives(
   askGives: bigint,
 ): Distribution {
   for (let i = 0; i < distribution.asks.length; i++) {
-    if (distribution.asks[i].gives !== 0n) distribution.asks[i].gives = askGives
-    if (distribution.bids[i].gives !== 0n) distribution.bids[i].gives = bidGives
+    if (distribution.asks[i]!.gives !== 0n)
+      distribution.asks[i]!.gives = askGives
+    if (distribution.bids[i]!.gives !== 0n)
+      distribution.bids[i]!.gives = bidGives
   }
   return distribution
 }

@@ -82,9 +82,9 @@ export function rawLimitOrderResultFromLogs(
   let endIndex = startIndex + 1
   let _depth = 0
   for (; endIndex < events.length; endIndex++) {
-    if (events[endIndex].eventName === 'MangroveOrderStart') {
+    if (events[endIndex]!.eventName === 'MangroveOrderStart') {
       _depth++
-    } else if (events[endIndex].eventName === 'MangroveOrderComplete') {
+    } else if (events[endIndex]!.eventName === 'MangroveOrderComplete') {
       if (_depth === 0) break
       _depth--
     }

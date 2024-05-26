@@ -98,15 +98,24 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
     allowFailure: true,
   })
 
+  if (
+    result.length !==
+    tokenBalanceCalls.length + overlyingCalls.length + logicBalancesCalls.length
+  )
+    throw new Error('Invalid result length')
+
   const tokenBalances = tokens.map((token, i) => {
-    const res = result[i]
-    const balance = res.status === 'success' ? (res.result as bigint) : 0n
+    const res = result[i]!
+    const balance =
+      res.status === 'success' && typeof res.result === 'bigint'
+        ? res.result
+        : 0n
     return { token, balance }
   })
 
   const overlying = tokens.flatMap((token, i) =>
     logics.map((logic, j) => {
-      const res = result[tokenBalanceCalls.length + i * logics.length + j]
+      const res = result[tokenBalanceCalls.length + i * logics.length + j]!
       const overlying: OverlyingResponse =
         res.status === 'success'
           ? logic.logicOverlying.parseOverlyingContractResponse(
@@ -134,8 +143,11 @@ export async function getBalances<TLogics extends Logic[] = Logic[]>(
             overlyingCalls.length +
             logics.length * i +
             j
-        ]
-      const balance = res.status === 'success' ? (res.result as bigint) : 0n
+        ]!
+      const balance =
+        res.status === 'success' && typeof res.result === 'bigint'
+          ? res.result
+          : 0n
       return { token, logic, balance }
     }),
   )

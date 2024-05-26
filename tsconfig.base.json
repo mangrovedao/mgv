@@ -17,7 +17,7 @@
     "noUnusedParameters": true, // Not enabled by default in `strict` mode.
     // TODO: The following options are also not enabled by default in `strict` mode and would be nice to have but would require some adjustments to the codebase.
     // "exactOptionalPropertyTypes": true,
-    // "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true,
 
     // JavaScript support
     "allowJs": false,

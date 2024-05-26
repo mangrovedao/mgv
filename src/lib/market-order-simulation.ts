@@ -84,7 +84,7 @@ export function rawMarketOrderSimulation(
     i < globalConfig.maxRecursionDepth;
     i++
   ) {
-    const offer = orderBook[i]
+    const offer = orderBook[i]!
     if (offer.offer.tick > maxTick) break
     const maxGot = fillWants
       ? fillVolume
