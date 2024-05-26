@@ -27,9 +27,9 @@ export type BuildTokenParms<
 > = {
   address: TAddress
   symbol: TSymbol
-  decimals?: TDecimals
-  displayDecimals?: TDisplayDecimals
-  priceDisplayDecimals?: TPriceDisplayDecimals
+  decimals?: TDecimals | undefined
+  displayDecimals?: TDisplayDecimals | undefined
+  priceDisplayDecimals?: TPriceDisplayDecimals | undefined
 }
 
 export function buildToken<

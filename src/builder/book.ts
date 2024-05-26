@@ -23,8 +23,8 @@ export const packedOfferListABI = parseAbi([
  */
 export type GetBookParams = {
   olKey: OLKey
-  fromId?: bigint
-  maxOffers?: bigint
+  fromId?: bigint | undefined
+  maxOffers?: bigint | undefined
 }
 
 /**
@@ -93,8 +93,8 @@ export function parseBookResult({
 }: ParseBookParams): CompleteOffer[] {
   const [_, offerIDs, offersPacked, offerDetailsPacked] = result
   return offerIDs.map((id, i) => {
-    const offer = unpackOffer(offersPacked[i])
-    const detail = unpackOfferDetail(offerDetailsPacked[i])
+    const offer = unpackOffer(offersPacked[i]!)
+    const detail = unpackOfferDetail(offerDetailsPacked[i]!)
     const humanReadableParams = rpcOfferToHumanOffer({
       ...offer,
       ba,

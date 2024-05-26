@@ -32,7 +32,7 @@ export async function getBook(
   client: Client,
   actionParams: MangroveActionsDefaultParams,
   marketParams: MarketParams,
-  parameters?: GetBookArgs,
+  parameters?: GetBookArgs | undefined,
 ): Promise<Book> {
   const { depth = 100n, ...multicallParams } = parameters || {}
   const { mgv, mgvReader } = actionParams
@@ -100,17 +100,22 @@ export async function getBook(
     quoteDecimals: quote.decimals,
   })
 
-  const midPrice = !asks[0]?.price
-    ? !bids[0]?.price
-      ? 0
-      : bids[0].price
-    : (asks[0].price + bids[0].price) / 2
+  const minAsk = asks[0]?.price
+  const maxBid = bids[0]?.price
 
-  const spread =
-    !asks[0]?.price || !bids[0]?.price ? 0 : asks[0].price - bids[0].price
+  let midPrice = 0
+  let spread = 0
+  let spreadPercent = 0
 
-  const spreadPercent =
-    !asks[0]?.price || !bids[0]?.price ? 0 : spread / midPrice
+  if (minAsk && maxBid) {
+    midPrice = (minAsk + maxBid) / 2
+    spread = Math.abs(minAsk - maxBid)
+    spreadPercent = spread / midPrice
+  } else if (minAsk) {
+    midPrice = minAsk
+  } else if (maxBid) {
+    midPrice = maxBid
+  }
 
   return {
     asks,

@@ -25,8 +25,8 @@ export type SetKandelLogicsStep = Step<
   'setKandelLogics',
   {
     kandel: Address
-    baseLogic?: Logic
-    quoteLogic?: Logic
+    baseLogic?: Logic | undefined
+    quoteLogic?: Logic | undefined
     gasRequirement: bigint
   }
 >

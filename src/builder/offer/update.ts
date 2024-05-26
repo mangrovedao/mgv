@@ -15,7 +15,7 @@ export type UpdateOfferByTickParams = {
   olKey: OLKey
   tick: bigint
   gives: bigint
-  gaspriceOverride?: bigint
+  gaspriceOverride?: bigint | undefined
   offerId: bigint
   globalConfig: GlobalConfig
   localConfig: LocalConfig
@@ -52,7 +52,7 @@ export type UpdateOfferByVolumeParams = {
   olKey: OLKey
   gives: bigint
   wants: bigint
-  gaspriceOverride?: bigint
+  gaspriceOverride?: bigint | undefined
   offerId: bigint
   globalConfig: GlobalConfig
   localConfig: LocalConfig

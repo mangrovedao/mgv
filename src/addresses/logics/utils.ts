@@ -16,7 +16,7 @@ export type OverlyingParams = {
 
 export type OverlyingResponse = {
   type: 'erc20' | 'erc721'
-  overlying?: Token
+  overlying?: Token | undefined
   available: boolean
 }
 

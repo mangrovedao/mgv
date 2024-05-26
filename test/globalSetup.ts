@@ -131,7 +131,10 @@ export default async function ({ provide }: GlobalSetupContext) {
 }
 
 interface CustomMatchers<R = unknown> {
-  toApproximateEqual: (expected: number | bigint, percentage?: number) => R
+  toApproximateEqual: (
+    expected: number | bigint,
+    percentage?: number | undefined,
+  ) => R
   toAddressEqual: (expected: Address) => R
 }
 

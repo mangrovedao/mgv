@@ -33,7 +33,7 @@ import { getAction } from '../../utils/getAction.js'
 export type GetNewOfferStepsParams = {
   user: Address
   bs: BS
-  sendAmount?: bigint
+  sendAmount?: bigint | undefined
 }
 
 export type GetNewOfferStepsArgs = Prettify<

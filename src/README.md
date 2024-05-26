@@ -125,7 +125,7 @@ function availableLogics(token: Token): Logic[] {
   return overlying.filter((overlying) => overlying.available)
 }
 
-function getBalance(token: Token, logic?: Logic): bigint {
+function getBalance(token: Token, logic?: Logic | undefined): bigint {
   if (logic) {
     return logicBalances.find(lb => {
       return isAddressEqual(lb.token.address, token.address) && isAddressEqual(lb.logic.logic, logic.logic)
@@ -141,7 +141,7 @@ The mangrove client is a view extension of the client object that interacts with
 
 ```ts
 import { createClient } from "viem";
-import { mangroveActions } from "@mangrovedao/mgv";
+import { magroveActions } from "@mangrovedao/mgv";
 
 const mangroveClient = createClient({...})
   .extend(mangroveActions(mangroveParams))
@@ -578,3 +578,4 @@ const { request } = await kandelClient.simulateRetract({
   account: '0x...',
 })
 ```
+
