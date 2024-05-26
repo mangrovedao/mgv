@@ -5,7 +5,7 @@ import type { CompleteOffer, GlobalConfig, LocalConfig } from '../lib.js'
  * @param depth the depth of the book for each side
  */
 export type BookParams = {
-  depth?: bigint
+  depth?: bigint | undefined
 }
 
 /**

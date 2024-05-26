@@ -68,13 +68,13 @@ export type RawLimitOrderParams = {
   localConfig: LocalConfig
   globalConfig: GlobalConfig
   fillVolume: bigint
-  orderType?: Order
-  fillWants?: boolean
-  expiryDate?: bigint
-  offerId?: bigint
-  takerGivesLogic?: Address
-  takerWantsLogic?: Address
-  value?: bigint
+  orderType?: Order | undefined
+  fillWants?: boolean | undefined
+  expiryDate?: bigint | undefined
+  offerId?: bigint | undefined
+  takerGivesLogic?: Address | undefined
+  takerWantsLogic?: Address | undefined
+  value?: bigint | undefined
 }
 
 export function rawLimitOrderParams(params: RawLimitOrderParams) {
@@ -141,13 +141,13 @@ export type LimitOrderParams = {
   restingOrderGasreq: bigint
   bs: BS
   book: Book
-  orderType?: Order
-  fillWants?: boolean
-  expiryDate?: bigint
-  offerId?: bigint
-  takerGivesLogic?: Address
-  takerWantsLogic?: Address
-  value?: bigint
+  orderType?: Order | undefined
+  fillWants?: boolean | undefined
+  expiryDate?: bigint | undefined
+  offerId?: bigint | undefined
+  takerGivesLogic?: Address | undefined
+  takerWantsLogic?: Address | undefined
+  value?: bigint | undefined
 }
 
 export function limitOrderParams(

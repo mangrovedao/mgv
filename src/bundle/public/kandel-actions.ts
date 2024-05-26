@@ -35,14 +35,15 @@ import type { KandelSteps, MarketParams } from '../../index.js'
 
 export type KandelSeederActions = {
   getKandelSteps: (args: GetKandelStepsArgs) => Promise<KandelSteps>
-  simulateSow: (args?: SowArgs) => Promise<SimulateSowResult>
+  simulateSow: (args?: SowArgs | undefined) => Promise<SimulateSowResult>
 }
 
 export function kandelSeederActions(market: MarketParams, seeder: Address) {
   return (client: Client): KandelSeederActions => ({
     getKandelSteps: (args: GetKandelStepsArgs) =>
       getKandelSteps(client, market, zeroAddress, args),
-    simulateSow: (args?: SowArgs) => simulateSow(client, market, seeder, args),
+    simulateSow: (args?: SowArgs | undefined) =>
+      simulateSow(client, market, seeder, args),
   })
 }
 

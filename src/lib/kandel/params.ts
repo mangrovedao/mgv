@@ -214,8 +214,8 @@ export function validateKandelParams(
 }
 
 export type GetKandelGasReqParams = {
-  baseLogic?: Logic
-  quoteLogic?: Logic
+  baseLogic?: Logic | undefined
+  quoteLogic?: Logic | undefined
 }
 
 export function getKandelGasReq(params: GetKandelGasReqParams) {

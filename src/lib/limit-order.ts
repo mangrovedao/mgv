@@ -35,17 +35,19 @@ export type LimitOrderResult = {
   takerGave: bigint
   bounty: bigint
   feePaid: bigint
-  takerGivesLogic?: Address
-  takerWantsLogic?: Address
-  offer?: {
-    id: bigint
-    tick: bigint
-    gives: bigint
-    wants: bigint
-    gasprice: bigint
-    gasreq: bigint
-    expiry?: bigint
-  }
+  takerGivesLogic?: Address | undefined
+  takerWantsLogic?: Address | undefined
+  offer?:
+    | {
+        id: bigint
+        tick: bigint
+        gives: bigint
+        wants: bigint
+        gasprice: bigint
+        gasreq: bigint
+        expiry?: bigint | undefined
+      }
+    | undefined
 }
 
 export function rawLimitOrderResultFromLogs(
@@ -206,8 +208,8 @@ export function limitOrderResultFromLogs(
 }
 
 export type GetDefaultLimitOrderGasreqParams = {
-  chainId?: bigint
-  mgvOrder?: Address
+  chainId?: bigint | undefined
+  mgvOrder?: Address | undefined
 }
 
 export function getDefaultLimitOrderGasreq(): bigint {

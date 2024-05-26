@@ -35,8 +35,8 @@ export type GetLimitOrderStepsParams = {
   user: Address
   userRouter: Address
   bs: BS
-  sendAmount?: bigint
-  logic?: OverlyingResult
+  sendAmount?: bigint | undefined
+  logic?: OverlyingResult | undefined
 }
 
 export type GetLimitOrderStepsArgs = Prettify<

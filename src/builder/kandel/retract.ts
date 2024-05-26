@@ -10,11 +10,11 @@ export const restractKandelABI = parseAbi([
 ])
 
 export type RetractParams = {
-  from?: bigint
+  from?: bigint | undefined
   to: bigint
-  baseAmount?: bigint
-  quoteAmount?: bigint
-  freeWei?: bigint
+  baseAmount?: bigint | undefined
+  quoteAmount?: bigint | undefined
+  freeWei?: bigint | undefined
   recipient: Address
 }
 

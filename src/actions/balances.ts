@@ -24,7 +24,7 @@ export type GetBalancesArgs<TLogics extends Logic[] = Logic[]> =
 
 export type OverlyingResult<TLogic extends Logic = Logic> = {
   type: 'erc20' | 'erc721'
-  overlying?: Token
+  overlying?: Token | undefined
   available: boolean
   token: Token
   logic: TLogic

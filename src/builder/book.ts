@@ -23,8 +23,8 @@ export const packedOfferListABI = parseAbi([
  */
 export type GetBookParams = {
   olKey: OLKey
-  fromId?: bigint
-  maxOffers?: bigint
+  fromId?: bigint | undefined
+  maxOffers?: bigint | undefined
 }
 
 /**

@@ -32,8 +32,8 @@ export const routerABI = parseAbi([
 export type GetKandelStepsParams = {
   userRouter: Address
   user: Address
-  baseOverlying?: OverlyingResult
-  quoteOverlying?: OverlyingResult
+  baseOverlying?: OverlyingResult | undefined
+  quoteOverlying?: OverlyingResult | undefined
 }
 
 export type GetKandelStepsArgs = GetKandelStepsParams &

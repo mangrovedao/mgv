@@ -14,10 +14,13 @@ export const sowABI = parseAbi([
  * @params liquiditySharing whether to share liquidity (deprecated)
  */
 export type SowParams = {
-  liquiditySharing?: boolean
+  liquiditySharing?: boolean | undefined
 }
 
-export function sowParams(market: MarketParams, params?: SowParams) {
+export function sowParams(
+  market: MarketParams,
+  params?: SowParams | undefined,
+) {
   return {
     abi: sowABI,
     functionName: 'sow',

@@ -44,7 +44,7 @@ import type { ResultWithReceipt } from './order/results.js'
 export type GetMarketOrderStepsParams = {
   user: Address
   bs: BS
-  sendAmount?: bigint
+  sendAmount?: bigint | undefined
 }
 
 export type GetMarketOrderStepsArgs = Prettify<

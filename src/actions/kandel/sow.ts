@@ -22,7 +22,7 @@ export async function simulateSow(
   client: Client,
   market: MarketParams,
   kandelSeeder: Address,
-  args?: SowArgs,
+  args?: SowArgs | undefined,
 ): Promise<SimulateSowResult> {
   return getAction(
     client,

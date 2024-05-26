@@ -32,7 +32,7 @@ export async function getBook(
   client: Client,
   actionParams: MangroveActionsDefaultParams,
   marketParams: MarketParams,
-  parameters?: GetBookArgs,
+  parameters?: GetBookArgs | undefined,
 ): Promise<Book> {
   const { depth = 100n, ...multicallParams } = parameters || {}
   const { mgv, mgvReader } = actionParams

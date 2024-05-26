@@ -24,8 +24,8 @@ export type RawMarketOrderSimulationParams = {
   localConfig: LocalConfig
   globalConfig: GlobalConfig
   fillVolume: bigint
-  fillWants?: boolean
-  maxTick?: bigint
+  fillWants?: boolean | undefined
+  maxTick?: bigint | undefined
 }
 
 /**

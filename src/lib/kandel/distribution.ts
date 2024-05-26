@@ -10,8 +10,8 @@ export type CreateGeometricDistributionParams = {
   pricePoints: bigint
   stepSize: bigint
   market: MarketParams
-  from?: bigint
-  to?: bigint
+  from?: bigint | undefined
+  to?: bigint | undefined
 } & (
   | {
       bidGives: bigint

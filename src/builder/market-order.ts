@@ -66,8 +66,8 @@ export type MarketOrderByVolumeParams = {
   olKey: OLKey
   wants: bigint
   gives: bigint
-  slippage?: number
-  fillWants?: boolean
+  slippage?: number | undefined
+  fillWants?: boolean | undefined
 }
 
 /**
@@ -105,8 +105,8 @@ export type MarketOrderByVolumeAndMarketParams = {
   baseAmount: bigint
   quoteAmount: bigint
   bs: BS
-  fillWants?: boolean
-  slippage?: number
+  fillWants?: boolean | undefined
+  slippage?: number | undefined
 }
 
 export function marketOrderByVolumeAndMarketParams(

@@ -8,22 +8,22 @@ export const populateABI = parseAbi([
 ])
 
 export type PopulateFromOffsetParams = {
-  from?: bigint
-  to?: bigint
+  from?: bigint | undefined
+  to?: bigint | undefined
   baseQuoteTickIndex0: bigint
   baseQuoteTickOffset: bigint
   firstAskIndex: bigint
   bidGives: bigint
   askGives: bigint
-  gasprice?: bigint
+  gasprice?: bigint | undefined
   gasreq: bigint
-  stepSize?: bigint
+  stepSize?: bigint | undefined
   pricePoints: bigint
-  baseAmount?: bigint
-  quoteAmount?: bigint
+  baseAmount?: bigint | undefined
+  quoteAmount?: bigint | undefined
 }
 export type PopulateChunkFromOffsetParams = {
-  from?: bigint
+  from?: bigint | undefined
   to: bigint
   baseQuoteTickIndex0: bigint
   firstAskIndex: bigint

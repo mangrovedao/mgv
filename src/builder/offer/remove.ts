@@ -12,7 +12,7 @@ export const retractOfferABI = parseAbi([
 export type RawRetractOfferParams = {
   olKey: OLKey
   offerId: bigint
-  deprovision?: boolean
+  deprovision?: boolean | undefined
 }
 
 export function rawRetractOfferParams(params: RawRetractOfferParams) {
@@ -34,7 +34,7 @@ export function rawRetractOfferParams(params: RawRetractOfferParams) {
 export type RetractOfferParams = {
   offerId: bigint
   bs: BS
-  deprovision?: boolean
+  deprovision?: boolean | undefined
 }
 
 export function retractOfferParams(
