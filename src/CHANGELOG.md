@@ -1,5 +1,13 @@
 # @mangrovedao/mgv
 
+## 0.6.14
+
+### Patch Changes
+
+- cd00ded: Fix simulation types for account
+- cd00ded: Change price naming to raw price in simulation
+- cd00ded: Fix market order return type
+
 ## 0.6.13
 
 ### Patch Changes
