@@ -31,7 +31,11 @@ import {
   type GetKandelStateResult,
   getKandelState,
 } from '../../actions/kandel/view.js'
-import type { KandelSteps, MarketParams } from '../../index.js'
+import type {
+  KandelSteps,
+  MangroveActionsDefaultParams,
+  MarketParams,
+} from '../../index.js'
 
 export type KandelSeederActions = {
   getKandelSteps: (args: GetKandelStepsArgs) => Promise<KandelSteps>
@@ -55,22 +59,22 @@ export type KandelActions = {
     args: PopulateChunkArgs,
   ) => Promise<PopulateChunkResult>
   simulateRetract: (args: RetractArgs) => Promise<SimulateRetractResult>
-  getKandelState: (args: GetKandelStateArgs) => Promise<GetKandelStateResult>
+  getKandelState: (args?: GetKandelStateArgs) => Promise<GetKandelStateResult>
 }
 
-export function kandelActions(market: MarketParams, kandel: Address) {
+export function kandelActions(
+  actionParams: MangroveActionsDefaultParams,
+  market: MarketParams,
+  kandel: Address,
+) {
   return (client: Client): KandelActions => ({
-    getKandelSteps: (args: GetKandelStepsArgs) =>
-      getKandelSteps(client, market, kandel, args),
-    simulateSetLogics: (args: SetLogicsArgs) =>
-      simulateSetLogics(client, kandel, args),
-    simulatePopulate: (args: PopulateArgs) =>
-      simulatePopulate(client, kandel, args),
-    simulatePopulateChunk: (args: PopulateChunkArgs) =>
+    getKandelSteps: (args) => getKandelSteps(client, market, kandel, args),
+    simulateSetLogics: (args) => simulateSetLogics(client, kandel, args),
+    simulatePopulate: (args) => simulatePopulate(client, kandel, args),
+    simulatePopulateChunk: (args) =>
       simulatePopulateChunk(client, kandel, args),
-    simulateRetract: (args: RetractArgs) =>
-      simulateRetract(client, kandel, args),
-    getKandelState: (args: GetKandelStateArgs) =>
-      getKandelState(client, market, kandel, args),
+    simulateRetract: (args) => simulateRetract(client, kandel, args),
+    getKandelState: (args = {}) =>
+      getKandelState(client, actionParams, market, kandel, args),
   })
 }
