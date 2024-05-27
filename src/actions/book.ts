@@ -36,13 +36,9 @@ export async function getBook(
 ): Promise<Book> {
   const { depth = 100n, ...multicallParams } = parameters || {}
   const { mgv, mgvReader } = actionParams
-  const { base, quote, tickSpacing } = marketParams
+  const { base, quote } = marketParams
 
-  const { asksMarket, bidsMarket } = getSemibooksOLKeys({
-    base: base.address,
-    quote: quote.address,
-    tickSpacing,
-  })
+  const { asksMarket, bidsMarket } = getSemibooksOLKeys(marketParams)
 
   const [rpcAsks, rpcBids, rpcAsksConfig, rpcBaseConfig, rpcMarketConfig] =
     await getAction(
