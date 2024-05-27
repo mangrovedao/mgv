@@ -26,6 +26,7 @@ export default async function ({ provide }: GlobalSetupContext) {
   const anvil = createAnvil({
     port: Number(process.env.MAIN_PORT || 8546),
     chainId: foundry.id,
+    ipc: '/tmp/anvil.ipc',
   })
   await anvil.start()
 
@@ -120,7 +121,7 @@ export default async function ({ provide }: GlobalSetupContext) {
   const shutdown = await startProxy({
     port: Number(process.env.PROXY_PORT || 8545),
     options: {
-      forkUrl: `http://localhost:${process.env.MAIN_PORT || 8546}`,
+      forkUrl: '/tmp/anvil.ipc',
     },
   })
 
