@@ -448,6 +448,7 @@ const client = createClient({ ... })
 
 const kandelClient = client.extend(
   kandelActions(
+    actionParms, // the action params object (containing the mangrove address)
     market, // the market object
     "0x..." // the kandel address
   )
@@ -578,4 +579,3 @@ const { request } = await kandelClient.simulateRetract({
   account: '0x...',
 })
 ```
-
