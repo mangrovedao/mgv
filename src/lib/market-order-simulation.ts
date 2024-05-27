@@ -144,7 +144,7 @@ export type MarketOrderSimulationResult = {
   maxTickEncountered: bigint
   minSlippage: number
   fillWants: boolean
-  price: number
+  rawPrice: number
   fillVolume: bigint
 }
 
@@ -207,7 +207,7 @@ export function marketOrderSimulation(
     feePaid: raw.feePaid,
     maxTickEncountered: raw.maxTickEncountered,
     minSlippage: slippage,
-    price: bs === BS.buy ? price : 1 / price,
+    rawPrice: bs === BS.buy ? price : 1 / price,
     fillWants,
     fillVolume,
   }
