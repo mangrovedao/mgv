@@ -1,5 +1,18 @@
 # @mangrovedao/mgv
 
+## 0.7.0
+
+### Minor Changes
+
+- 8738527: Changes kandel client to receive action params
+- 8738527: Changes getSemiBookOlKeys to get market params
+
+### Patch Changes
+
+- d58a776: Viem to min version
+- a43177d: Update viem to lts
+- 8738527: Added provisions and offer id to kandel view
+
 ## 0.6.14
 
 ### Patch Changes
