@@ -1,9 +1,5 @@
 import type { Address, Client } from 'viem'
-import {
-  type SimulateContractParameters,
-  type SimulateContractReturnType,
-  simulateContract,
-} from 'viem/actions'
+import { type SimulateContractReturnType, simulateContract } from 'viem/actions'
 import {
   type PopulateChunkFromOffsetParams,
   type PopulateFromOffsetParams,
@@ -12,9 +8,10 @@ import {
   populateFromOffsetParams,
 } from '../../builder/kandel/populate.js'
 import type { BuiltArgsWithValue } from '../../index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import { getAction } from '../../utils/getAction.js'
 
-type SimulationPopulateParams = SimulateContractParameters<
+type SimulationPopulateParams = SimulationParams<
   typeof populateABI,
   'populateFromOffset'
 >
@@ -42,7 +39,7 @@ export function simulatePopulate(
   })
 }
 
-type SimulationPopulateChunckParams = SimulateContractParameters<
+type SimulationPopulateChunckParams = SimulationParams<
   typeof populateABI,
   'populateChunkFromOffset'
 >

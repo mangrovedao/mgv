@@ -1,9 +1,4 @@
-import type {
-  Address,
-  Client,
-  SimulateContractParameters,
-  SimulateContractReturnType,
-} from 'viem'
+import type { Address, Client, SimulateContractReturnType } from 'viem'
 import { simulateContract } from 'viem/actions'
 import {
   type RetractParams,
@@ -11,14 +6,16 @@ import {
   retractParams,
 } from '../../builder/kandel/retract.js'
 import type { BuiltArgs } from '../../index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import { getAction } from '../../utils/getAction.js'
 
-type SimulationParams = SimulateContractParameters<
+type RetractSimulationParams = SimulationParams<
   typeof restractKandelABI,
   'retractAndWithdraw'
 >
 
-export type RetractArgs = RetractParams & Omit<SimulationParams, BuiltArgs>
+export type RetractArgs = RetractParams &
+  Omit<RetractSimulationParams, BuiltArgs>
 
 export type SimulateRetractResult = SimulateContractReturnType<
   typeof restractKandelABI,
@@ -35,7 +32,7 @@ export async function simulateRetract(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as RetractSimulationParams),
     ...retractParams(args),
     address: kandel,
   })

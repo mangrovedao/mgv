@@ -1,9 +1,4 @@
-import type {
-  Address,
-  Client,
-  SimulateContractParameters,
-  SimulateContractReturnType,
-} from 'viem'
+import type { Address, Client, SimulateContractReturnType } from 'viem'
 import { simulateContract } from 'viem/actions'
 import {
   type SowParams,
@@ -11,11 +6,12 @@ import {
   sowParams,
 } from '../../builder/kandel/sow.js'
 import type { BuiltArgs, MarketParams } from '../../index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import { getAction } from '../../utils/getAction.js'
 
-type SimulationParams = SimulateContractParameters<typeof sowABI, 'sow'>
+type SowSimulationParams = SimulationParams<typeof sowABI, 'sow'>
 
-export type SowArgs = SowParams & Omit<SimulationParams, BuiltArgs>
+export type SowArgs = SowParams & Omit<SowSimulationParams, BuiltArgs>
 export type SimulateSowResult = SimulateContractReturnType<typeof sowABI, 'sow'>
 
 export async function simulateSow(
@@ -29,7 +25,7 @@ export async function simulateSow(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as SowSimulationParams),
     ...sowParams(market, args),
     address: kandelSeeder,
   })

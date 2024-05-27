@@ -2,7 +2,6 @@ import {
   type Address,
   type Client,
   type ReadContractParameters,
-  type SimulateContractParameters,
   type WaitForTransactionReceiptParameters,
   type erc20Abi,
   maxUint128,
@@ -36,6 +35,7 @@ import type {
   MarketParams,
 } from '../types/actions/index.js'
 import type { MarketOrderResult } from '../types/actions/market-order.js'
+import type { SimulationParams } from '../types/actions/simulation.js'
 import type { MarketOrderSteps } from '../types/actions/steps.js'
 import type { Prettify } from '../types/lib.js'
 import { getAction } from '../utils/getAction.js'
@@ -88,12 +88,13 @@ export async function getMarketOrderSteps(
   ]
 }
 
-type SimulationParams = SimulateContractParameters<
+type MarketOrderSimulationParams = SimulationParams<
   typeof marketOrderByTickABI,
   'marketOrderByTick'
 >
+
 export type SimulateMarketOrderByTickArgs = Prettify<
-  MarketOrderByTickParams & Omit<SimulationParams, BuiltArgs>
+  MarketOrderByTickParams & Omit<MarketOrderSimulationParams, BuiltArgs>
 >
 
 export async function simulateMarketOrderByTick(
@@ -109,7 +110,7 @@ export async function simulateMarketOrderByTick(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as MarketOrderSimulationParams),
     ...marketOrderByTickParams(args),
     address: actionParams.mgv,
   })
@@ -123,7 +124,7 @@ export async function simulateMarketOrderByTick(
 }
 
 export type SimulateMarketOrderByVolumeArgs = Prettify<
-  MarketOrderByVolumeParams & Omit<SimulationParams, BuiltArgs>
+  MarketOrderByVolumeParams & Omit<MarketOrderSimulationParams, BuiltArgs>
 >
 
 export async function simulateMarketOrderByVolume(
@@ -139,7 +140,7 @@ export async function simulateMarketOrderByVolume(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as MarketOrderSimulationParams),
     ...marketOrderByVolumeParams(args),
     address: actionParams.mgv,
   })
@@ -153,7 +154,8 @@ export async function simulateMarketOrderByVolume(
 }
 
 export type SimulateMarketOrderByVolumeAndMarketArgs = Prettify<
-  MarketOrderByVolumeAndMarketParams & Omit<SimulationParams, BuiltArgs>
+  MarketOrderByVolumeAndMarketParams &
+    Omit<MarketOrderSimulationParams, BuiltArgs>
 >
 
 export async function simulateMarketOrderByVolumeAndMarket(
@@ -170,7 +172,7 @@ export async function simulateMarketOrderByVolumeAndMarket(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as MarketOrderSimulationParams),
     ...marketOrderByVolumeAndMarketParams(marketParams, args),
     address: actionParams.mgv,
   })
