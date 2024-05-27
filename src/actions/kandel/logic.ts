@@ -1,9 +1,4 @@
-import type {
-  Address,
-  Client,
-  SimulateContractParameters,
-  SimulateContractReturnType,
-} from 'viem'
+import type { Address, Client, SimulateContractReturnType } from 'viem'
 import { simulateContract } from 'viem/actions'
 import {
   type SetLogicsParams,
@@ -11,14 +6,13 @@ import {
   setLogicsParams,
 } from '../../builder/kandel/logic.js'
 import type { BuiltArgs } from '../../types/actions/index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import { getAction } from '../../utils/getAction.js'
 
-type SimulationParams = SimulateContractParameters<
-  typeof logicsABI,
-  'setLogics'
->
+type SetLogicSimulationParams = SimulationParams<typeof logicsABI, 'setLogics'>
 
-export type SetLogicsArgs = SetLogicsParams & Omit<SimulationParams, BuiltArgs>
+export type SetLogicsArgs = SetLogicsParams &
+  Omit<SetLogicSimulationParams, BuiltArgs>
 export type SetLogicsResult = SimulateContractReturnType<
   typeof logicsABI,
   'setLogics'
@@ -34,7 +28,7 @@ export async function simulateSetLogics(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as SetLogicSimulationParams),
     ...setLogicsParams(args),
     address: kandel,
   })

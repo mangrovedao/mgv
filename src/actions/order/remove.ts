@@ -1,8 +1,4 @@
-import type {
-  Client,
-  SimulateContractParameters,
-  SimulateContractReturnType,
-} from 'viem'
+import type { Client, SimulateContractReturnType } from 'viem'
 import { simulateContract } from 'viem/actions'
 import type { Prettify } from 'viem/chains'
 import {
@@ -17,15 +13,16 @@ import type {
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../types/actions/index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import { getAction } from '../../utils/getAction.js'
 
-type SimulationParams = SimulateContractParameters<
+type RetractSimulationParams = SimulationParams<
   typeof retractOrderABI,
   'retractOffer'
 >
 
 export type SimulateRawRemoveOrderArgs = Prettify<
-  RawRemoveOrderParams & Omit<SimulationParams, BuiltArgs>
+  RawRemoveOrderParams & Omit<RetractSimulationParams, BuiltArgs>
 >
 
 export type RetractOrderResult = {
@@ -46,7 +43,7 @@ export async function simulateRawRemoveOrder(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as RetractSimulationParams),
     address: actionParams.mgvOrder,
     ...rawRemoveOrderParams(args),
   })
@@ -54,7 +51,7 @@ export async function simulateRawRemoveOrder(
 }
 
 export type SimulateRemoveOrderArgs = Prettify<
-  RemoveOrderParams & Omit<SimulationParams, BuiltArgs>
+  RemoveOrderParams & Omit<RetractSimulationParams, BuiltArgs>
 >
 
 export async function simulateRemoveOrder(
@@ -68,7 +65,7 @@ export async function simulateRemoveOrder(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as RetractSimulationParams),
     address: actionParams.mgvOrder,
     ...removeOrderParams(market, args),
   })

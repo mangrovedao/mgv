@@ -1,8 +1,4 @@
-import type {
-  Client,
-  SimulateContractParameters,
-  SimulateContractReturnType,
-} from 'viem'
+import type { Client, SimulateContractReturnType } from 'viem'
 import { simulateContract } from 'viem/actions'
 import {
   type RawSetExpirationParams,
@@ -23,6 +19,7 @@ import type {
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../types/actions/index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import type { Prettify } from '../../types/lib.js'
 import { getAction } from '../../utils/getAction.js'
 import {
@@ -36,13 +33,13 @@ export type GetUpdateOrderStepsArgs = GetLimitOrderStepsArgs
 
 export const getUpdateOrderSteps = getLimitOrderSteps
 
-type SimulationParams = SimulateContractParameters<
+type UpdateSimulationParams = SimulationParams<
   typeof updateOrderABI,
   'updateOffer'
 >
 
 export type SimulateUpdateOrderByTickArgs = Prettify<
-  UpdateOrderByTickParams & Omit<SimulationParams, BuiltArgsWithValue>
+  UpdateOrderByTickParams & Omit<UpdateSimulationParams, BuiltArgsWithValue>
 >
 
 export type SimulateUpdateOrderResult = Omit<
@@ -60,7 +57,7 @@ export async function simulateUpdateOrderByTick(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as UpdateSimulationParams),
     address: actionParams.mgvOrder,
     ...updateOrderByTickParams(args),
   })
@@ -68,7 +65,7 @@ export async function simulateUpdateOrderByTick(
 }
 
 export type SimulateUpdateOrderByVolumeArgs = Prettify<
-  UpdateOrderByVolumeParams & Omit<SimulationParams, BuiltArgsWithValue>
+  UpdateOrderByVolumeParams & Omit<UpdateSimulationParams, BuiltArgsWithValue>
 >
 
 export async function simulateUpdateOrderByVolume(
@@ -81,7 +78,7 @@ export async function simulateUpdateOrderByVolume(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as UpdateSimulationParams),
     address: actionParams.mgvOrder,
     ...updateOrderByVolumeParams(args),
   })
@@ -89,7 +86,7 @@ export async function simulateUpdateOrderByVolume(
 }
 
 export type SimulateUpdateOrderArgs = Prettify<
-  UpdateOrderParams & Omit<SimulationParams, BuiltArgsWithValue>
+  UpdateOrderParams & Omit<UpdateSimulationParams, BuiltArgsWithValue>
 >
 
 export async function simulateUpdateOrder(
@@ -103,14 +100,14 @@ export async function simulateUpdateOrder(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as UpdateSimulationParams),
     address: actionParams.mgvOrder,
     ...updateOrderParams(market, args),
   })
   return { request }
 }
 
-type SetExpirationSimulationParams = SimulateContractParameters<
+type SetExpirationSimulationParams = SimulationParams<
   typeof updateOrderABI,
   'setReneging'
 >

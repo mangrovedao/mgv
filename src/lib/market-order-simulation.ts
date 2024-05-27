@@ -133,6 +133,8 @@ export type MarketOrderSimulationParams = {
  * @param maxTickEncountered the highest tick encountered
  * @param minSlippage the minimum slippage to specify
  * @param price the price of the market order
+ * @param fillVolume the total volume filled
+ * @param fillWants if true, stops when fillVolume of outbound token is received, otherwise stops when fillVolume of inbound token is sent
  */
 export type MarketOrderSimulationResult = {
   baseAmount: bigint
@@ -142,7 +144,8 @@ export type MarketOrderSimulationResult = {
   maxTickEncountered: bigint
   minSlippage: number
   fillWants: boolean
-  price: number
+  rawPrice: number
+  fillVolume: bigint
 }
 
 /**
@@ -155,6 +158,8 @@ export function marketOrderSimulation(
 ): MarketOrderSimulationResult {
   const { book, bs } = params
   const globalConfig = book.marketConfig
+
+  // if base in params, then fillVolume is base, otherwise fillVolume is quote
   const fillVolume = 'base' in params ? params.base : params.quote
 
   // if we are buying, we are buying the base token and confronting the asks
@@ -169,6 +174,10 @@ export function marketOrderSimulation(
   // so if we sepcify the quote amount, we want to get this specific amount of quote token
   const fillWants =
     (bs === BS.buy && 'base' in params) || (bs === BS.sell && 'quote' in params)
+
+  // base in params and sell
+  // fillVolume = base
+  // fillWants = false
 
   const raw = rawMarketOrderSimulation({
     orderBook,
@@ -185,16 +194,21 @@ export function marketOrderSimulation(
   // max_price = raw_price * (1 + slippage)
   // 1 + slippage = max_price / raw_price
   // slippage = max_price / raw_price - 1
-  const slippage = maxPriceEncountered / price - 1
+
+  const slippage = Math.max(maxPriceEncountered / price, 1) - 1
+
+  // if we sell => we get quote and give base
+  // if we buy => we get base and give quote
 
   return {
-    baseAmount: BS.buy ? raw.totalGot : raw.totalGave,
-    quoteAmount: BS.buy ? raw.totalGave : raw.totalGot,
+    baseAmount: bs === BS.buy ? raw.totalGot : raw.totalGave,
+    quoteAmount: bs === BS.buy ? raw.totalGave : raw.totalGot,
     gas: raw.gas,
     feePaid: raw.feePaid,
     maxTickEncountered: raw.maxTickEncountered,
     minSlippage: slippage,
-    price,
+    rawPrice: bs === BS.buy ? price : 1 / price,
     fillWants,
+    fillVolume,
   }
 }

@@ -2,7 +2,6 @@ import {
   type Address,
   type Client,
   type ReadContractParameters,
-  type SimulateContractParameters,
   type SimulateContractReturnType,
   type erc20Abi,
   maxUint128,
@@ -26,6 +25,7 @@ import type {
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../types/actions/index.js'
+import type { SimulationParams } from '../../types/actions/simulation.js'
 import type { LimitOrderSteps } from '../../types/actions/steps.js'
 import type { Prettify } from '../../types/lib.js'
 import { getAction } from '../../utils/getAction.js'
@@ -103,10 +103,10 @@ export async function getUserRouter(
   })
 }
 
-type SimulationParams = SimulateContractParameters<typeof limitOrderABI, 'take'>
+type LimitOrderSimulationParams = SimulationParams<typeof limitOrderABI, 'take'>
 
 export type SimulateRawLimitOrderArgs = Prettify<
-  RawLimitOrderParams & Omit<SimulationParams, BuiltArgsWithValue>
+  RawLimitOrderParams & Omit<LimitOrderSimulationParams, BuiltArgsWithValue>
 >
 
 export async function simulateRawLimitOrder(
@@ -119,14 +119,14 @@ export async function simulateRawLimitOrder(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as LimitOrderSimulationParams),
     ...rawLimitOrderParams(args),
     address: actionParams.mgv,
   })
 }
 
 export type SimulateLimitOrderArgs = Prettify<
-  LimitOrderParams & Omit<SimulationParams, BuiltArgsWithValue>
+  LimitOrderParams & Omit<LimitOrderSimulationParams, BuiltArgsWithValue>
 >
 
 export type SimulateLimitOrderResult = Prettify<
@@ -144,7 +144,7 @@ export async function simulateLimitOrder(
     simulateContract,
     'simulateContract',
   )({
-    ...(args as unknown as SimulationParams),
+    ...(args as unknown as LimitOrderSimulationParams),
     ...limitOrderParams(marketParams, args),
     address: actionParams.mgvOrder,
   })
