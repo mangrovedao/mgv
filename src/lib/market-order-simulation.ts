@@ -118,8 +118,10 @@ export type MarketOrderSimulationParams = {
 } & (
   | {
       base: bigint
+      quote?: undefined
     }
   | {
+      base?: undefined
       quote: bigint
     }
 )
@@ -156,11 +158,18 @@ export type MarketOrderSimulationResult = {
 export function marketOrderSimulation(
   params: MarketOrderSimulationParams,
 ): MarketOrderSimulationResult {
-  const { book, bs } = params
+  const { book, bs, base, quote } = params
   const globalConfig = book.marketConfig
 
   // if base in params, then fillVolume is base, otherwise fillVolume is quote
-  const fillVolume = 'base' in params ? params.base : params.quote
+  let fillVolume: bigint
+  if (typeof base === 'bigint') {
+    fillVolume = base
+  } else if (typeof quote === 'bigint') {
+    fillVolume = quote
+  } else {
+    throw new Error('either base or quote must be specified')
+  }
 
   // if we are buying, we are buying the base token and confronting the asks
   // if we are selling, we are selling the base token and confronting the bids
