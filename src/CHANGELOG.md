@@ -1,5 +1,17 @@
 # @mangrovedao/mgv
 
+## 0.8.0
+
+### Minor Changes
+
+- a459e3a: Added the smart router client
+
+  The `getUserRouter` functions were moved from the order subfolders to `smart-router.ts` files
+
+  Please enter a summary for your changes.
+
+- a459e3a: Added addresses to the default context
+
 ## 0.7.1
 
 ### Patch Changes
