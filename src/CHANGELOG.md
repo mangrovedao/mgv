@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.7.1
+
+### Patch Changes
+
+- 429e847: Change params to market order simulation
+
 ## 0.7.0
 
 ### Minor Changes
