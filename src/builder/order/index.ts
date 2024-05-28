@@ -1,12 +1,10 @@
 export type {
-  GetUserRouterParams,
   RawLimitOrderParams,
   LimitOrderParams,
 } from './new.js'
 
 export {
   limitOrderABI,
-  getUserRouterParams,
   rawLimitOrderParams,
   limitOrderParams,
 } from './new.js'

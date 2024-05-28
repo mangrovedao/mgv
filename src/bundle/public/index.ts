@@ -10,3 +10,7 @@ export {
   type KandelActions,
   type KandelSeederActions,
 } from './kandel-actions.js'
+export {
+  type UserRouterActions,
+  userRouterActions,
+} from './user-router.js'

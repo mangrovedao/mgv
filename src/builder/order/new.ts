@@ -16,23 +16,7 @@ export const limitOrderABI = parseAbi([
   'struct TakerOrder { OLKey olKey; int tick; uint8 orderType; uint fillVolume; bool fillWants; uint expiryDate; uint offerId; uint restingOrderGasreq; address takerGivesLogic; address takerWantsLogic;}',
   'struct TakerOrderResult { uint takerGot; uint takerGave; uint bounty; uint fee; uint offerId; bytes32 offerWriteData;}',
   'function take(TakerOrder calldata tko) external payable returns (TakerOrderResult memory res)',
-  'function router(address fundOwner) public view returns (address)',
 ])
-
-export type GetUserRouterParams = {
-  user: Address
-}
-
-export function getUserRouterParams(params: GetUserRouterParams) {
-  return {
-    abi: limitOrderABI,
-    functionName: 'router',
-    args: [params.user],
-  } satisfies Omit<
-    ContractFunctionParameters<typeof limitOrderABI, 'view', 'router'>,
-    'address'
-  >
-}
 
 // buy => get base, send quote => when taker, outbound is base, inbound is quote, when maker outbound is quote, inbound is base
 // sell => get quote, send base => when taker, outbound is quote, inbound is base, when maker outbound is base, inbound is quote

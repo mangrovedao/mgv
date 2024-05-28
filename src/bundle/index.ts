@@ -4,6 +4,7 @@ export type {
   MangroveActions,
   KandelActions,
   KandelSeederActions,
+  UserRouterActions,
 } from './public/index.js'
 
 export {
@@ -12,4 +13,5 @@ export {
   mangroveActions,
   kandelActions,
   kandelSeederActions,
+  userRouterActions,
 } from './public/index.js'

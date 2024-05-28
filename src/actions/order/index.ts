@@ -1,7 +1,6 @@
 export type {
   GetLimitOrderStepsParams,
   GetLimitOrderStepsArgs,
-  GetUserRouterArgs,
   SimulateRawLimitOrderArgs,
   SimulateLimitOrderArgs,
   SimulateLimitOrderResult,
@@ -9,7 +8,6 @@ export type {
 
 export {
   getLimitOrderSteps,
-  getUserRouter,
   simulateRawLimitOrder,
   simulateLimitOrder,
 } from './new.js'

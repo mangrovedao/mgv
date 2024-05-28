@@ -5,22 +5,17 @@ import {
   isAddressEqual,
   maxUint128,
   maxUint256,
-  parseAbi,
   zeroAddress,
 } from 'viem'
 import { multicall } from 'viem/actions'
 import { getLogicsParams } from '../../builder/kandel/logic.js'
+import { adminParams, isBoundParams } from '../../builder/smart-router.js'
 // import { getParamsParams } from '../../builder/kandel/populate.js'
 import { tokenAllowanceParams } from '../../builder/tokens.js'
 import type { KandelSteps, MarketParams } from '../../index.js'
 import { getKandelGasReq } from '../../lib/kandel/params.js'
 import { getAction } from '../../utils/getAction.js'
 import type { OverlyingResult } from '../balances.js'
-
-export const routerABI = parseAbi([
-  'function admin() public view returns (address current)',
-  'function isBound(address mkr) public view returns (bool)',
-])
 
 // => Deploy user router instance if not exist
 // => Create kandel instance
@@ -55,14 +50,13 @@ export async function getKandelSteps(
       contracts: [
         {
           address: args.userRouter,
-          abi: routerABI,
-          functionName: 'admin',
+          ...adminParams,
         },
         {
           address: args.userRouter,
-          abi: routerABI,
-          functionName: 'isBound',
-          args: [kandel],
+          ...isBoundParams({
+            maker: kandel,
+          }),
         },
         {
           address: kandel,

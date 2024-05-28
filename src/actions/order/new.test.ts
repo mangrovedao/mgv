@@ -13,7 +13,8 @@ import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { getClient } from '~test/src/client.js'
 import { BS, Order } from '../../lib/enums.js'
 import { getBook } from '../book.js'
-import { getLimitOrderSteps, getUserRouter, simulateLimitOrder } from './new.js'
+import { getUserRouter } from '../smart-router.js'
+import { getLimitOrderSteps, simulateLimitOrder } from './new.js'
 
 const params = inject('mangrove')
 const { wethUSDC } = inject('markets')

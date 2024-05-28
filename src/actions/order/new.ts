@@ -9,10 +9,8 @@ import {
 } from 'viem'
 import { readContract, simulateContract } from 'viem/actions'
 import {
-  type GetUserRouterParams,
   type LimitOrderParams,
   type RawLimitOrderParams,
-  getUserRouterParams,
   type limitOrderABI,
   limitOrderParams,
   rawLimitOrderParams,
@@ -82,25 +80,6 @@ export async function getLimitOrderSteps(
       done: allowance >= amount || allowance >= maxUint128,
     },
   ]
-}
-
-export type GetUserRouterArgs = GetUserRouterParams &
-  Omit<ReadContractParameters<typeof limitOrderABI, 'router'>, BuiltArgs>
-
-export async function getUserRouter(
-  client: Client,
-  actionParams: MangroveActionsDefaultParams,
-  args: GetUserRouterArgs,
-) {
-  return getAction(
-    client,
-    readContract,
-    'readContract',
-  )({
-    ...getUserRouterParams(args),
-    address: actionParams.mgvOrder,
-    ...args,
-  })
 }
 
 type LimitOrderSimulationParams = SimulationParams<typeof limitOrderABI, 'take'>

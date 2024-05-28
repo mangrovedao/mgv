@@ -68,7 +68,6 @@ export {
 // order
 
 export type {
-  GetUserRouterParams,
   RawLimitOrderParams,
   LimitOrderParams,
   UpdateOrderByTickParams,
@@ -80,7 +79,6 @@ export type {
 
 export {
   limitOrderABI,
-  getUserRouterParams,
   rawLimitOrderParams,
   limitOrderParams,
   updateOrderABI,
@@ -91,3 +89,19 @@ export {
   rawRemoveOrderParams,
   removeOrderParams,
 } from './order/index.js'
+
+// smart router
+
+export type {
+  GetUserRouterParams,
+  IsBoundParams,
+  DeployRouterParams,
+  BindParams,
+} from './smart-router.js'
+
+export {
+  getUserRouterParams,
+  isBoundParams,
+  deployRouterParams,
+  bindParams,
+} from './smart-router.js'
