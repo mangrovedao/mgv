@@ -112,6 +112,7 @@ export type {
   MangroveActions,
   KandelActions,
   KandelSeederActions,
+  UserRouterActions,
 } from './bundle/index.js'
 
 export {
@@ -120,6 +121,7 @@ export {
   mangroveActions,
   kandelActions,
   kandelSeederActions,
+  userRouterActions,
 } from './bundle/index.js'
 
 // --- addresses ---

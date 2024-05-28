@@ -84,8 +84,8 @@ export default async function ({ provide }: GlobalSetupContext) {
     mgv: mangrove,
     mgvReader: mangroveReader,
     mgvOrder: mangroveOrder,
+    smartRouter: routerImplementation,
     routerProxyFactory,
-    routerImplementation,
     multicall,
     tickSpacing: 60n,
   })
@@ -152,8 +152,8 @@ declare module 'vitest' {
       mgv: Address
       mgvReader: Address
       mgvOrder: Address
+      smartRouter: Address
       routerProxyFactory: Address
-      routerImplementation: Address
       multicall: Address
       tickSpacing: bigint
     }

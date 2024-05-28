@@ -11,6 +11,8 @@ export type MangroveActionsDefaultParams = {
   mgv: Address
   mgvReader: Address
   mgvOrder: Address
+  routerProxyFactory: Address
+  smartRouter: Address
 }
 
 /**

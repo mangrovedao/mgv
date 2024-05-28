@@ -1,6 +1,11 @@
 import type { Address, Client } from 'viem'
 import type { GetUserRouterArgs } from '../../actions/index.js'
 import { getUserRouter } from '../../actions/index.js'
+import {
+  type DeployRouterArgs,
+  type DeployRouterResult,
+  simulateDeployRouter,
+} from '../../actions/smart-router.js'
 import type { MangroveActionsDefaultParams } from '../../types/index.js'
 
 export type MangroveActions = {
@@ -13,10 +18,15 @@ export type MangroveActions = {
    * console.log(userRouter); // 0x...
    */
   getUserRouter: (args: GetUserRouterArgs) => Promise<Address>
+
+  /** Deploys the smart router instance for the given user */
+  simulateDeployRouter: (args: DeployRouterArgs) => Promise<DeployRouterResult>
 }
 
 export function mangroveActions(actionsParams: MangroveActionsDefaultParams) {
   return (client: Client): MangroveActions => ({
     getUserRouter: (args) => getUserRouter(client, actionsParams, args),
+    simulateDeployRouter: (args) =>
+      simulateDeployRouter(client, actionsParams, args),
   })
 }

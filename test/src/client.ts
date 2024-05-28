@@ -5,15 +5,15 @@ import {
   publicActions,
   walletActions,
 } from 'viem'
-// import { ipc } from 'viem/node'
 import { privateKeyToAccount } from 'viem/accounts'
 import { foundry } from 'viem/chains'
+import { ipc } from 'viem/node'
 import { multicall } from '~test/globalSetup.js'
 import { accounts, poolId } from './constants.js'
 
 export const globalTestClient = createTestClient({
   chain: foundry,
-  transport: http(`http://localhost:${process.env.MAIN_PORT || 8546}`),
+  transport: ipc('/tmp/anvil.ipc'),
   mode: 'anvil',
   account: privateKeyToAccount(accounts[0].privateKey),
 })
