@@ -6,6 +6,12 @@ export type {
   WaitForSetExpirationResultParams,
   WaitForRemoveLimitOrderResult,
   WaitForMarketOrderResultParams,
+  OrderResult,
+  GetSingleOrderParams,
+  GetSingleOrderArgs,
+  GetOrdersParamsSingleMarket,
+  GetOrdersParams,
+  GetOrdersArgs,
 } from './actions/index.js'
 
 // -- lib functions --

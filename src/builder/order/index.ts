@@ -32,3 +32,16 @@ export {
   rawRemoveOrderParams,
   removeOrderParams,
 } from './remove.js'
+
+export type {
+  ViewLimitOrderParams,
+  ViewLimitOrderLogicsParams,
+} from './view.js'
+
+export {
+  mgvOrderViewABI,
+  smartRouterViewABI,
+  viewExpirationParams,
+  viewProvisionParams,
+  viewLimitOrderLogicsParams,
+} from './view.js'

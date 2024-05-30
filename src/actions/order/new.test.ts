@@ -7,7 +7,7 @@ import {
   parseUnits,
   zeroAddress,
 } from 'viem'
-import { afterEach, describe, expect, inject, it } from 'vitest'
+import { describe, expect, inject, it } from 'vitest'
 import { limitOrderResultFromLogs } from '~mgv/lib/limit-order.js'
 import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { getClient } from '~test/src/client.js'
@@ -21,10 +21,6 @@ const { wethUSDC } = inject('markets')
 const client = getClient()
 
 describe('new order', () => {
-  afterEach(async () => {
-    await client.reset()
-  })
-
   it('get user router', async () => {
     const router = await getUserRouter(client, params, {
       user: client.account.address,

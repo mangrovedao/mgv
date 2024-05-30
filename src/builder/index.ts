@@ -75,6 +75,8 @@ export type {
   UpdateOrderParams,
   RawRemoveOrderParams,
   RemoveOrderParams,
+  ViewLimitOrderParams,
+  ViewLimitOrderLogicsParams,
 } from './order/index.js'
 
 export {
@@ -88,6 +90,11 @@ export {
   retractOrderABI,
   rawRemoveOrderParams,
   removeOrderParams,
+  mgvOrderViewABI,
+  smartRouterViewABI,
+  viewExpirationParams,
+  viewProvisionParams,
+  viewLimitOrderLogicsParams,
 } from './order/index.js'
 
 // smart router
