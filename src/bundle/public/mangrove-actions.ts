@@ -2,6 +2,13 @@ import type { Address, Client } from 'viem'
 import type { GetUserRouterArgs } from '../../actions/index.js'
 import { getUserRouter } from '../../actions/index.js'
 import {
+  type GetOrdersArgs,
+  type GetSingleOrderArgs,
+  type OrderResult,
+  getOrder,
+  getOrders,
+} from '../../actions/order/view.js'
+import {
   type DeployRouterArgs,
   type DeployRouterResult,
   simulateDeployRouter,
@@ -21,6 +28,12 @@ export type MangroveActions = {
 
   /** Deploys the smart router instance for the given user */
   simulateDeployRouter: (args: DeployRouterArgs) => Promise<DeployRouterResult>
+
+  /** Get a single order details given its market, side, and id */
+  getOrder: (args: GetSingleOrderArgs) => Promise<OrderResult>
+
+  /** Gets multiple orders details given their markets, sides, and ids */
+  getOrders: (args: GetOrdersArgs) => Promise<OrderResult[]>
 }
 
 export function mangroveActions(actionsParams: MangroveActionsDefaultParams) {
@@ -28,5 +41,7 @@ export function mangroveActions(actionsParams: MangroveActionsDefaultParams) {
     getUserRouter: (args) => getUserRouter(client, actionsParams, args),
     simulateDeployRouter: (args) =>
       simulateDeployRouter(client, actionsParams, args),
+    getOrder: (args) => getOrder(client, actionsParams, args),
+    getOrders: (args) => getOrders(client, actionsParams, args),
   })
 }

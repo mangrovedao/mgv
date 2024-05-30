@@ -1,6 +1,6 @@
 import { formatUnits } from 'viem'
 import type { MarketParams } from '../types/index.js'
-import type { BA } from './enums.js'
+import { BA } from './enums.js'
 import {
   inboundFromOutbound,
   outboundFromInbound,
@@ -24,7 +24,7 @@ export function rpcOfferToHumanOffer({
   baseDecimals: number
   quoteDecimals: number
 }) {
-  if (ba === 'asks') {
+  if (ba === BA.asks) {
     const volume = Number(formatUnits(gives, baseDecimals))
     const total = Number(
       formatUnits(inboundFromOutbound(tick, gives), quoteDecimals),

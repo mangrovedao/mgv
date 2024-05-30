@@ -57,3 +57,18 @@ export {
   waitForSetExpirationResult,
   waitForRemoveLimitOrderResult,
 } from './results.js'
+
+export type {
+  OrderResult,
+  GetFullOfferParams,
+  GetSingleOrderParams,
+  GetSingleOrderArgs,
+  GetOrdersParamsSingleMarket,
+  GetOrdersParams,
+  GetOrdersArgs,
+} from './view.js'
+
+export {
+  getOrder,
+  getOrders,
+} from './view.js'

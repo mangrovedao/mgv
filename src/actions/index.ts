@@ -20,6 +20,13 @@ export type {
   WaitForLimitOrderUpdateResultParams,
   WaitForSetExpirationResultParams,
   WaitForRemoveLimitOrderResult,
+  OrderResult,
+  GetFullOfferParams,
+  GetSingleOrderParams,
+  GetSingleOrderArgs,
+  GetOrdersParamsSingleMarket,
+  GetOrdersParams,
+  GetOrdersArgs,
 } from './order/index.js'
 
 export {
@@ -38,6 +45,8 @@ export {
   waitForLimitOrderUpdateResult,
   waitForSetExpirationResult,
   waitForRemoveLimitOrderResult,
+  getOrder,
+  getOrders,
 } from './order/index.js'
 
 export type {
