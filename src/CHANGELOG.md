@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.1
+
+### Patch Changes
+
+- b33b7e0: Added `getOrder` and `getOrders`
+
 ## 0.8.0
 
 ### Minor Changes
