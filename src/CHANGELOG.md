@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.2
+
+### Patch Changes
+
+- 48d97b5: Add addresses for base sepolia
+
 ## 0.8.1
 
 ### Patch Changes
