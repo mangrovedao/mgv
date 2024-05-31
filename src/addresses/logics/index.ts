@@ -3,6 +3,8 @@ export {
   blastZeroLendLogic,
   blastPacFinanceLogic,
   blastLogics,
+  baseSepoliaAave,
+  baseSepoliaLogics,
 } from './chains/index.js'
 
 export {
