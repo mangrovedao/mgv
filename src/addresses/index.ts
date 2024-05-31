@@ -3,22 +3,25 @@ export type {
   BuildTokenParms,
 } from './tokens/index.js'
 
-export { blastMarkets } from './markets/index.js'
+export { blastMarkets, baseSepoliaMarkets } from './markets/index.js'
 
 // --- tokens ---
 
 export {
+  blastTokens,
+  buildToken,
   blastWETH,
   blastUSDB,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
-  blastTokens,
-  buildToken,
+  baseSepoliaUSDC,
+  baseSepoliaWETH,
+  baseSepoliaTokens,
 } from './tokens/index.js'
 
 // --- mangrove ---
 
-export { blastMangrove } from './mangrove/index.js'
+export { blastMangrove, baseSepoliaMangrove } from './mangrove/index.js'
 
 // --- logics ---
 
@@ -37,6 +40,8 @@ export {
   blastZeroLendLogic,
   blastPacFinanceLogic,
   blastLogics,
+  baseSepoliaAave,
+  baseSepoliaLogics,
   balanceLogicABI,
   baseBalance,
   aaveLogicABI,

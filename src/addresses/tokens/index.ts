@@ -6,6 +6,12 @@ export {
   blastTokens,
 } from './blast.js'
 
+export {
+  baseSepoliaUSDC,
+  baseSepoliaWETH,
+  baseSepoliaTokens,
+} from './base-sepolia.js'
+
 export type {
   Token,
   BuildTokenParms,
