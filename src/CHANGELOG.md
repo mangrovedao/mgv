@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.4
+
+### Patch Changes
+
+- 6766134: Add export for `getKandelGasreq`
+
 ## 0.8.3
 
 ### Patch Changes
