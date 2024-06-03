@@ -28,6 +28,7 @@ export type {
   RawKandelParams,
   KandelParams,
   ValidateParamsResult,
+  GetKandelGasReqParams,
 } from './params.js'
 
-export { validateKandelParams } from './params.js'
+export { validateKandelParams, getKandelGasReq } from './params.js'
