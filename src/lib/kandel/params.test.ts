@@ -1,12 +1,12 @@
 import { describe, expect, inject, it } from 'vitest'
+import { getBook } from '~mgv/actions/book.js'
+import { getClient } from '~test/src/client.js'
 import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
 } from '../human-readable.js'
 import { priceFromTick, tickFromPrice } from '../tick.js'
 import { getKandelPositionRawParams, validateKandelParams } from './params.js'
-import { getBook } from '~mgv/actions/book.js'
-import { getClient } from '~test/src/client.js'
 
 const { wethUSDC } = inject('markets')
 const params = inject('mangrove')
@@ -43,7 +43,7 @@ describe('kandel params', () => {
   it('validateKandelParams', async () => {
     const book = await getBook(client, params, wethUSDC)
 
-    const test = validateKandelParams({
+    const _test = validateKandelParams({
       minPrice: 3100,
       midPrice: 3000,
       maxPrice: 3500,
