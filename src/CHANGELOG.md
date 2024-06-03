@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.3
+
+### Patch Changes
+
+- ccf2f05: Fix kandel division by 0
+
 ## 0.8.2
 
 ### Patch Changes
