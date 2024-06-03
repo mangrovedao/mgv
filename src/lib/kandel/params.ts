@@ -153,8 +153,8 @@ export function validateKandelParams(
 
   const { nBids, nAsks } = countBidsAndAsks(distribution)
   // asks gives base and bids gives quote
-  const askGives = params.baseAmount / nAsks
-  const bidGives = params.quoteAmount / nBids
+  const askGives = nAsks > 0 ? params.baseAmount / nAsks : 0n
+  const bidGives = nBids > 0 ? params.quoteAmount / nBids : 0n
 
   distribution = changeGives(distribution, bidGives, askGives)
 
