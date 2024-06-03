@@ -43,6 +43,7 @@ export type {
   RawKandelParams,
   KandelParams,
   ValidateParamsResult,
+  GetKandelGasReqParams,
 } from './kandel/index.js'
 
 export {
@@ -51,6 +52,7 @@ export {
   seederEventsABI,
   getKandelsFromLogs,
   validateKandelParams,
+  getKandelGasReq,
 } from './kandel/index.js'
 
 // limit-order
