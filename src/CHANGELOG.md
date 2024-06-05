@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.5
+
+### Patch Changes
+
+- 90827c9: Fixed values for populate
+
 ## 0.8.4
 
 ### Patch Changes
