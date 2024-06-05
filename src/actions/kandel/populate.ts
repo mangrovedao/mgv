@@ -7,7 +7,7 @@ import {
   populateChunkFromOffsetParams,
   populateFromOffsetParams,
 } from '../../builder/kandel/populate.js'
-import type { BuiltArgsWithValue } from '../../index.js'
+import type { BuiltArgs } from '../../index.js'
 import type { SimulationParams } from '../../types/actions/simulation.js'
 import { getAction } from '../../utils/getAction.js'
 
@@ -16,7 +16,7 @@ type SimulationPopulateParams = SimulationParams<
   'populateFromOffset'
 >
 export type PopulateArgs = PopulateFromOffsetParams &
-  Omit<SimulationPopulateParams, BuiltArgsWithValue>
+  Omit<SimulationPopulateParams, BuiltArgs>
 
 export type PopulateResult = SimulateContractReturnType<
   typeof populateABI,
@@ -45,7 +45,7 @@ type SimulationPopulateChunckParams = SimulationParams<
 >
 
 export type PopulateChunkArgs = PopulateChunkFromOffsetParams &
-  Omit<SimulationPopulateChunckParams, BuiltArgsWithValue>
+  Omit<SimulationPopulateChunckParams, BuiltArgs>
 
 export type PopulateChunkResult = SimulateContractReturnType<
   typeof populateABI,

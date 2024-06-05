@@ -101,6 +101,8 @@ export function countBidsAndAsks(distribution: Distribution) {
   let nAsks = 0n
   for (let i = 0; i < distribution.asks.length; i++) {
     if (distribution.asks[i]!.gives !== 0n) nAsks++
+  }
+  for (let i = 0; i < distribution.bids.length; i++) {
     if (distribution.bids[i]!.gives !== 0n) nBids++
   }
   return {
@@ -179,9 +181,12 @@ export function validateKandelParams(
 
   const minBaseAmount = minAsk * nAsks
   const minQuoteAmount = minBid * nBids
+
   const minProvision =
-    ((gasreq + asksLocalConfig.offer_gasbase) * nAsks +
-      (gasreq + bidsLocalConfig.offer_gasbase) * nBids) *
+    ((gasreq + asksLocalConfig.offer_gasbase) *
+      BigInt(distribution.asks.length) +
+      (gasreq + bidsLocalConfig.offer_gasbase) *
+        BigInt(distribution.bids.length)) *
     marketConfig.gasprice *
     BigInt(1e6)
 
