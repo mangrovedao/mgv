@@ -16,6 +16,8 @@ export {
   blastMetaStreetWETHPUNKS40,
   baseSepoliaUSDC,
   baseSepoliaWETH,
+  baseSepoliaDAI,
+  baseSepoliaWBTC,
   baseSepoliaTokens,
 } from './tokens/index.js'
 

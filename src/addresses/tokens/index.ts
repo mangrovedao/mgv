@@ -9,6 +9,8 @@ export {
 export {
   baseSepoliaUSDC,
   baseSepoliaWETH,
+  baseSepoliaDAI,
+  baseSepoliaWBTC,
   baseSepoliaTokens,
 } from './base-sepolia.js'
 

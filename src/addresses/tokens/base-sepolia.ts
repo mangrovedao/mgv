@@ -13,4 +13,24 @@ export const baseSepoliaUSDC = buildToken({
   decimals: 6,
 })
 
-export const baseSepoliaTokens = [baseSepoliaUSDC, baseSepoliaWETH] as const
+export const baseSepoliaWBTC = buildToken({
+  address: '0x5146d560975A44B9Ad1a8bdF5f4017591a26df82',
+  symbol: 'WBTC',
+  decimals: 8,
+  displayDecimals: 5,
+  priceDisplayDecimals: 6,
+})
+
+export const baseSepoliaDAI = buildToken({
+  address: '0x9508B3459Bc95A39CA66c385f1Ae12f03f72f8af',
+  symbol: 'DAI',
+  displayDecimals: 2,
+  priceDisplayDecimals: 2,
+})
+
+export const baseSepoliaTokens = [
+  baseSepoliaUSDC,
+  baseSepoliaWETH,
+  baseSepoliaWBTC,
+  baseSepoliaDAI,
+] as const
