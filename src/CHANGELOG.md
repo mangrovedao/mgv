@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.6
+
+### Patch Changes
+
+- 54a59ad: Add sepolia market WBTC/DAI
+
 ## 0.8.5
 
 ### Patch Changes
