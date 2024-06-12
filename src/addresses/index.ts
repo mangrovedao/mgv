@@ -54,4 +54,4 @@ export {
 
 // --- kandel ---
 
-export { blastSmartKandel } from './kandel/index.js'
+export { blastSmartKandel, baseSepoliaSmartKandel } from './kandel/index.js'
