@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.7
+
+### Patch Changes
+
+- 12f7da7: Added Base sepolia smart kandel
+
 ## 0.8.6
 
 ### Patch Changes
