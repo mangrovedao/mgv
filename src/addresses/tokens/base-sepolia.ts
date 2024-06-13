@@ -19,6 +19,7 @@ export const baseSepoliaWBTC = buildToken({
   decimals: 8,
   displayDecimals: 5,
   priceDisplayDecimals: 6,
+  mgvTestToken: true,
 })
 
 export const baseSepoliaDAI = buildToken({
@@ -26,6 +27,7 @@ export const baseSepoliaDAI = buildToken({
   symbol: 'DAI',
   displayDecimals: 2,
   priceDisplayDecimals: 2,
+  mgvTestToken: true,
 })
 
 export const baseSepoliaTokens = [
