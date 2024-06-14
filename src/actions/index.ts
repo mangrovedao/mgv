@@ -111,3 +111,10 @@ export {
   isBound,
   simulateDeployRouter,
 } from './smart-router.js'
+
+export type {
+  OfferParsed,
+  GetKandelStateArgs,
+  GetKandelStateParams,
+  GetKandelStateResult,
+} from './kandel/view.js'

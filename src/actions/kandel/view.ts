@@ -29,7 +29,7 @@ export type GetKandelStateParams = {}
 export type GetKandelStateArgs = GetKandelStateParams &
   Omit<MulticallParameters, 'contracts' | 'allowFailure'>
 
-type OfferParsed = {
+export type OfferParsed = {
   id: bigint
   tick: bigint
   gives: bigint

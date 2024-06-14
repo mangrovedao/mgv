@@ -12,6 +12,10 @@ export type {
   GetOrdersParamsSingleMarket,
   GetOrdersParams,
   GetOrdersArgs,
+  OfferParsed,
+  GetKandelStateArgs,
+  GetKandelStateParams,
+  GetKandelStateResult,
 } from './actions/index.js'
 
 // -- lib functions --
