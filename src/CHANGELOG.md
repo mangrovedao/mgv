@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.9
+
+### Patch Changes
+
+- a5219bc: Fix density by using the same algorithm as from the chain
+
 ## 0.8.8
 
 ### Patch Changes
