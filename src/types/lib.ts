@@ -26,6 +26,7 @@ export type LocalConfig = {
   active: boolean
   fee: bigint
   density: number
+  rawDensity: bigint
   binPosInLeaf: bigint
   level3: bigint
   level2: bigint

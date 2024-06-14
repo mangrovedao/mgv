@@ -15,6 +15,7 @@ describe('local', () => {
       level1: 48n,
       root: 2n,
       offer_gasbase: 300_000n,
+      rawDensity: 273n,
       lock: false,
       last: 8698n,
     }
