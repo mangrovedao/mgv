@@ -47,7 +47,8 @@ export function unpackLocalConfig(_config: bigint): LocalConfig {
   config >>= level3_bits
   const binPosInLeaf = config & mask(binPosInLeaf_bits)
   config >>= binPosInLeaf_bits
-  const density = parseDensity(config & mask(density_bits))
+  const rawDensity = config & mask(density_bits)
+  const density = parseDensity(rawDensity)
   config >>= density_bits
   const fee = config & mask(fee_bits)
   config >>= fee_bits
@@ -56,6 +57,7 @@ export function unpackLocalConfig(_config: bigint): LocalConfig {
     active: active === 1n,
     fee,
     density,
+    rawDensity,
     binPosInLeaf,
     level3,
     level2,

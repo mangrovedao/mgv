@@ -48,6 +48,21 @@ export function formatDensity(density: number): bigint {
   return BigInt((exponent << 2) | mantissa)
 }
 
+const SUBNORMAL_LIMIT = 0b111n
+
+export function rawDensityTo96X32(rawDensity: bigint): bigint {
+  if (rawDensity <= SUBNORMAL_LIMIT) {
+    return rawDensity & 0b11n
+  }
+  const shift = (rawDensity >> 2n) - 2n
+  return ((rawDensity & 0b11n) | 0b100n) << shift
+}
+
+export function multiplyUpRawDensity(rawDensity: bigint, m: bigint): bigint {
+  const part = m * rawDensityTo96X32(rawDensity)
+  return (part >> 32n) + (part % (2n << 32n) === 0n ? 0n : 1n)
+}
+
 export function multiplyDensity(density: number, b: bigint, up = true): bigint {
   const roundMethod = up ? Math.ceil : Math.round
   return BigInt(roundMethod(Number(b) * density))
@@ -60,5 +75,5 @@ export function multiplyDensity(density: number, b: bigint, up = true): bigint {
  * @returns the minimum volume required to execute the offer.
  */
 export function minVolume(config: LocalConfig, gasreq: bigint): bigint {
-  return multiplyDensity(config.density, gasreq + config.offer_gasbase)
+  return multiplyUpRawDensity(config.rawDensity, gasreq + config.offer_gasbase)
 }
