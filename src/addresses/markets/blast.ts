@@ -4,11 +4,17 @@ import {
   blastMetaStreetWETHPUNKS40,
   blastUSDB,
   blastWETH,
+  blastUSDe,
 } from '../tokens/blast.js'
 
 export const blastMarkets = [
   {
     base: blastWETH,
+    quote: blastUSDB,
+    tickSpacing: 1n,
+  },
+  {
+    base: blastUSDe,
     quote: blastUSDB,
     tickSpacing: 1n,
   },
