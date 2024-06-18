@@ -12,6 +12,13 @@ export const blastUSDB = buildToken({
   priceDisplayDecimals: 2,
 })
 
+export const blastUSDe = buildToken({
+  address: '0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
+  symbol: 'USDe',
+  displayDecimals: 2,
+  priceDisplayDecimals: 2,
+})
+
 export const blastMetaStreetWETHPUNKS20 = buildToken({
   address: '0x9a50953716ba58e3d6719ea5c437452ac578705f',
   symbol: 'mwstETH-WPUNKS:20',
@@ -25,6 +32,7 @@ export const blastMetaStreetWETHPUNKS40 = buildToken({
 export const blastTokens = [
   blastWETH,
   blastUSDB,
+  blastUSDe,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
 ] as const
