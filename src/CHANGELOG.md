@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.11
+
+### Patch Changes
+
+- adcb4b6: Add USDe token on blast
+
 ## 0.8.10
 
 ### Patch Changes
