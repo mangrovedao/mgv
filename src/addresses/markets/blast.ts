@@ -3,8 +3,8 @@ import {
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
   blastUSDB,
-  blastWETH,
   blastUSDe,
+  blastWETH,
 } from '../tokens/blast.js'
 
 export const blastMarkets = [
