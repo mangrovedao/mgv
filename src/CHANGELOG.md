@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.12
+
+### Patch Changes
+
+- 918a274: rename retractParams (from,to) args
+
 ## 0.8.11
 
 ### Patch Changes
