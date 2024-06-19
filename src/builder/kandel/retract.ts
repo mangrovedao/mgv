@@ -3,41 +3,41 @@ import {
   type ContractFunctionParameters,
   maxUint256,
   parseAbi,
-} from 'viem'
+} from "viem";
 
 export const restractKandelABI = parseAbi([
-  'function retractAndWithdraw(uint from, uint to, uint baseAmount, uint quoteAmount, uint freeWei, address recipient) external',
-])
+  "function retractAndWithdraw(uint from, uint to, uint baseAmount, uint quoteAmount, uint freeWei, address recipient) external",
+]);
 
 export type RetractParams = {
-  from?: bigint | undefined
-  to: bigint
-  baseAmount?: bigint | undefined
-  quoteAmount?: bigint | undefined
-  freeWei?: bigint | undefined
-  recipient: Address
-}
+  fromIndex?: bigint | undefined;
+  toIndex: bigint;
+  baseAmount?: bigint | undefined;
+  quoteAmount?: bigint | undefined;
+  freeWei?: bigint | undefined;
+  recipient: Address;
+};
 
 export function retractParams(params: RetractParams) {
   const {
-    from = 0n,
-    to,
+    fromIndex = 0n,
+    toIndex,
     baseAmount = 0n,
     quoteAmount = 0n,
     freeWei = maxUint256,
     recipient,
-  } = params
+  } = params;
 
   return {
     abi: restractKandelABI,
-    functionName: 'retractAndWithdraw',
-    args: [from, to, baseAmount, quoteAmount, freeWei, recipient],
+    functionName: "retractAndWithdraw",
+    args: [fromIndex, toIndex, baseAmount, quoteAmount, freeWei, recipient],
   } satisfies Omit<
     ContractFunctionParameters<
       typeof restractKandelABI,
-      'nonpayable',
-      'retractAndWithdraw'
+      "nonpayable",
+      "retractAndWithdraw"
     >,
-    'address'
-  >
+    "address"
+  >;
 }
