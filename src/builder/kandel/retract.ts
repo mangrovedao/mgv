@@ -10,8 +10,8 @@ export const restractKandelABI = parseAbi([
 ])
 
 export type RetractParams = {
-  from?: bigint | undefined
-  to: bigint
+  fromIndex?: bigint | undefined
+  toIndex: bigint
   baseAmount?: bigint | undefined
   quoteAmount?: bigint | undefined
   freeWei?: bigint | undefined
@@ -20,8 +20,8 @@ export type RetractParams = {
 
 export function retractParams(params: RetractParams) {
   const {
-    from = 0n,
-    to,
+    fromIndex = 0n,
+    toIndex,
     baseAmount = 0n,
     quoteAmount = 0n,
     freeWei = maxUint256,
@@ -31,7 +31,7 @@ export function retractParams(params: RetractParams) {
   return {
     abi: restractKandelABI,
     functionName: 'retractAndWithdraw',
-    args: [from, to, baseAmount, quoteAmount, freeWei, recipient],
+    args: [fromIndex, toIndex, baseAmount, quoteAmount, freeWei, recipient],
   } satisfies Omit<
     ContractFunctionParameters<
       typeof restractKandelABI,
