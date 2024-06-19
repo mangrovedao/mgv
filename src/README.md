@@ -571,7 +571,7 @@ To retract a kandel, you can call the `simulateRetract` function. You have to kn
 
 ```ts
 const { request } = await kandelClient.simulateRetract({
-  to: pricePoints,
+  toIndex: pricePoints,
   baseAmount: parseEther('1'),
   quoteAmount: parseEther('3000'),
   // both of these addresses are suppoesedly the same
