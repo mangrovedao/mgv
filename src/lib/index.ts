@@ -143,13 +143,3 @@ export {
 // utils
 
 export { mask } from './utils.js'
-
-// zod
-
-export {
-  tickSchema,
-  hexSchema,
-  addressSchema,
-  volumeSchema,
-  olKeySchema,
-} from './zod.js'
