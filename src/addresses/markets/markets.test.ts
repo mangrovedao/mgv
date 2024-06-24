@@ -1,4 +1,4 @@
-import { describe, it, expect, expectTypeOf } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 import type { MarketParams } from '~mgv/index.js'
 
 function testMarketFile(chain: string, module: any) {
