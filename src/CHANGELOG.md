@@ -1,5 +1,12 @@
 # @mangrovedao/mgv
 
+## 0.8.13
+
+### Patch Changes
+
+- 1c2e49e: Extracted markets from the array
+- 8375fd9: Remove zod from mgv
+
 ## 0.8.12
 
 ### Patch Changes
