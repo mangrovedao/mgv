@@ -6,15 +6,19 @@ import {
   baseSepoliaWETH,
 } from '../tokens/base-sepolia.js'
 
+export const baseSepoliaWETHUSDC = {
+  base: baseSepoliaWETH,
+  quote: baseSepoliaUSDC,
+  tickSpacing: 1n,
+} as const satisfies MarketParams
+
+export const baseSepoliaWBTCDAI = {
+  base: baseSepoliaWBTC,
+  quote: baseSepoliaDAI,
+  tickSpacing: 1n,
+} as const satisfies MarketParams
+
 export const baseSepoliaMarkets = [
-  {
-    base: baseSepoliaWETH,
-    quote: baseSepoliaUSDC,
-    tickSpacing: 1n,
-  },
-  {
-    base: baseSepoliaWBTC,
-    quote: baseSepoliaDAI,
-    tickSpacing: 1n,
-  },
+  baseSepoliaWETHUSDC,
+  baseSepoliaWBTCDAI,
 ] as const satisfies MarketParams[]

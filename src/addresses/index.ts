@@ -3,7 +3,16 @@ export type {
   BuildTokenParms,
 } from './tokens/index.js'
 
-export { blastMarkets, baseSepoliaMarkets } from './markets/index.js'
+export {
+  blastMarkets,
+  blastWETHUSDB,
+  blastUSDeUSDB,
+  blastmwstETHWPUNKS20WETH,
+  blastmwstETHWPUNKS40WETH,
+  baseSepoliaMarkets,
+  baseSepoliaWBTCDAI,
+  baseSepoliaWETHUSDC,
+} from './markets/index.js'
 
 // --- tokens ---
 
