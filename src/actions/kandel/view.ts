@@ -60,6 +60,7 @@ export type GetKandelStateResult = {
   quoteAmount: bigint
   baseAmount: bigint
   unlockedProvision: bigint
+  totalProvision: bigint
   kandelStatus: KandelStatus
   asks: OfferParsed[]
   bids: OfferParsed[]
@@ -356,7 +357,6 @@ async function kandelBidsAndAsks(
         ],
       })
       for (let i = 0; i < bids.length && i < provisions.length; i++) {
-        if (bids[i]!.gives === 0n) continue
         const value = provisions[i]
         const provision = value?.status === 'success' ? value.result : 0n
         bids[i]!.provision = provision
@@ -366,7 +366,6 @@ async function kandelBidsAndAsks(
         i < asks.length && i + bids.length < provisions.length;
         i++
       ) {
-        if (asks[i]!.gives === 0n) continue
         const value = provisions[i + bids.length]
         const provision = value?.status === 'success' ? value.result : 0n
         asks[i]!.provision = provision
@@ -410,6 +409,17 @@ function kandelStatus(
   return KandelStatus.OutOfRange
 }
 
+function getTotalProvision(
+  { asks, bids }: GetKandelBidsAndAskResult,
+  unlockedProvision: bigint,
+): bigint {
+  return (
+    unlockedProvision +
+    asks.reduce((acc, ask) => acc + ask.provision, 0n) +
+    bids.reduce((acc, bid) => acc + bid.provision, 0n)
+  )
+}
+
 export async function getKandelState(
   client: Client,
   actionsParams: MangroveActionsDefaultParams,
@@ -433,5 +443,6 @@ export async function getKandelState(
     unlockedProvision,
     kandelStatus: kandelStatus(result, unlockedProvision, midPrice),
     reversed,
+    totalProvision: getTotalProvision(result, unlockedProvision),
   }
 }

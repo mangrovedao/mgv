@@ -70,7 +70,7 @@ describe('view kandel', () => {
       pricePoints: 5n,
       market: wethUSDC,
       baseAmount: parseEther('1'),
-      quoteAmount: parseUnits('3000', 18),
+      quoteAmount: parseUnits('3000', 6),
       stepSize: 1n,
       gasreq: 350_000n,
       factor: 3,
@@ -81,7 +81,8 @@ describe('view kandel', () => {
 
     expect(isValid).toBe(true)
 
-    const kandel = await sowAndPopulate(params, minProvision)
+    const kandel = await sowAndPopulate(params, minProvision * 3n)
+
     const kandelState = await getKandelState(
       client,
       actionParams,
@@ -94,14 +95,15 @@ describe('view kandel', () => {
 
     expect(kandelState.baseQuoteTickOffset).toBe(841n)
     expect(kandelState.baseAmount).toBe(parseEther('1'))
-    expect(kandelState.quoteAmount).toBe(parseUnits('3000', 18))
+    expect(kandelState.quoteAmount).toBe(parseUnits('3000', 6))
     expect(kandelState.gasprice).toBe(0)
     expect(kandelState.gasreq).toBe(350_000)
     expect(kandelState.stepSize).toBe(1)
     expect(kandelState.pricePoints).toBe(5)
     expect(kandelState.asks.length).toBe(4)
     expect(kandelState.bids.length).toBe(4)
-    expect(kandelState.unlockedProvision).toBe(0n)
+    expect(kandelState.unlockedProvision).toBe(minProvision * 2n)
+    expect(kandelState.totalProvision).toBe(minProvision * 3n)
     expect(kandelState.kandelStatus).toBe(KandelStatus.Active)
   })
 
