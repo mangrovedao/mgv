@@ -1,15 +1,15 @@
-import { parseEther, parseUnits, type Address } from 'viem'
+import { type Address, parseEther, parseUnits } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { validateKandelParams } from '~mgv/index.js'
+import type { KandelParams, MarketParams } from '~mgv/index.js'
+import { BS, Order } from '~mgv/lib/enums.js'
 import { getClient } from '~test/src/client.js'
 import { getBook } from '../book.js'
+import { simulateLimitOrder } from '../index.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
 import { simulatePopulate } from './populate.js'
 import { simulateSow } from './sow.js'
-import type { KandelParams, MarketParams } from '~mgv/index.js'
-import { getKandelState, KandelStatus } from './view.js'
-import { BS, Order } from '~mgv/lib/enums.js'
-import { simulateLimitOrder } from '../index.js'
+import { KandelStatus, getKandelState } from './view.js'
 
 const { smartKandelSeeder } = inject('kandel')
 const { wethUSDC } = inject('markets')

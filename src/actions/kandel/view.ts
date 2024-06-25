@@ -6,14 +6,15 @@ import {
   isAddressEqual,
 } from 'viem'
 import { multicall } from 'viem/actions'
+import { getBookParams, parseBookResult } from '../../builder/book.js'
 import {
+  baseParams,
   baseQuoteTickOffsetParams,
   getOfferParams,
   kandelParamsParams,
   offerIdOfIndexParams,
   offeredVolumeParams,
   provisionOfParams,
-  baseParams,
   quoteParams,
   tickSpacingParams,
 } from '../../builder/kandel/view.js'
@@ -27,7 +28,6 @@ import { rawPriceToHumanPrice } from '../../lib/human-readable.js'
 import { unpackOffer } from '../../lib/offer.js'
 import { getSemibooksOLKeys } from '../../lib/ol-key.js'
 import { getAction } from '../../utils/getAction.js'
-import { getBookParams, parseBookResult } from '../../builder/book.js'
 
 export type GetKandelStateParams = {}
 
