@@ -117,4 +117,5 @@ export type {
   GetKandelStateArgs,
   GetKandelStateParams,
   GetKandelStateResult,
+  KandelStatus,
 } from './kandel/view.js'

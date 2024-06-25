@@ -16,6 +16,7 @@ export type {
   GetKandelStateArgs,
   GetKandelStateParams,
   GetKandelStateResult,
+  KandelStatus,
 } from './actions/index.js'
 
 // -- lib functions --
