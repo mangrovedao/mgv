@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.14
+
+### Patch Changes
+
+- 828b863: Add reverse market possibility on kandel view function
+
 ## 0.8.13
 
 ### Patch Changes
