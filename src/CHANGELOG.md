@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.15
+
+### Patch Changes
+
+- e08f617: Added total provision to kandel view function
+
 ## 0.8.14
 
 ### Patch Changes
