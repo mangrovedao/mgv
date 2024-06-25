@@ -16,7 +16,34 @@ export const viewKandelABI = parseAbi([
   'function getOffer(uint8 ba, uint index) public view returns (uint offer)',
   'function offerIdOfIndex(uint8 ba, uint index) public view returns (uint offerId)',
   'function provisionOf(OLKey memory olKey, uint offerId) public view returns (uint provision)',
+  'function BASE() public view returns (address)',
+  'function QUOTE() public view returns (address)',
+  'function TICK_SPACING() public view returns (uint)',
 ])
+
+export const baseParams = {
+  abi: viewKandelABI,
+  functionName: 'BASE',
+} satisfies Omit<
+  ContractFunctionParameters<typeof viewKandelABI, 'view', 'BASE'>,
+  'address'
+>
+
+export const quoteParams = {
+  abi: viewKandelABI,
+  functionName: 'QUOTE',
+} satisfies Omit<
+  ContractFunctionParameters<typeof viewKandelABI, 'view', 'QUOTE'>,
+  'address'
+>
+
+export const tickSpacingParams = {
+  abi: viewKandelABI,
+  functionName: 'TICK_SPACING',
+} satisfies Omit<
+  ContractFunctionParameters<typeof viewKandelABI, 'view', 'TICK_SPACING'>,
+  'address'
+>
 
 export const baseQuoteTickOffsetParams = {
   abi: viewKandelABI,
