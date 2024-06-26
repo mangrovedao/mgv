@@ -77,6 +77,7 @@ export type RawKandelParams = RawKandelPositionParams & {
   asksLocalConfig: LocalConfig
   bidsLocalConfig: LocalConfig
   marketConfig: GlobalConfig
+  deposit?: boolean | undefined
 }
 
 export type KandelParams = PositionKandelParams & {
@@ -84,6 +85,8 @@ export type KandelParams = PositionKandelParams & {
   askGives: bigint
   bidGives: bigint
   gasreq: bigint
+  baseAmount?: bigint | undefined
+  quoteAmount?: bigint | undefined
 }
 
 export type ValidateParamsResult = {
@@ -140,6 +143,7 @@ export function validateKandelParams(
     asksLocalConfig,
     bidsLocalConfig,
     marketConfig,
+    deposit = false,
   } = params
 
   let distribution = createGeometricDistribution({
@@ -202,6 +206,8 @@ export function validateKandelParams(
       bidGives,
       gasreq,
       pricePoints,
+      baseAmount: deposit ? baseAmount : undefined,
+      quoteAmount: deposit ? quoteAmount : undefined,
     },
     rawParams: {
       ...params,

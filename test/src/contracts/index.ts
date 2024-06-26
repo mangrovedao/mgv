@@ -1,7 +1,7 @@
 import { globalTestClient } from "../client.js";
 import { accounts } from "../constants.js";
 import { Address, Client, Hex, parseAbi } from "viem";
-import { writeContract } from "viem/actions";
+import { writeContract, waitForTransactionReceipt } from "viem/actions";
 import { ERC20_ABI, ERC20_BYTECODE } from "./erc20.js";
 import type { OLKey } from "~mgv/types/lib.js";
 import { flip } from "~mgv/lib/ol-key.js";
@@ -30,6 +30,28 @@ export async function deployERC20(
     address: receipt.contractAddress,
     decimals
   })
+}
+
+export async function deployKandelSeeder(
+  mgv: Address,
+  kandelGasreq: bigint,
+  kandelLib: Address,
+  kandelSeederBytecode: Hex
+): Promise<Address> {
+  const seederTx = await globalTestClient.deployContract({
+    account: globalTestClient.account,
+    chain: globalTestClient.chain,
+    bytecode: kandelSeederBytecode.replace(/__\$[a-fA-F0-9]{34}\$__/g, kandelLib.slice(2)),
+    abi: parseAbi([
+      "constructor(address mgv, uint gasreq)",
+    ]),
+    args: [mgv, kandelGasreq],
+  } as any);
+  const seederReceipt = await globalTestClient.waitForTransactionReceipt({
+    hash: seederTx,
+  });
+  const seederAddress = seederReceipt.contractAddress;
+  return seederAddress;
 }
 
 export async function deploySmartKandel(
@@ -219,4 +241,32 @@ export async function mint(
     functionName: "mint",
     args: [to, amount],
   } as any);
+  await waitForTransactionReceipt(client, { hash: res });
+}
+
+export async function approve(
+  client: Client,
+  token: Address,
+  owner: Address,
+  spender: Address,
+  amount: bigint
+) {
+  const res = await writeContract(client, {
+    address: token,
+    abi: ERC20_ABI,
+    functionName: "approve",
+    args: [spender, amount],
+  } as any);
+  await waitForTransactionReceipt(client, { hash: res });
+}
+
+export async function mintAndApprove(
+  client: Client,
+  token: Address,
+  to: Address,
+  amount: bigint,
+  spender: Address
+) {
+  await mint(client, token, to, amount)
+  await approve(client, token, to, spender, amount)
 }

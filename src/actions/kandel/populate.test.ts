@@ -2,17 +2,18 @@ import { parseEther, parseUnits } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { validateKandelParams } from '~mgv/index.js'
 import { getClient } from '~test/src/client.js'
+import { mintAndApprove } from '~test/src/contracts/index.js'
 import { getBook } from '../book.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
 import { simulatePopulate } from './populate.js'
 import { simulateSow } from './sow.js'
 
-const { smartKandelSeeder } = inject('kandel')
+const { smartKandelSeeder, kandelSeeder } = inject('kandel')
 const { wethUSDC } = inject('markets')
 const actionParams = inject('mangrove')
 const client = getClient()
 
-describe('populate', () => {
+describe('populate smart kandel', () => {
   it('populates', async () => {
     const { request: sowReq, result: kandel } = await simulateSow(
       client,
@@ -34,7 +35,7 @@ describe('populate', () => {
       pricePoints: 5n,
       market: wethUSDC,
       baseAmount: parseEther('1'),
-      quoteAmount: parseUnits('3000', 18),
+      quoteAmount: parseUnits('3000', 6),
       stepSize: 1n,
       gasreq: 350_000n,
       factor: 3,
@@ -60,6 +61,66 @@ describe('populate', () => {
     })
     const bindTx = await client.writeContract(bindReq)
     await client.waitForTransactionReceipt({ hash: bindTx })
+
+    const { request } = await simulatePopulate(client, kandel, {
+      ...params,
+      account: client.account.address,
+      value: minProvision,
+    })
+    const hash2 = await client.writeContract(request)
+    await client.waitForTransactionReceipt({ hash: hash2 })
+  })
+})
+
+describe('populate kandel', () => {
+  it('populates', async () => {
+    const { request: sowReq, result: kandel } = await simulateSow(
+      client,
+      wethUSDC,
+      kandelSeeder,
+      {
+        account: client.account.address,
+      },
+    )
+    const hash = await client.writeContract(sowReq)
+    await client.waitForTransactionReceipt({ hash })
+
+    const book = await getBook(client, actionParams, wethUSDC)
+
+    const { params, isValid, minProvision } = validateKandelParams({
+      minPrice: 2990,
+      midPrice: 3000,
+      maxPrice: 3010,
+      pricePoints: 5n,
+      market: wethUSDC,
+      baseAmount: parseEther('10'),
+      quoteAmount: parseUnits('30000', 6),
+      stepSize: 1n,
+      gasreq: 350_000n,
+      factor: 3,
+      asksLocalConfig: book.asksConfig,
+      bidsLocalConfig: book.bidsConfig,
+      marketConfig: book.marketConfig,
+      deposit: true,
+    })
+
+    expect(isValid).toBe(true)
+
+    // mint tokens and give approval to kandel
+    await mintAndApprove(
+      client,
+      wethUSDC.base.address,
+      client.account.address,
+      params.baseAmount || 0n,
+      kandel,
+    )
+    await mintAndApprove(
+      client,
+      wethUSDC.quote.address,
+      client.account.address,
+      params.quoteAmount || 0n,
+      kandel,
+    )
 
     const { request } = await simulatePopulate(client, kandel, {
       ...params,
