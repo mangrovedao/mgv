@@ -2,11 +2,11 @@ import { parseEther, parseUnits } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { validateKandelParams } from '~mgv/index.js'
 import { getClient } from '~test/src/client.js'
+import { mintAndApprove } from '~test/src/contracts/index.js'
 import { getBook } from '../book.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
 import { simulatePopulate } from './populate.js'
 import { simulateSow } from './sow.js'
-import { mintAndApprove } from '~test/src/contracts/index.js'
 
 const { smartKandelSeeder, kandelSeeder } = inject('kandel')
 const { wethUSDC } = inject('markets')
