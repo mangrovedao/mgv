@@ -7,6 +7,7 @@ import { globalTestClient } from '~test/src/client.js'
 import { accounts } from './src/constants.js'
 import {
   deployERC20,
+  deployKandelSeeder,
   deployMangroveCore,
   deployMangroveOrder,
   deployMangroveReader,
@@ -18,6 +19,7 @@ import {
 import { kandellibBytecode } from './src/contracts/kandellib.bytecode.js'
 import { getMangroveBytecodes } from './src/contracts/mangrove.js'
 import { smartKandelSeederBytecode } from './src/contracts/smart-kandel-seeder.bytecode.js'
+import { kandelSeederBytecode } from './src/contracts/kandel-seeder.bytecode.js'
 
 export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
@@ -79,6 +81,13 @@ export default async function ({ provide }: GlobalSetupContext) {
     smartKandelSeederBytecode,
   )
 
+  const kandelSeeder = await deployKandelSeeder(
+    mangrove,
+    128_000n,
+    kandelLib,
+    kandelSeederBytecode,
+  )
+
   provide('tokens', { WETH, USDC, DAI })
   provide('mangrove', {
     mgv: mangrove,
@@ -89,7 +98,7 @@ export default async function ({ provide }: GlobalSetupContext) {
     multicall,
     tickSpacing: 60n,
   })
-  provide('kandel', { kandelLib, smartKandelSeeder })
+  provide('kandel', { kandelLib, kandelSeeder, smartKandelSeeder })
 
   // open markets
 
@@ -163,6 +172,7 @@ declare module 'vitest' {
     }
     kandel: {
       kandelLib: Address
+      kandelSeeder: Address
       smartKandelSeeder: Address
     }
   }
