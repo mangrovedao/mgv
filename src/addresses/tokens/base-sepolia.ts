@@ -9,7 +9,7 @@ export const baseSepoliaUSDC = buildToken({
   address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
   symbol: 'USDC',
   displayDecimals: 2,
-  priceDisplayDecimals: 2,
+  priceDisplayDecimals: 4,
   decimals: 6,
 })
 
@@ -26,7 +26,7 @@ export const baseSepoliaDAI = buildToken({
   address: '0x9508B3459Bc95A39CA66c385f1Ae12f03f72f8af',
   symbol: 'DAI',
   displayDecimals: 2,
-  priceDisplayDecimals: 2,
+  priceDisplayDecimals: 4,
   mgvTestToken: true,
 })
 
