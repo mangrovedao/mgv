@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.16
+
+### Patch Changes
+
+- 9c61618: Change the decimals displayed for the Usd currencies
+
 ## 0.8.15
 
 ### Patch Changes
