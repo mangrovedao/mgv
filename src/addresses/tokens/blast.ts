@@ -9,14 +9,14 @@ export const blastUSDB = buildToken({
   address: '0x4300000000000000000000000000000000000003',
   symbol: 'USDB',
   displayDecimals: 2,
-  priceDisplayDecimals: 2,
+  priceDisplayDecimals: 4,
 })
 
 export const blastUSDe = buildToken({
   address: '0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
   symbol: 'USDe',
   displayDecimals: 2,
-  priceDisplayDecimals: 2,
+  priceDisplayDecimals: 4,
 })
 
 export const blastMetaStreetWETHPUNKS20 = buildToken({
