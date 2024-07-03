@@ -6,7 +6,9 @@ export type {
 export {
   blastMarkets,
   blastWETHUSDB,
+  blastBLASTUSDB,
   blastUSDeUSDB,
+  blastBLASTWETH,
   blastmwstETHWPUNKS20WETH,
   blastmwstETHWPUNKS40WETH,
   baseSepoliaMarkets,
@@ -22,6 +24,7 @@ export {
   blastWETH,
   blastUSDB,
   blastUSDe,
+  blastBLAST,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
   baseSepoliaUSDC,

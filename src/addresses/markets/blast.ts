@@ -1,5 +1,6 @@
 import type { MarketParams } from '../../types/index.js'
 import {
+  blastBLAST,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
   blastUSDB,
@@ -31,9 +32,23 @@ export const blastmwstETHWPUNKS40WETH = {
   tickSpacing: 1n,
 } as const satisfies MarketParams
 
+export const blastBLASTUSDB = {
+  base: blastBLAST,
+  quote: blastUSDB,
+  tickSpacing: 1n,
+} as const satisfies MarketParams
+
+export const blastBLASTWETH = {
+  base: blastBLAST,
+  quote: blastWETH,
+  tickSpacing: 1n,
+} as const satisfies MarketParams
+
 export const blastMarkets = [
   blastWETHUSDB,
+  blastBLASTUSDB,
   blastUSDeUSDB,
+  blastBLASTWETH,
   blastmwstETHWPUNKS20WETH,
   blastmwstETHWPUNKS40WETH,
 ] as const satisfies MarketParams[]
