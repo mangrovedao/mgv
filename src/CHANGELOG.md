@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.17
+
+### Patch Changes
+
+- c6ee852: Add Blast token and Blast market
+
 ## 0.8.16
 
 ### Patch Changes
