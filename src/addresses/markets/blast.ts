@@ -1,11 +1,11 @@
 import type { MarketParams } from '../../types/index.js'
 import {
+  blastBLAST,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
   blastUSDB,
   blastUSDe,
   blastWETH,
-  blastBLAST,
 } from '../tokens/blast.js'
 
 export const blastWETHUSDB = {
