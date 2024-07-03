@@ -1,7 +1,9 @@
 export {
   blastMarkets,
   blastWETHUSDB,
+  blastBLASTUSDB,
   blastUSDeUSDB,
+  blastBLASTWETH,
   blastmwstETHWPUNKS20WETH,
   blastmwstETHWPUNKS40WETH,
 } from './blast.js'

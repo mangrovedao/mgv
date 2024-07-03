@@ -2,6 +2,7 @@ export {
   blastWETH,
   blastUSDB,
   blastUSDe,
+  blastBLAST,
   blastMetaStreetWETHPUNKS20,
   blastMetaStreetWETHPUNKS40,
   blastTokens,
