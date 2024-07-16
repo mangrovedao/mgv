@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.8.18
+
+### Patch Changes
+
+- 5f6343e: Fix validate kandel params when one sided
+
 ## 0.8.17
 
 ### Patch Changes
