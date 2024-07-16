@@ -194,7 +194,10 @@ export function validateKandelParams(
     marketConfig.gasprice *
     BigInt(1e6)
 
-  const isValid = askGives >= minAsk && bidGives >= minBid
+  const isValid =
+    (nAsks === 0n || askGives >= minAsk) && (nBids === 0n || bidGives >= minBid)
+
+  console.log('isValid', isValid, askGives, minAsk, bidGives, minBid)
 
   return {
     params: {
