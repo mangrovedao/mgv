@@ -126,7 +126,7 @@ describe('view kandel', () => {
       marketConfig: book.marketConfig,
     })
 
-    expect(isValid).toBe(false)
+    expect(isValid).toBe(true) // even though out of range, params are valid
 
     const kandel = await sowAndPopulate(params, minProvision)
 
