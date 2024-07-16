@@ -197,8 +197,6 @@ export function validateKandelParams(
   const isValid =
     (nAsks === 0n || askGives >= minAsk) && (nBids === 0n || bidGives >= minBid)
 
-  console.log('isValid', isValid, askGives, minAsk, bidGives, minBid)
-
   return {
     params: {
       baseQuoteTickIndex0,
