@@ -1,14 +1,14 @@
-import { erc20Abi, parseEther, parseUnits, type Client } from 'viem'
+import { type Client, erc20Abi, parseEther, parseUnits } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { minVolume, validateKandelParams } from '~mgv/index.js'
+import { BS } from '~mgv/lib/enums.js'
 import { getClient } from '~test/src/client.js'
 import { mintAndApprove } from '~test/src/contracts/index.js'
 import { getBook } from '../book.js'
+import { simulateMarketOrderByVolumeAndMarket } from '../market-order.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
 import { simulatePopulate } from './populate.js'
 import { simulateSow } from './sow.js'
-import { simulateMarketOrderByVolumeAndMarket } from '../market-order.js'
-import { BS } from '~mgv/lib/enums.js'
 
 const { smartKandelSeeder, kandelSeeder } = inject('kandel')
 const { wethUSDC } = inject('markets')
@@ -132,7 +132,7 @@ describe('populate kandel', () => {
     const hash2 = await client.writeContract(request)
     await client.waitForTransactionReceipt({ hash: hash2 })
 
-    const book2 = await getBook(client, actionParams, wethUSDC)
+    // const book2 = await getBook(client, actionParams, wethUSDC)
     // console.log(book2)
 
     await mintAndApprove(
@@ -163,7 +163,7 @@ describe('populate kandel', () => {
     const marketOrderTx = await client.writeContract(marketOrderRequest)
     await client.waitForTransactionReceipt({ hash: marketOrderTx })
 
-    const book3 = await getBook(client, actionParams, wethUSDC)
+    // const book3 = await getBook(client, actionParams, wethUSDC)
     // console.log(book3)
 
     // console.log(minVolume(book3.asksConfig, 128_000n))
@@ -200,7 +200,7 @@ describe('populate kandel', () => {
       deposit: true,
     })
 
-    // expect(isValid).toBe(true)
+    expect(isValid).toBe(true)
 
     // mint tokens and give approval to kandel
     await mintAndApprove(
@@ -226,7 +226,7 @@ describe('populate kandel', () => {
     const hash2 = await client.writeContract(request)
     await client.waitForTransactionReceipt({ hash: hash2 })
 
-    const book2 = await getBook(client, actionParams, wethUSDC)
+    // const book2 = await getBook(client, actionParams, wethUSDC)
 
     await mintAndApprove(
       client,
@@ -235,20 +235,17 @@ describe('populate kandel', () => {
       parseEther('0.01'),
       actionParams.mgv,
     )
-    const {
-      request: marketOrderRequest,
-      takerGave,
-      bounty,
-    } = await simulateMarketOrderByVolumeAndMarket(
-      client,
-      actionParams,
-      wethUSDC,
-      {
-        bs: BS.sell,
-        baseAmount: parseEther('0.01'),
-        quoteAmount: parseUnits('1', 6),
-      },
-    )
+    const { request: marketOrderRequest } =
+      await simulateMarketOrderByVolumeAndMarket(
+        client,
+        actionParams,
+        wethUSDC,
+        {
+          bs: BS.sell,
+          baseAmount: parseEther('0.01'),
+          quoteAmount: parseUnits('1', 6),
+        },
+      )
 
     // expect(takerGave).toBe(parseEther('4.999'))
     // expect(bounty).toBe(0n)
@@ -256,7 +253,7 @@ describe('populate kandel', () => {
     const marketOrderTx = await client.writeContract(marketOrderRequest)
     await client.waitForTransactionReceipt({ hash: marketOrderTx })
 
-    const book3 = await getBook(client, actionParams, wethUSDC)
+    // const book3 = await getBook(client, actionParams, wethUSDC)
 
     // console.log(minVolume(book3.asksConfig, 128_000n))
 
@@ -268,24 +265,19 @@ describe('populate kandel', () => {
       actionParams.mgv,
     )
 
-    const {
-      request: marketOrderRequest2,
-      takerGave: takerGave2,
-      bounty: bounty2,
-    } = await simulateMarketOrderByVolumeAndMarket(
-      client,
-      actionParams,
-      wethUSDC,
-      {
-        bs: BS.buy,
-        baseAmount: parseEther('0.01'),
-        quoteAmount: parseUnits('30', 6),
-      },
-    )
+    const { request: marketOrderRequest2 } =
+      await simulateMarketOrderByVolumeAndMarket(
+        client,
+        actionParams,
+        wethUSDC,
+        {
+          bs: BS.buy,
+          baseAmount: parseEther('0.01'),
+          quoteAmount: parseUnits('30', 6),
+        },
+      )
 
     const marketOrderTx2 = await client.writeContract(marketOrderRequest2)
     await client.waitForTransactionReceipt({ hash: marketOrderTx2 })
-
-    const book4 = await getBook(client, actionParams, wethUSDC)
   })
 })

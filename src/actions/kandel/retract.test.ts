@@ -6,8 +6,8 @@ import { mintAndApprove } from '~test/src/contracts/index.js'
 import { getBook } from '../book.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
 import { simulatePopulate } from './populate.js'
-import { simulateSow } from './sow.js'
 import { simulateRetract } from './retract.js'
+import { simulateSow } from './sow.js'
 
 const { smartKandelSeeder, kandelSeeder } = inject('kandel')
 const { wethUSDC } = inject('markets')
