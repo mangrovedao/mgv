@@ -65,4 +65,5 @@ export type {
   NewOfferSteps,
   AmplifiedOrderSteps,
   KandelSteps,
+  SmartKandelSteps,
 } from './steps.js'

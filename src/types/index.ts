@@ -14,6 +14,7 @@ export type {
   NewOfferSteps,
   AmplifiedOrderSteps,
   KandelSteps,
+  SmartKandelSteps,
 } from './actions/index.js'
 
 export type {
