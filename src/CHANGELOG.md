@@ -1,5 +1,15 @@
 # @mangrovedao/mgv
 
+## 0.9.0
+
+### Minor Changes
+
+- 66994d1: Add get kandel steps for classic kandel
+
+### Patch Changes
+
+- f2b7ad7: Reorder markets
+
 ## 0.8.18
 
 ### Patch Changes
