@@ -24,7 +24,9 @@ import {
 } from '../../actions/kandel/sow.js'
 import {
   type GetKandelStepsArgs,
+  type GetSmartKandelStepsArgs,
   getKandelSteps,
+  getSmartKandelSteps,
 } from '../../actions/kandel/steps.js'
 import {
   type GetKandelStateArgs,
@@ -33,12 +35,16 @@ import {
 } from '../../actions/kandel/view.js'
 import type {
   KandelSteps,
+  SmartKandelSteps,
   MangroveActionsDefaultParams,
   MarketParams,
 } from '../../index.js'
 
 export type KandelSeederActions = {
   getKandelSteps: (args: GetKandelStepsArgs) => Promise<KandelSteps>
+  getSmartKandelSteps: (
+    args: GetSmartKandelStepsArgs,
+  ) => Promise<SmartKandelSteps>
   simulateSow: (args?: SowArgs | undefined) => Promise<SimulateSowResult>
 }
 
@@ -46,6 +52,8 @@ export function kandelSeederActions(market: MarketParams, seeder: Address) {
   return (client: Client): KandelSeederActions => ({
     getKandelSteps: (args: GetKandelStepsArgs) =>
       getKandelSteps(client, market, zeroAddress, args),
+    getSmartKandelSteps: (args: GetSmartKandelStepsArgs) =>
+      getSmartKandelSteps(client, market, zeroAddress, args),
     simulateSow: (args?: SowArgs | undefined) =>
       simulateSow(client, market, seeder, args),
   })
@@ -53,6 +61,9 @@ export function kandelSeederActions(market: MarketParams, seeder: Address) {
 
 export type KandelActions = {
   getKandelSteps: (args: GetKandelStepsArgs) => Promise<KandelSteps>
+  getSmartKandelSteps: (
+    args: GetSmartKandelStepsArgs,
+  ) => Promise<SmartKandelSteps>
   simulateSetLogics: (args: SetLogicsArgs) => Promise<SetLogicsResult>
   simulatePopulate: (args: PopulateArgs) => Promise<PopulateResult>
   simulatePopulateChunk: (
@@ -69,6 +80,8 @@ export function kandelActions(
 ) {
   return (client: Client): KandelActions => ({
     getKandelSteps: (args) => getKandelSteps(client, market, kandel, args),
+    getSmartKandelSteps: (args) =>
+      getSmartKandelSteps(client, market, kandel, args),
     simulateSetLogics: (args) => simulateSetLogics(client, kandel, args),
     simulatePopulate: (args) => simulatePopulate(client, kandel, args),
     simulatePopulateChunk: (args) =>

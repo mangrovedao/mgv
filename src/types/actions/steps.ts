@@ -47,7 +47,15 @@ export type AmplifiedOrderSteps = readonly [
   ERC20ApprovalStep,
   ERC20ApprovalStep,
 ]
+
 export type KandelSteps = readonly [
+  SowKandelStep,
+  ERC20ApprovalStep,
+  ERC20ApprovalStep,
+  PopulateKandelSteps,
+]
+
+export type SmartKandelSteps = readonly [
   SowKandelStep,
   DeployRouterStep,
   BindStep,

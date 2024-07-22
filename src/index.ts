@@ -100,6 +100,7 @@ export type {
   NewOfferSteps,
   AmplifiedOrderSteps,
   KandelSteps,
+  SmartKandelSteps,
   GlobalConfig,
   LocalConfig,
   CompleteToken,

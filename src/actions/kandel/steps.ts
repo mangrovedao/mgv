@@ -10,9 +10,12 @@ import {
 import { multicall } from 'viem/actions'
 import { getLogicsParams } from '../../builder/kandel/logic.js'
 import { adminParams, isBoundParams } from '../../builder/smart-router.js'
-// import { getParamsParams } from '../../builder/kandel/populate.js'
 import { tokenAllowanceParams } from '../../builder/tokens.js'
-import type { KandelSteps, MarketParams } from '../../index.js'
+import type {
+  KandelSteps,
+  SmartKandelSteps,
+  MarketParams,
+} from '../../index.js'
 import { getKandelGasReq } from '../../lib/kandel/params.js'
 import { getAction } from '../../utils/getAction.js'
 import type { OverlyingResult } from '../balances.js'
@@ -25,7 +28,6 @@ import type { OverlyingResult } from '../balances.js'
 // => populate the kandel
 
 export type GetKandelStepsParams = {
-  userRouter: Address
   user: Address
   baseOverlying?: OverlyingResult | undefined
   quoteOverlying?: OverlyingResult | undefined
@@ -40,6 +42,100 @@ export async function getKandelSteps(
   kandel: Address,
   args: GetKandelStepsArgs,
 ): Promise<KandelSteps> {
+  const [baseAllowance, quoteAllowance] = await getAction(
+    client,
+    multicall,
+    'multicall',
+  )({
+    ...args,
+    contracts: [
+      {
+        ...tokenAllowanceParams({
+          owner: args.user,
+          spender: kandel,
+          token:
+            args.baseOverlying?.available && args.baseOverlying.overlying
+              ? args.baseOverlying.overlying.address
+              : market.base.address,
+        }),
+      },
+      {
+        ...tokenAllowanceParams({
+          owner: args.user,
+          spender: kandel,
+          token:
+            args.quoteOverlying?.available && args.quoteOverlying.overlying
+              ? args.quoteOverlying.overlying.address
+              : market.quote.address,
+        }),
+      },
+    ],
+    allowFailure: true,
+  })
+
+  return [
+    {
+      type: 'sowKandel',
+      params: {
+        market,
+      },
+      done: !isAddressEqual(kandel, zeroAddress),
+    },
+    {
+      type: 'erc20Approval',
+      params: {
+        token:
+          args.baseOverlying?.available && args.baseOverlying.overlying
+            ? args.baseOverlying.overlying
+            : market.base,
+        from: args.user,
+        spender: kandel,
+        amount: maxUint256,
+      },
+      done:
+        baseAllowance.status === 'success' && baseAllowance.result > maxUint128,
+    },
+    {
+      type: 'erc20Approval',
+      params: {
+        token:
+          args.quoteOverlying?.available && args.quoteOverlying.overlying
+            ? args.quoteOverlying.overlying
+            : market.quote,
+        from: args.user,
+        spender: kandel,
+        amount: maxUint256,
+      },
+      done:
+        quoteAllowance.status === 'success' &&
+        quoteAllowance.result > maxUint128,
+    },
+    {
+      type: 'populate',
+      params: {
+        gasreq: 128_000n,
+      },
+      done: false,
+    },
+  ]
+}
+
+export type GetSmartKandelStepsParams = {
+  userRouter: Address
+  user: Address
+  baseOverlying?: OverlyingResult | undefined
+  quoteOverlying?: OverlyingResult | undefined
+}
+
+export type GetSmartKandelStepsArgs = GetSmartKandelStepsParams &
+  Omit<MulticallParameters, 'contracts' | 'allowFailure'>
+
+export async function getSmartKandelSteps(
+  client: Client,
+  market: MarketParams,
+  kandel: Address,
+  args: GetSmartKandelStepsArgs,
+): Promise<SmartKandelSteps> {
   const [admin, bound, logics, /*params,*/ baseAllowance, quoteAllowance] =
     await getAction(
       client,
