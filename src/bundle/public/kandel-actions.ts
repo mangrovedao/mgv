@@ -35,9 +35,9 @@ import {
 } from '../../actions/kandel/view.js'
 import type {
   KandelSteps,
-  SmartKandelSteps,
   MangroveActionsDefaultParams,
   MarketParams,
+  SmartKandelSteps,
 } from '../../index.js'
 
 export type KandelSeederActions = {

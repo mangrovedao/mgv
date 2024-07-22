@@ -13,8 +13,8 @@ import { adminParams, isBoundParams } from '../../builder/smart-router.js'
 import { tokenAllowanceParams } from '../../builder/tokens.js'
 import type {
   KandelSteps,
-  SmartKandelSteps,
   MarketParams,
+  SmartKandelSteps,
 } from '../../index.js'
 import { getKandelGasReq } from '../../lib/kandel/params.js'
 import { getAction } from '../../utils/getAction.js'
