@@ -46,9 +46,9 @@ export const blastBLASTWETH = {
 
 export const blastMarkets = [
   blastWETHUSDB,
-  blastBLASTUSDB,
-  blastUSDeUSDB,
   blastBLASTWETH,
+  blastUSDeUSDB,
+  blastBLASTUSDB,
   blastmwstETHWPUNKS20WETH,
   blastmwstETHWPUNKS40WETH,
 ] as const satisfies MarketParams[]
