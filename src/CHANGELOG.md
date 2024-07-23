@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.1
+
+### Patch Changes
+
+- 2bc2aa1: Added mangrove addresses for arbitrum
+
 ## 0.9.0
 
 ### Minor Changes
