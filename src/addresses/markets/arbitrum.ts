@@ -1,5 +1,5 @@
 import type { MarketParams } from '../../types/index.js'
-import { arbitrumWETH, arbitrumUSDC, arbitrumUSDT } from '../tokens/arbitrum.js'
+import { arbitrumUSDC, arbitrumUSDT, arbitrumWETH } from '../tokens/arbitrum.js'
 
 export const arbitrumWETHUSDC = {
   base: arbitrumWETH,
