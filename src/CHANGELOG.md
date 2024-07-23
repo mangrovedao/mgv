@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.2
+
+### Patch Changes
+
+- 19a954c: Add arbitrum tokens and markets
+
 ## 0.9.1
 
 ### Patch Changes
