@@ -14,6 +14,10 @@ export {
   baseSepoliaMarkets,
   baseSepoliaWBTCDAI,
   baseSepoliaWETHUSDC,
+  arbitrumMarkets,
+  arbitrumWETHUSDC,
+  arbitrumWETHUSDT,
+  arbitrumUSDCUSDT,
 } from './markets/index.js'
 
 // --- tokens ---
@@ -32,6 +36,10 @@ export {
   baseSepoliaDAI,
   baseSepoliaWBTC,
   baseSepoliaTokens,
+  arbitrumWETH,
+  arbitrumUSDC,
+  arbitrumUSDT,
+  arbitrumTokens,
 } from './tokens/index.js'
 
 // --- mangrove ---
