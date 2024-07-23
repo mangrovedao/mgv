@@ -36,7 +36,11 @@ export {
 
 // --- mangrove ---
 
-export { blastMangrove, baseSepoliaMangrove } from './mangrove/index.js'
+export {
+  blastMangrove,
+  baseSepoliaMangrove,
+  arbitrumMangrove,
+} from './mangrove/index.js'
 
 // --- logics ---
 
