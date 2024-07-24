@@ -1,4 +1,8 @@
-import { type ContractFunctionParameters, parseAbi, type ContractFunctionReturnType } from 'viem'
+import {
+  type ContractFunctionParameters,
+  type ContractFunctionReturnType,
+  parseAbi,
+} from 'viem'
 
 export const openMarketsABI = parseAbi([
   'struct Market { address tkn0; address tkn1; uint tickSpacing; }',
@@ -29,15 +33,10 @@ export function openMarketsParams() {
     functionName: 'openMarkets',
     args: [],
   } satisfies Omit<
-    ContractFunctionParameters<
-      typeof openMarketsABI,
-      'view',
-      'openMarkets'
-    >,
+    ContractFunctionParameters<typeof openMarketsABI, 'view', 'openMarkets'>,
     'address'
   >
 }
-
 
 export type ParseOpenMarketsParams = {
   result: ContractFunctionReturnType<
@@ -46,7 +45,6 @@ export type ParseOpenMarketsParams = {
     'openMarkets'
   >
 }
-
 
 /**
  *
@@ -74,6 +72,3 @@ export function parseBookResult({
     }
   })
 }
-
-
-
