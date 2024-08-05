@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.3
+
+### Patch Changes
+
+- 5c63a0c: Fixed USDC and USDT decimals on arbitrum
+
 ## 0.9.2
 
 ### Patch Changes
