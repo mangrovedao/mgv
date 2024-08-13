@@ -1,10 +1,10 @@
-import { createClient, http, parseUnits } from 'viem'
+import { http, createClient, parseUnits } from 'viem'
 import { arbitrum } from 'viem/chains'
 import { describe, it } from 'vitest'
 import { getBook } from '~mgv/actions/book.js'
 import { arbitrumMangrove, arbitrumWETHUSDC } from '~mgv/addresses/index.js'
-import { marketOrderSimulation } from './market-order-simulation.js'
 import { BS } from './enums.js'
+import { marketOrderSimulation } from './market-order-simulation.js'
 
 describe('Market order simulation', () => {
   it('should simulate', async () => {
