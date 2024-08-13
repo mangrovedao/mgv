@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.4
+
+### Patch Changes
+
+- c88d3a1: Fix invalid param names on kandel
+
 ## 0.9.3
 
 ### Patch Changes
