@@ -5,6 +5,7 @@ export type {
   KandelActions,
   KandelSeederActions,
   UserRouterActions,
+  AaveKandelActions,
 } from './public/index.js'
 
 export {
@@ -14,4 +15,5 @@ export {
   kandelActions,
   kandelSeederActions,
   userRouterActions,
+  aaveKandelActions,
 } from './public/index.js'

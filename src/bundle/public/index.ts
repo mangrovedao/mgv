@@ -7,8 +7,10 @@ export { mangroveActions, type MangroveActions } from './mangrove-actions.js'
 export {
   kandelActions,
   kandelSeederActions,
+  aaveKandelActions,
   type KandelActions,
   type KandelSeederActions,
+  type AaveKandelActions,
 } from './kandel-actions.js'
 export {
   type UserRouterActions,

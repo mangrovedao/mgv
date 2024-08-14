@@ -1,5 +1,15 @@
 import { type Address, type Client, zeroAddress } from 'viem'
 import {
+  type CheckAaveAssetArgs,
+  type CheckAaveAssetsArgs,
+  type CheckAaveMarketArgs,
+  type CheckAaveMarketsArgs,
+  checkAaveAsset,
+  checkAaveAssets,
+  checkAaveMarket,
+  checkAaveMarkets,
+} from '../../actions/kandel/aave.js'
+import {
   type SetLogicsArgs,
   type SetLogicsResult,
   simulateSetLogics,
@@ -89,5 +99,21 @@ export function kandelActions(
     simulateRetract: (args) => simulateRetract(client, kandel, args),
     getKandelState: (args = {}) =>
       getKandelState(client, actionParams, market, kandel, args),
+  })
+}
+
+export type AaveKandelActions = {
+  checkAaveAsset: (args: CheckAaveAssetArgs) => Promise<boolean>
+  checkAaveAssets: (args: CheckAaveAssetsArgs) => Promise<boolean[]>
+  checkAaveMarket: (args: CheckAaveMarketArgs) => Promise<boolean>
+  checkAaveMarkets: (args: CheckAaveMarketsArgs) => Promise<MarketParams[]>
+}
+
+export function aaveKandelActions(aaveRouter: Address) {
+  return (client: Client): AaveKandelActions => ({
+    checkAaveAsset: (args) => checkAaveAsset(client, aaveRouter, args),
+    checkAaveAssets: (args) => checkAaveAssets(client, aaveRouter, args),
+    checkAaveMarket: (args) => checkAaveMarket(client, aaveRouter, args),
+    checkAaveMarkets: (args) => checkAaveMarkets(client, aaveRouter, args),
   })
 }
