@@ -1,5 +1,15 @@
 import { type Address, type Client, zeroAddress } from 'viem'
 import {
+  type CheckAaveAssetArgs,
+  type CheckAaveAssetsArgs,
+  type CheckAaveMarketArgs,
+  type CheckAaveMarketsArgs,
+  checkAaveAsset,
+  checkAaveAssets,
+  checkAaveMarket,
+  checkAaveMarkets,
+} from '../../actions/kandel/aave.js'
+import {
   type SetLogicsArgs,
   type SetLogicsResult,
   simulateSetLogics,
@@ -39,16 +49,6 @@ import type {
   MarketParams,
   SmartKandelSteps,
 } from '../../index.js'
-import {
-  checkAaveAsset,
-  checkAaveAssets,
-  checkAaveMarket,
-  checkAaveMarkets,
-  type CheckAaveAssetArgs,
-  type CheckAaveAssetsArgs,
-  type CheckAaveMarketArgs,
-  type CheckAaveMarketsArgs,
-} from '../../actions/kandel/aave.js'
 
 export type KandelSeederActions = {
   getKandelSteps: (args: GetKandelStepsArgs) => Promise<KandelSteps>

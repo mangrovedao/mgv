@@ -1,4 +1,4 @@
-import { parseAbi, type Address, type ContractFunctionParameters } from 'viem'
+import { type Address, type ContractFunctionParameters, parseAbi } from 'viem'
 
 export type CheckAaveAssetParams = {
   token: Address

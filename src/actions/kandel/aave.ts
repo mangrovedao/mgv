@@ -6,9 +6,9 @@ import type {
 } from 'viem'
 import { multicall, readContract } from 'viem/actions'
 import {
-  checkAaveAssetParams,
   type CheckAaveAssetParams,
   type aaveRouterCheckAssetABI,
+  checkAaveAssetParams,
 } from '../../builder/kandel/aave.js'
 import type { BuiltArgs, MarketParams } from '../../index.js'
 import { getAction } from '../../utils/getAction.js'
@@ -106,8 +106,9 @@ export async function checkAaveMarkets(
     return acc
   }, new Map<Address, boolean>())
 
-  return args.markets.filter((m) =>
-    tokensMap.get(m.base.address.toLowerCase() as Address) &&
-    tokensMap.get(m.quote.address.toLowerCase() as Address),
+  return args.markets.filter(
+    (m) =>
+      tokensMap.get(m.base.address.toLowerCase() as Address) &&
+      tokensMap.get(m.quote.address.toLowerCase() as Address),
   )
 }
