@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.5
+
+### Patch Changes
+
+- f838392: Added check for aave markets
+
 ## 0.9.4
 
 ### Patch Changes
