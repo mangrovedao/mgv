@@ -39,6 +39,16 @@ import type {
   MarketParams,
   SmartKandelSteps,
 } from '../../index.js'
+import {
+  checkAaveAsset,
+  checkAaveAssets,
+  checkAaveMarket,
+  checkAaveMarkets,
+  type CheckAaveAssetArgs,
+  type CheckAaveAssetsArgs,
+  type CheckAaveMarketArgs,
+  type CheckAaveMarketsArgs,
+} from '../../actions/kandel/aave.js'
 
 export type KandelSeederActions = {
   getKandelSteps: (args: GetKandelStepsArgs) => Promise<KandelSteps>
@@ -89,5 +99,21 @@ export function kandelActions(
     simulateRetract: (args) => simulateRetract(client, kandel, args),
     getKandelState: (args = {}) =>
       getKandelState(client, actionParams, market, kandel, args),
+  })
+}
+
+export type AaveKandelActions = {
+  checkAaveAsset: (args: CheckAaveAssetArgs) => Promise<boolean>
+  checkAaveAssets: (args: CheckAaveAssetsArgs) => Promise<boolean[]>
+  checkAaveMarket: (args: CheckAaveMarketArgs) => Promise<boolean>
+  checkAaveMarkets: (args: CheckAaveMarketsArgs) => Promise<MarketParams[]>
+}
+
+export function aaveKandelActions(aaveRouter: Address) {
+  return (client: Client): AaveKandelActions => ({
+    checkAaveAsset: (args) => checkAaveAsset(client, aaveRouter, args),
+    checkAaveAssets: (args) => checkAaveAssets(client, aaveRouter, args),
+    checkAaveMarket: (args) => checkAaveMarket(client, aaveRouter, args),
+    checkAaveMarkets: (args) => checkAaveMarkets(client, aaveRouter, args),
   })
 }

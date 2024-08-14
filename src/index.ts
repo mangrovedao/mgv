@@ -120,6 +120,7 @@ export type {
   KandelActions,
   KandelSeederActions,
   UserRouterActions,
+  AaveKandelActions,
 } from './bundle/index.js'
 
 export {
@@ -129,6 +130,7 @@ export {
   kandelActions,
   kandelSeederActions,
   userRouterActions,
+  aaveKandelActions,
 } from './bundle/index.js'
 
 // --- addresses ---
