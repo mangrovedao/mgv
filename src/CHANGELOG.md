@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.6
+
+### Patch Changes
+
+- 48ee6b9: Added WETH/WBTC WBTC/USDT and weETH/WETH on arbitrum
+
 ## 0.9.5
 
 ### Patch Changes
