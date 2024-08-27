@@ -3,8 +3,8 @@ import {
   arbitrumUSDC,
   arbitrumUSDT,
   arbitrumWBTC,
-  arbitrumweETH,
   arbitrumWETH,
+  arbitrumweETH,
 } from '../tokens/arbitrum.js'
 
 export const arbitrumWETHUSDC = {
