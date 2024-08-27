@@ -19,4 +19,7 @@ export {
   arbitrumWETHUSDC,
   arbitrumWETHUSDT,
   arbitrumUSDCUSDT,
+  arbitrumWETHWBTC,
+  arbitrumWBTCUSDT,
+  arbitrumWETHweETH,
 } from './arbitrum.js'

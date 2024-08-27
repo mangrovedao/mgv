@@ -18,8 +18,10 @@ export {
 
 export {
   arbitrumWETH,
+  arbitrumWBTC,
   arbitrumUSDC,
   arbitrumUSDT,
+  arbitrumweETH,
   arbitrumTokens,
 } from './arbitrum.js'
 

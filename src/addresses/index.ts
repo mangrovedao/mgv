@@ -18,6 +18,9 @@ export {
   arbitrumWETHUSDC,
   arbitrumWETHUSDT,
   arbitrumUSDCUSDT,
+  arbitrumWETHWBTC,
+  arbitrumWBTCUSDT,
+  arbitrumWETHweETH,
 } from './markets/index.js'
 
 // --- tokens ---
@@ -37,8 +40,10 @@ export {
   baseSepoliaWBTC,
   baseSepoliaTokens,
   arbitrumWETH,
+  arbitrumWBTC,
   arbitrumUSDC,
   arbitrumUSDT,
+  arbitrumweETH,
   arbitrumTokens,
 } from './tokens/index.js'
 
