@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.7
+
+### Patch Changes
+
+- fd0b7bf: Reverse base quote order for WETH/weETH
+
 ## 0.9.6
 
 ### Patch Changes
