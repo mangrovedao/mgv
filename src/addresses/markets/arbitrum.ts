@@ -38,8 +38,8 @@ export const arbitrumWBTCUSDT = {
 } as const satisfies MarketParams
 
 export const arbitrumWETHweETH = {
-  base: arbitrumWETH,
-  quote: arbitrumweETH,
+  base: arbitrumweETH,
+  quote: arbitrumWETH,
   tickSpacing: 1n,
 } as const satisfies MarketParams
 
