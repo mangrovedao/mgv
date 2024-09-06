@@ -2,12 +2,13 @@ import { parseAbi } from 'viem'
 import { expect, it } from 'vitest'
 import { describe, inject } from 'vitest'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { createGeometricDistribution } from './distribution.js'
 import { getKandelPositionRawParams } from './params.js'
 
 const { kandelLib, smartKandelSeeder } = inject('kandel')
 const { routerProxyFactory, mgv } = inject('mangrove')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 
 const client = getClient()
 

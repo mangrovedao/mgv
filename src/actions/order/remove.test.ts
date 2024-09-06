@@ -6,12 +6,13 @@ import {
   removeOrderResultFromLogs,
 } from '~mgv/lib/limit-order.js'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { getBook } from '../book.js'
 import { simulateLimitOrder } from './new.js'
 import { simulateRemoveOrder } from './remove.js'
 
 const client = getClient()
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const params = inject('mangrove')
 
 describe('remove order', () => {

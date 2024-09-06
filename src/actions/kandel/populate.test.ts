@@ -1,9 +1,10 @@
-import { type Client, erc20Abi, parseEther, parseUnits } from 'viem'
+import { parseEther, parseUnits } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
-import { minVolume, validateKandelParams } from '~mgv/index.js'
+import { validateKandelParams } from '~mgv/index.js'
 import { BS } from '~mgv/lib/enums.js'
 import { getClient } from '~test/src/client.js'
 import { mintAndApprove } from '~test/src/contracts/index.js'
+import { getMarkets } from '~test/src/markets.js'
 import { getBook } from '../book.js'
 import { simulateMarketOrderByVolumeAndMarket } from '../market-order.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
@@ -11,7 +12,7 @@ import { simulatePopulate } from './populate.js'
 import { simulateSow } from './sow.js'
 
 const { smartKandelSeeder, kandelSeeder } = inject('kandel')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const actionParams = inject('mangrove')
 const client = getClient()
 

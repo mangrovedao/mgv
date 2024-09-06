@@ -1,5 +1,6 @@
 import { parseUnits } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
+import { getMarkets } from '~test/src/markets.js'
 import { BA } from './enums.js'
 import {
   amounts,
@@ -10,7 +11,7 @@ import {
 } from './human-readable.js'
 import { tickFromVolumes } from './tick.js'
 
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const { USDC, WETH } = inject('tokens')
 
 // price is quote/base
