@@ -1,17 +1,17 @@
-import { describe, expect, it, inject, beforeAll } from 'vitest'
-import { BS } from './enums.js'
-import { marketOrderSimulation } from './market-order-simulation.js'
-import type { Book } from '../types/index.js'
-import { getClient } from '~test/src/client.js'
-import { simulateSow } from '~mgv/actions/kandel/sow.js'
-import { validateKandelParams } from '~mgv/index.js'
-import { mintAndApprove } from '~test/src/contracts/index.js'
 import { parseEther, parseUnits } from 'viem'
+import { beforeAll, describe, expect, inject, it } from 'vitest'
 import { getBook } from '~mgv/actions/book.js'
 import { simulatePopulate } from '~mgv/actions/kandel/populate.js'
+import { simulateSow } from '~mgv/actions/kandel/sow.js'
+import { validateKandelParams } from '~mgv/index.js'
+import { getClient } from '~test/src/client.js'
+import { mintAndApprove } from '~test/src/contracts/index.js'
+import type { Book } from '../types/index.js'
+import { BS } from './enums.js'
+import { marketOrderSimulation } from './market-order-simulation.js'
 import { inboundFromOutbound, outboundFromInbound } from './tick.js'
 
-const client = getClient();
+const client = getClient()
 const actionParams = inject('mangrove')
 const kandelSeeder = inject('kandel')
 const { wethUSDC } = inject('markets')
@@ -24,7 +24,7 @@ describe('marketOrderSimulation', () => {
   beforeAll(async () => {
     // Get the book
     book = await getBook(client, actionParams, wethUSDC)
-    
+
     const { params, minProvision } = validateKandelParams({
       minPrice: 2990,
       midPrice: 3000,
@@ -81,15 +81,17 @@ describe('marketOrderSimulation', () => {
 
   it('should simulate a buy market order', () => {
     const baseAmount = parseEther('4')
-    const quoteAmount = inboundFromOutbound(book.asks[0]!.offer.tick, baseAmount)
-    const fee = baseAmount * book.asksConfig.fee / 10_000n
+    const quoteAmount = inboundFromOutbound(
+      book.asks[0]!.offer.tick,
+      baseAmount,
+    )
+    const fee = (baseAmount * book.asksConfig.fee) / 10_000n
 
     const result = marketOrderSimulation({
       book,
       bs: BS.buy,
       base: baseAmount, // 5 tokens
     })
-
 
     expect(result.baseAmount).toBe(baseAmount - fee)
     expect(result.quoteAmount).toBe(quoteAmount)
@@ -98,14 +100,17 @@ describe('marketOrderSimulation', () => {
     expect(result.maxTickEncountered).toBe(book.asks[0]?.offer.tick)
     expect(result.minSlippage).toBe(0)
     expect(result.fillWants).toBe(true)
-    expect(result.rawPrice).approximately(3000/1e12, 10e-12)
+    expect(result.rawPrice).approximately(3000 / 1e12, 10e-12)
     expect(result.fillVolume).toBe(baseAmount)
   })
 
   it('should simulate a sell market order', () => {
     const baseAmount = parseEther('4')
-    const quoteAmount = outboundFromInbound(book.bids[0]!.offer.tick, baseAmount)
-    const fee = quoteAmount * book.bidsConfig.fee / 10_000n
+    const quoteAmount = outboundFromInbound(
+      book.bids[0]!.offer.tick,
+      baseAmount,
+    )
+    const fee = (quoteAmount * book.bidsConfig.fee) / 10_000n
 
     const result = marketOrderSimulation({
       book,
@@ -120,15 +125,18 @@ describe('marketOrderSimulation', () => {
     expect(result.maxTickEncountered).toBe(book.bids[0]?.offer.tick)
     expect(result.minSlippage).toBe(0)
     expect(result.fillWants).toBe(false)
-    expect(result.rawPrice).approximately(3000/1e12, 10e-12)
+    expect(result.rawPrice).approximately(3000 / 1e12, 10e-12)
     expect(result.fillVolume).toBe(baseAmount)
   })
 
   it('should simulate a buy market order with quote amount', () => {
     const quoteAmount = parseUnits('12000', 6) // 12000 USDC
-    const baseAmount = outboundFromInbound(book.asks[0]!.offer.tick, quoteAmount)
-    const fee = baseAmount * book.asksConfig.fee / 10_000n
-    
+    const baseAmount = outboundFromInbound(
+      book.asks[0]!.offer.tick,
+      quoteAmount,
+    )
+    const fee = (baseAmount * book.asksConfig.fee) / 10_000n
+
     const result = marketOrderSimulation({
       book,
       bs: BS.buy,
@@ -142,14 +150,17 @@ describe('marketOrderSimulation', () => {
     expect(result.maxTickEncountered).toBe(book.asks[0]!.offer.tick)
     expect(result.minSlippage).toBe(0)
     expect(result.fillWants).toBe(false)
-    expect(result.rawPrice).approximately(3000/1e12, 10e-12)
+    expect(result.rawPrice).approximately(3000 / 1e12, 10e-12)
     expect(result.fillVolume).toBe(quoteAmount)
   })
 
   it('should simulate a sell order with quote amount', () => {
     const quoteAmount = parseUnits('12000', 6) // 12000 USDC
-    const baseAmount = inboundFromOutbound(book.bids[0]!.offer.tick, quoteAmount)
-    const fee = quoteAmount * book.bidsConfig.fee / 10_000n
+    const baseAmount = inboundFromOutbound(
+      book.bids[0]!.offer.tick,
+      quoteAmount,
+    )
+    const fee = (quoteAmount * book.bidsConfig.fee) / 10_000n
 
     const result = marketOrderSimulation({
       book,
@@ -164,7 +175,7 @@ describe('marketOrderSimulation', () => {
     expect(result.maxTickEncountered).toBe(book.bids[0]!.offer.tick)
     expect(result.minSlippage).toBe(0)
     expect(result.fillWants).toBe(true)
-    expect(result.rawPrice).approximately(3000/1e12, 10e-12)
+    expect(result.rawPrice).approximately(3000 / 1e12, 10e-12)
     expect(result.fillVolume).toBe(quoteAmount)
   })
 

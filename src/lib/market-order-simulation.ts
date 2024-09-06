@@ -99,15 +99,9 @@ export function rawMarketOrderSimulation(
       takerGives = offerWants
     } else if (fillWants) {
       takerWants = fillVolume
-      takerGives = inboundFromOutbound(
-        orderBook[i]!.offer.tick,
-        fillVolume
-      )
+      takerGives = inboundFromOutbound(orderBook[i]!.offer.tick, fillVolume)
     } else {
-      takerWants = outboundFromInbound(
-        orderBook[i]!.offer.tick,
-        fillVolume
-      )
+      takerWants = outboundFromInbound(orderBook[i]!.offer.tick, fillVolume)
       takerGives = fillVolume
     }
 
