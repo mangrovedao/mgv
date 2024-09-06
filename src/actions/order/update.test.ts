@@ -8,12 +8,13 @@ import {
 } from '~mgv/lib/limit-order.js'
 import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { getBook } from '../book.js'
 import { simulateLimitOrder } from './new.js'
 import { simulateSetExpiration, simulateUpdateOrder } from './update.js'
 
 const client = getClient()
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const params = inject('mangrove')
 
 describe('update order', () => {

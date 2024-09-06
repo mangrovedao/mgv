@@ -1,6 +1,7 @@
 import { describe, expect, inject, it } from 'vitest'
 import { getBook } from '~mgv/actions/book.js'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
@@ -8,7 +9,7 @@ import {
 import { priceFromTick, tickFromPrice } from '../tick.js'
 import { getKandelPositionRawParams, validateKandelParams } from './params.js'
 
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const params = inject('mangrove')
 
 const client = getClient()

@@ -2,11 +2,12 @@ import { isAddress } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { simulateSow } from '~mgv/actions/kandel/sow.js'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { hash } from '../ol-key.js'
 import { getKandelsFromLogs } from './logs.js'
 
 const { smartKandelSeeder } = inject('kandel')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const client = getClient()
 
 describe('Kandel logs', () => {

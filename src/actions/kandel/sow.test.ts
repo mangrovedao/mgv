@@ -1,10 +1,11 @@
 import { isAddress } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { simulateSow } from './sow.js'
 
 const { smartKandelSeeder, kandelSeeder } = inject('kandel')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const client = getClient()
 
 describe('sow Smart Kandel', () => {

@@ -2,7 +2,8 @@ import { createAnvil, startProxy } from '@viem/anvil'
 import { type Address, parseAbi, parseEther, parseUnits } from 'viem'
 import { foundry } from 'viem/chains'
 import type { GlobalSetupContext } from 'vitest/node'
-import type { MarketParams, Token } from '~mgv/index.js'
+import type { SerializableMarketParams, Token } from '~mgv/index.js'
+import { toSerializable } from '~mgv/lib/utils.js'
 import { globalTestClient } from '~test/src/client.js'
 import { accounts } from './src/constants.js'
 import {
@@ -96,7 +97,6 @@ export default async function ({ provide }: GlobalSetupContext) {
     smartRouter: routerImplementation,
     routerProxyFactory,
     multicall,
-    tickSpacing: 60n,
   })
   provide('kandel', { kandelLib, kandelSeeder, smartKandelSeeder })
 
@@ -124,7 +124,10 @@ export default async function ({ provide }: GlobalSetupContext) {
     parseEther('0.0001'),
   )
 
-  provide('markets', { wethUSDC, wethDAI })
+  provide('markets', {
+    wethUSDC: toSerializable(wethUSDC),
+    wethDAI: toSerializable(wethDAI),
+  })
 
   // starts a proxy pool from there
   const shutdown = await startProxy({
@@ -164,11 +167,10 @@ declare module 'vitest' {
       smartRouter: Address
       routerProxyFactory: Address
       multicall: Address
-      tickSpacing: bigint
     }
     markets: {
-      wethUSDC: MarketParams
-      wethDAI: MarketParams
+      wethUSDC: SerializableMarketParams
+      wethDAI: SerializableMarketParams
     }
     kandel: {
       kandelLib: Address

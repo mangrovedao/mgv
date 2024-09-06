@@ -1,6 +1,7 @@
 export type {
   MangroveActionsDefaultParams,
   MarketParams,
+  SerializableMarketParams,
   BuiltArgs,
   BuiltArgsWithValue,
   Book,
@@ -22,6 +23,7 @@ export type {
   LocalConfig,
   CompleteToken,
   OLKey,
+  SerializableOLKey,
   RpcOffer,
   RpcOfferDetail,
   RpcCompleteOffer,

@@ -6,6 +6,7 @@ import { simulateSow } from '~mgv/actions/kandel/sow.js'
 import { validateKandelParams } from '~mgv/index.js'
 import { getClient } from '~test/src/client.js'
 import { mintAndApprove } from '~test/src/contracts/index.js'
+import { getMarkets } from '~test/src/markets.js'
 import type { Book } from '../types/index.js'
 import { BS } from './enums.js'
 import { marketOrderSimulation } from './market-order-simulation.js'
@@ -14,7 +15,7 @@ import { inboundFromOutbound, outboundFromInbound } from './tick.js'
 const client = getClient()
 const actionParams = inject('mangrove')
 const kandelSeeder = inject('kandel')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 
 const KANDEL_GASREQ = 128_000n
 

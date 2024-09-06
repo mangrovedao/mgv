@@ -4,6 +4,7 @@ import { validateKandelParams } from '~mgv/index.js'
 import type { KandelParams, MarketParams } from '~mgv/index.js'
 import { BS, Order } from '~mgv/lib/enums.js'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { getBook } from '../book.js'
 import { simulateLimitOrder } from '../index.js'
 import { simulateBind, simulateDeployRouter } from '../smart-router.js'
@@ -12,7 +13,7 @@ import { simulateSow } from './sow.js'
 import { KandelStatus, getKandelState } from './view.js'
 
 const { smartKandelSeeder } = inject('kandel')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 const actionParams = inject('mangrove')
 const client = getClient()
 
