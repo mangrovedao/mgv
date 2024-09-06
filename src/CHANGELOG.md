@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.8
+
+### Patch Changes
+
+- 61623e3: Fixed market order simulation and added tests
+
 ## 0.9.7
 
 ### Patch Changes
