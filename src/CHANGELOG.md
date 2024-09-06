@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.9
+
+### Patch Changes
+
+- 692f50f: Added serialize helper functions for markets and offer list keys
+
 ## 0.9.8
 
 ### Patch Changes
