@@ -55,19 +55,14 @@ export type RawMarketOrderSimulationResult = {
 export function rawMarketOrderSimulation(
   params: RawMarketOrderSimulationParams,
 ): RawMarketOrderSimulationResult {
-  const {
+  let {
     orderBook,
-    fillVolume: _fillVolume,
+    fillVolume,
     localConfig,
     globalConfig,
     fillWants = true,
     maxTick = MAX_TICK,
   } = params
-
-  // if fillWants is true, then we need to multiply the fillVolume by 10_000n / (10_000n - fee) in order to account for the fee
-  let fillVolume = fillWants
-    ? (_fillVolume * 10_000n) / (10_000n - localConfig.fee)
-    : _fillVolume
 
   const result: RawMarketOrderSimulationResult = {
     totalGot: 0n,
@@ -84,18 +79,42 @@ export function rawMarketOrderSimulation(
     i < globalConfig.maxRecursionDepth;
     i++
   ) {
-    const offer = orderBook[i]!
-    if (offer.offer.tick > maxTick) break
-    const maxGot = fillWants
-      ? fillVolume
-      : outboundFromInbound(offer.offer.tick, fillVolume)
-    const got = maxGot < offer.offer.gives ? maxGot : offer.offer.gives
-    const gave = inboundFromOutbound(offer.offer.tick, got)
-    result.totalGot += got
-    result.totalGave += gave
-    result.gas += localConfig.offer_gasbase + offer.detail.gasreq
-    result.maxTickEncountered = offer.offer.tick
-    fillVolume -= fillWants ? got : gave
+    if (orderBook[i]!.offer.tick > maxTick) break
+
+    const offerGives = orderBook[i]!.offer.gives
+    const offerWants = inboundFromOutbound(orderBook[i]!.offer.tick, offerGives)
+
+    result.gas += localConfig.offer_gasbase + orderBook[i]!.detail.gasreq
+    result.maxTickEncountered = orderBook[i]!.offer.tick
+
+    let takerWants = 0n
+    let takerGives = 0n
+
+    if (
+      (fillWants && offerGives <= fillVolume) ||
+      (!fillWants && offerWants <= fillVolume)
+    ) {
+      // We can take the entire offer
+      takerWants = offerGives
+      takerGives = offerWants
+    } else if (fillWants) {
+      takerWants = fillVolume
+      takerGives = inboundFromOutbound(
+        orderBook[i]!.offer.tick,
+        fillVolume
+      )
+    } else {
+      takerWants = outboundFromInbound(
+        orderBook[i]!.offer.tick,
+        fillVolume
+      )
+      takerGives = fillVolume
+    }
+
+    result.totalGot += takerWants
+    result.totalGave += takerGives
+
+    fillVolume -= fillWants ? takerWants : takerGives
   }
 
   result.feePaid = (result.totalGot * localConfig.fee) / 10_000n
