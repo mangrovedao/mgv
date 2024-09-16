@@ -12,6 +12,7 @@ export const viewKandelABI = parseAbi([
   olKeyABIRaw,
   'function baseQuoteTickOffset() public view returns (uint)',
   'function params() public view returns (Params memory)',
+  'function reserveBalance(uint8 ba) public view returns (uint balance)',
   'function offeredVolume(uint8 ba) public view returns (uint volume)',
   'function getOffer(uint8 ba, uint index) public view returns (uint offer)',
   'function offerIdOfIndex(uint8 ba, uint index) public view returns (uint offerId)',
@@ -67,6 +68,17 @@ export const kandelParamsParams = {
 
 function parseBA(ba: BA) {
   return ba === BA.bids ? 0 : 1
+}
+
+export function reserveBalanceParams(ba: BA) {
+  return {
+    abi: viewKandelABI,
+    functionName: 'reserveBalance',
+    args: [parseBA(ba)],
+  } satisfies Omit<
+    ContractFunctionParameters<typeof viewKandelABI, 'view', 'reserveBalance'>,
+    'address'
+  >
 }
 
 export function offeredVolumeParams(ba: BA) {
