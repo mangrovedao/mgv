@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.10
+
+### Patch Changes
+
+- d939aeb: Added base and quote reserve to kandel view function
+
 ## 0.9.9
 
 ### Patch Changes
