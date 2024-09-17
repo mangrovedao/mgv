@@ -28,18 +28,13 @@ export type MarketParams = {
   tickSpacing: bigint
 }
 
-/**
- *
- * The parameters for a given market market
- * @param tkn0 The base token
- * @param tkn1 The quote token
- * @param tickSpacing The tick spacing
- */
-export type BaseMarket = {
-  tkn0: { token: Address; decimals: number; symbol: string }
-  tkn1: { token: Address; decimals: number; symbol: string }
-  tickSpacing: bigint
+export type TokenConfig = {
+  cashness: number
+  displayDecimals?: number
+  priceDisplayDecimals?: number
 }
+
+export type GetMarketsParams = Record<string, TokenConfig>
 
 /**
  * A serializable version of a market
