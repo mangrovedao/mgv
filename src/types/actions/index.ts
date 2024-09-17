@@ -28,6 +28,14 @@ export type MarketParams = {
   tickSpacing: bigint
 }
 
+export type TokenConfig = {
+  cashness: number
+  displayDecimals?: number
+  priceDisplayDecimals?: number
+}
+
+export type GetMarketsParams = Record<string, TokenConfig>
+
 /**
  * A serializable version of a market
  * @param base The base token
