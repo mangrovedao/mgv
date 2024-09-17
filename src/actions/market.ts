@@ -63,22 +63,15 @@ export async function getMarkets(
   ])
   const { mgvReader } = actionParams
 
-  const data = await getAction(
+  const markets = await getAction(
     client,
-    call,
-    'call',
+    readContract,
+    'readContract',
   )({
     code: bytecode,
-    data: encodeFunctionData({
-      abi: abi,
-      functionName: 'getMarkets',
-      args: [mgvReader],
-    }),
-  })
-  const markets = decodeFunctionResult({
     abi: abi,
     functionName: 'getMarkets',
-    data: data.data!,
+    args: [mgvReader]
   })
 
   return [...markets]
