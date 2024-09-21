@@ -1,4 +1,9 @@
-import { type ContractFunctionParameters, parseAbi, type ContractFunctionReturnType } from 'viem'
+import {
+  type ContractFunctionParameters,
+  type ContractFunctionReturnType,
+  parseAbi,
+} from 'viem'
+import type { OpenMarketsResult } from '~mgv/types/actions/open-markets.js'
 
 export const openMarketsABI = parseAbi([
   'struct Market { address tkn0; address tkn1; uint tickSpacing; }',
@@ -29,15 +34,10 @@ export function openMarketsParams() {
     functionName: 'openMarkets',
     args: [],
   } satisfies Omit<
-    ContractFunctionParameters<
-      typeof openMarketsABI,
-      'view',
-      'openMarkets'
-    >,
+    ContractFunctionParameters<typeof openMarketsABI, 'view', 'openMarkets'>,
     'address'
   >
 }
-
 
 export type ParseOpenMarketsParams = {
   result: ContractFunctionReturnType<
@@ -47,33 +47,34 @@ export type ParseOpenMarketsParams = {
   >
 }
 
-
 /**
  *
  * @param result the result of open markets
  * @returns the parsed open markets result
  */
-export function parseBookResult({
+export function parseOpenMarketResult({
   result,
-}: ParseOpenMarketsParams): CompleteOffer[] {
-  const [_, offerIDs, offersPacked, offerDetailsPacked] = result
-  return offerIDs.map((id, i) => {
-    const offer = unpackOffer(offersPacked[i]!)
-    const detail = unpackOfferDetail(offerDetailsPacked[i]!)
-    const humanReadableParams = rpcOfferToHumanOffer({
-      ...offer,
-      ba,
-      baseDecimals,
-      quoteDecimals,
-    })
+}: ParseOpenMarketsParams): OpenMarketsResult[] {
+  const [rawMarkets, rawMarketsConfigs] = result
+
+  const markets = rawMarkets?.map((item) => {
+    const { tkn0, tkn1, tickSpacing } = item
+
     return {
-      id,
-      offer,
-      detail,
-      ...humanReadableParams,
+      tkn0,
+      tkn1,
+      tickSpacing,
     }
   })
+
+  const marketsConfig = rawMarketsConfigs?.map((item) => {
+    const { config01, config10 } = item
+
+    return {
+      config01,
+      config10,
+    }
+  })
+
+  return { markets, marketsConfig }
 }
-
-
-

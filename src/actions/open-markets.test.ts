@@ -31,9 +31,8 @@ describe('Getting the open markets', () => {
     const openMarkets = await getOpenMarkets(client, params)
     console.log(openMarkets.marketsConfig)
 
-    
     // expect(openMarkets.markets).toEqual({
-        //   monitor: '0x0000000000000000000000000000000000000000',
+    //   monitor: '0x0000000000000000000000000000000000000000',
     //   useOracle: false,
     //   notify: false,
     //   gasprice: 1680n,
@@ -46,6 +45,4 @@ describe('Getting the open markets', () => {
     // expect(book.bidsConfig.active).toBeTruthy()
     // expect(book.asksConfig.active).toBeTruthy()
   })
-
-
 })
