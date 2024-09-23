@@ -1,8 +1,9 @@
 import { describe, expect, inject, it } from 'vitest'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { getBook } from './book.js'
 
-const { wethDAI } = inject('markets')
+const { wethDAI } = getMarkets()
 const params = inject('mangrove')
 
 describe('Getting the book', () => {

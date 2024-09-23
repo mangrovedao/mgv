@@ -1,5 +1,59 @@
 # @mangrovedao/mgv
 
+## 0.9.10
+
+### Patch Changes
+
+- d939aeb: Added base and quote reserve to kandel view function
+
+## 0.9.9
+
+### Patch Changes
+
+- 692f50f: Added serialize helper functions for markets and offer list keys
+
+## 0.9.8
+
+### Patch Changes
+
+- 61623e3: Fixed market order simulation and added tests
+
+## 0.9.7
+
+### Patch Changes
+
+- fd0b7bf: Reverse base quote order for WETH/weETH
+
+## 0.9.6
+
+### Patch Changes
+
+- 48ee6b9: Added WETH/WBTC WBTC/USDT and weETH/WETH on arbitrum
+
+## 0.9.5
+
+### Patch Changes
+
+- f838392: Added check for aave markets
+
+## 0.9.4
+
+### Patch Changes
+
+- c88d3a1: Fix invalid param names on kandel
+
+## 0.9.3
+
+### Patch Changes
+
+- 5c63a0c: Fixed USDC and USDT decimals on arbitrum
+
+## 0.9.2
+
+### Patch Changes
+
+- 19a954c: Add arbitrum tokens and markets
+
 ## 0.9.1
 
 ### Patch Changes

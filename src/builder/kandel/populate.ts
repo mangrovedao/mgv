@@ -8,8 +8,8 @@ export const populateABI = parseAbi([
 ])
 
 export type PopulateFromOffsetParams = {
-  from?: bigint | undefined
-  to?: bigint | undefined
+  fromIndex?: bigint | undefined
+  toIndex?: bigint | undefined
   baseQuoteTickIndex0: bigint
   baseQuoteTickOffset: bigint
   firstAskIndex: bigint
@@ -23,8 +23,8 @@ export type PopulateFromOffsetParams = {
   quoteAmount?: bigint | undefined
 }
 export type PopulateChunkFromOffsetParams = {
-  from?: bigint | undefined
-  to: bigint
+  fromIndex?: bigint | undefined
+  toIndex: bigint
   baseQuoteTickIndex0: bigint
   firstAskIndex: bigint
   bidGives: bigint
@@ -40,8 +40,8 @@ export function populateFromOffsetParams(params: PopulateFromOffsetParams) {
     gasreq,
     pricePoints,
     stepSize,
-    from = 0n,
-    to = pricePoints,
+    fromIndex = 0n,
+    toIndex = pricePoints,
     baseAmount = 0n,
     quoteAmount = 0n,
     gasprice = 0n,
@@ -50,8 +50,8 @@ export function populateFromOffsetParams(params: PopulateFromOffsetParams) {
     abi: populateABI,
     functionName: 'populateFromOffset',
     args: [
-      from,
-      to,
+      fromIndex,
+      toIndex,
       baseQuoteTickIndex0,
       baseQuoteTickOffset,
       firstAskIndex,
@@ -84,13 +84,20 @@ export function populateChunkFromOffsetParams(
     firstAskIndex,
     bidGives,
     askGives,
-    from = 0n,
-    to,
+    fromIndex = 0n,
+    toIndex,
   } = params
   return {
     abi: populateABI,
     functionName: 'populateChunkFromOffset',
-    args: [from, to, baseQuoteTickIndex0, firstAskIndex, bidGives, askGives],
+    args: [
+      fromIndex,
+      toIndex,
+      baseQuoteTickIndex0,
+      firstAskIndex,
+      bidGives,
+      askGives,
+    ],
   } satisfies Omit<
     ContractFunctionParameters<
       typeof populateABI,

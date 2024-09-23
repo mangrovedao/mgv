@@ -16,6 +16,7 @@ import {
   offeredVolumeParams,
   provisionOfParams,
   quoteParams,
+  reserveBalanceParams,
   tickSpacingParams,
 } from '../../builder/kandel/view.js'
 import {
@@ -59,6 +60,8 @@ export type GetKandelStateResult = {
   pricePoints: number
   quoteAmount: bigint
   baseAmount: bigint
+  reserveBalanceQuote: bigint
+  reserveBalanceBase: bigint
   unlockedProvision: bigint
   totalProvision: bigint
   kandelStatus: KandelStatus
@@ -77,6 +80,8 @@ type KandelInitCallResult = {
   }
   baseAmount: bigint
   quoteAmount: bigint
+  reserveBalanceQuote: bigint
+  reserveBalanceBase: bigint
   unlockedProvision: bigint
   // mid price from the book
   midPrice: number
@@ -99,6 +104,8 @@ async function kandelInitCall(
     params,
     _quoteAmount,
     _baseAmount,
+    _reserveBalanceQuote,
+    _reserveBalanceBase,
     _base,
     _quote,
     _tickSpacing,
@@ -139,6 +146,14 @@ async function kandelInitCall(
       {
         address: kandel,
         ...offeredVolumeParams(BA.asks),
+      },
+      {
+        address: kandel,
+        ...reserveBalanceParams(BA.bids),
+      },
+      {
+        address: kandel,
+        ...reserveBalanceParams(BA.asks),
       },
       {
         address: kandel,
@@ -187,6 +202,10 @@ async function kandelInitCall(
   const baseAmount = _baseAmount.status === 'success' ? _baseAmount.result : 0n
   const quoteAmount =
     _quoteAmount.status === 'success' ? _quoteAmount.result : 0n
+  const reserveBalanceQuote =
+    _reserveBalanceQuote.status === 'success' ? _reserveBalanceQuote.result : 0n
+  const reserveBalanceBase =
+    _reserveBalanceBase.status === 'success' ? _reserveBalanceBase.result : 0n
 
   const asks =
     bestAsk.status === 'success'
@@ -231,6 +250,8 @@ async function kandelInitCall(
         : { gasprice: 0, gasreq: 0, stepSize: 0, pricePoints: 0 },
     baseAmount: reversed ? quoteAmount : baseAmount,
     quoteAmount: reversed ? baseAmount : quoteAmount,
+    reserveBalanceQuote: reversed ? reserveBalanceBase : reserveBalanceQuote,
+    reserveBalanceBase: reversed ? reserveBalanceQuote : reserveBalanceBase,
     reversed,
     unlockedProvision:
       unlockedProvision.status === 'success' ? unlockedProvision.result : 0n,

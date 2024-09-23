@@ -3,6 +3,7 @@ import { describe, expect, inject, it } from 'vitest'
 import { limitOrderResultFromLogs } from '~mgv/lib/limit-order.js'
 import { tickFromVolumes } from '~mgv/lib/tick.js'
 import { getClient } from '~test/src/client.js'
+import { getMarkets } from '~test/src/markets.js'
 import { BA, BS, Order } from '../../lib/enums.js'
 import { getBook } from '../book.js'
 import { getUserRouter } from '../smart-router.js'
@@ -11,7 +12,7 @@ import { getOrder, getOrders } from './view.js'
 
 const client = getClient()
 const params = inject('mangrove')
-const { wethUSDC } = inject('markets')
+const { wethUSDC } = getMarkets()
 
 describe('view order', () => {
   it('single order', async () => {

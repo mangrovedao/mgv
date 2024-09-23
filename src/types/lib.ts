@@ -55,6 +55,18 @@ export type OLKey = {
 }
 
 /**
+ * An OLKey object that is serializable.
+ * @param outbound_tkn The address of the outbound token.
+ * @param inbound_tkn The address of the inbound token.
+ * @param tickSpacing The tick spacing.
+ */
+export type SerializableOLKey = {
+  outbound_tkn: Address
+  inbound_tkn: Address
+  tickSpacing: number
+}
+
+/**
  * The offer object returned by the RPC endpoint.
  */
 export type RpcOffer = {

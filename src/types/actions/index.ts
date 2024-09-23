@@ -29,6 +29,18 @@ export type MarketParams = {
 }
 
 /**
+ * A serializable version of a market
+ * @param base The base token
+ * @param quote The quote token
+ * @param tickSpacing The tick spacing
+ */
+export type SerializableMarketParams = {
+  base: Token
+  quote: Token
+  tickSpacing: number
+}
+
+/**
  * List of args that are built by the transaction builders
  */
 export type BuiltArgs = 'address' | 'abi' | 'functionName' | 'args'

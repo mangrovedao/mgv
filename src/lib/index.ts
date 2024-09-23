@@ -142,4 +142,4 @@ export {
 
 // utils
 
-export { mask } from './utils.js'
+export { mask, fromSerializable, toSerializable } from './utils.js'

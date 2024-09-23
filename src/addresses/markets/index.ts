@@ -13,3 +13,13 @@ export {
   baseSepoliaWBTCDAI,
   baseSepoliaWETHUSDC,
 } from './base-sepolia.js'
+
+export {
+  arbitrumMarkets,
+  arbitrumWETHUSDC,
+  arbitrumWETHUSDT,
+  arbitrumUSDCUSDT,
+  arbitrumWETHWBTC,
+  arbitrumWBTCUSDT,
+  arbitrumWETHweETH,
+} from './arbitrum.js'
