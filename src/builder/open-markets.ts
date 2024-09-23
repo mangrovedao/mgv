@@ -2,22 +2,22 @@ import {
   type ContractFunctionParameters,
   type ContractFunctionReturnType,
   parseAbi,
-} from "viem";
-import type { Client } from "viem";
+} from 'viem'
+import type { Client } from 'viem'
 
-import { multicall } from "viem/actions";
-import type { Token } from "~mgv/_types/index.js";
-import { buildToken } from "~mgv/addresses/index.js";
-import type { OpenMarketsResult } from "~mgv/types/actions/open-markets.js";
-import type { LocalConfig } from "~mgv/types/lib.js";
-import { getAction } from "~mgv/utils/getAction.js";
+import { multicall } from 'viem/actions'
+import type { Token } from '~mgv/_types/index.js'
+import { buildToken } from '~mgv/addresses/index.js'
+import type { OpenMarketsResult } from '~mgv/types/actions/open-markets.js'
+import type { LocalConfig } from '~mgv/types/lib.js'
+import { getAction } from '~mgv/utils/getAction.js'
 
 export const openMarketsABI = parseAbi([
-  "struct Market { address tkn0; address tkn1; uint tickSpacing; }",
-  "struct LocalUnpacked { bool active; uint fee; uint rawDensity; uint binPosInLeaf; uint level3; uint level2; uint level1; uint root; uint kilo_offer_gasbase; bool lock; uint last;}",
-  "struct MarketConfig { LocalUnpacked config01; LocalUnpacked config10; }",
-  "function openMarkets() external view returns (Market[] memory, MarketConfig[] memory)",
-]);
+  'struct Market { address tkn0; address tkn1; uint tickSpacing; }',
+  'struct LocalUnpacked { bool active; uint fee; uint rawDensity; uint binPosInLeaf; uint level3; uint level2; uint level1; uint root; uint kilo_offer_gasbase; bool lock; uint last;}',
+  'struct MarketConfig { LocalUnpacked config01; LocalUnpacked config10; }',
+  'function openMarkets() external view returns (Market[] memory, MarketConfig[] memory)',
+])
 
 /**
  *
@@ -38,22 +38,22 @@ export const openMarketsABI = parseAbi([
 export function openMarketsParams() {
   return {
     abi: openMarketsABI,
-    functionName: "openMarkets",
+    functionName: 'openMarkets',
     args: [],
   } satisfies Omit<
-    ContractFunctionParameters<typeof openMarketsABI, "view", "openMarkets">,
-    "address"
-  >;
+    ContractFunctionParameters<typeof openMarketsABI, 'view', 'openMarkets'>,
+    'address'
+  >
 }
 
 export type ParseOpenMarketsParams = {
-  client: Client;
+  client: Client
   result: ContractFunctionReturnType<
     typeof openMarketsABI,
-    "view",
-    "openMarkets"
-  >;
-};
+    'view',
+    'openMarkets'
+  >
+}
 
 /**
  *
@@ -64,86 +64,86 @@ export async function parseOpenMarketResult({
   client,
   result,
 }: ParseOpenMarketsParams): Promise<OpenMarketsResult> {
-  const [rawMarkets, rawMarketsConfigs] = result;
+  const [rawMarkets, rawMarketsConfigs] = result
 
   const markets = await Promise.all(
     rawMarkets.map(async (item) => {
-      const { tkn0, tkn1, tickSpacing } = item;
+      const { tkn0, tkn1, tickSpacing } = item
 
       // Fetch token information for both tokens (tkn0 and tkn1)
       const tokenInfos = await getAction(
         client,
         multicall,
-        "multicall"
+        'multicall',
       )({
         contracts: [
           {
-            functionName: "decimals",
+            functionName: 'decimals',
             abi: [
               {
-                name: "decimals",
+                name: 'decimals',
                 outputs: [
                   {
-                    type: "uint8",
+                    type: 'uint8',
                   },
                 ],
-                stateMutability: "view",
-                type: "function",
+                stateMutability: 'view',
+                type: 'function',
               },
             ],
             address: tkn0,
           },
           {
-            functionName: "symbol",
+            functionName: 'symbol',
             abi: [
               {
-                name: "symbol",
+                name: 'symbol',
                 outputs: [
                   {
-                    type: "string",
+                    type: 'string',
                   },
                 ],
-                stateMutability: "view",
-                type: "function",
+                stateMutability: 'view',
+                type: 'function',
               },
             ],
             address: tkn0,
           },
           {
-            functionName: "decimals",
+            functionName: 'decimals',
             abi: [
               {
-                name: "decimals",
+                name: 'decimals',
                 outputs: [
                   {
-                    type: "uint8",
+                    type: 'uint8',
                   },
                 ],
-                stateMutability: "view",
-                type: "function",
+                stateMutability: 'view',
+                type: 'function',
               },
             ],
             address: tkn1,
           },
           {
-            functionName: "symbol",
+            functionName: 'symbol',
             abi: [
               {
-                name: "symbol",
+                name: 'symbol',
                 outputs: [
                   {
-                    type: "string",
+                    type: 'string',
                   },
                 ],
-                stateMutability: "view",
-                type: "function",
+                stateMutability: 'view',
+                type: 'function',
               },
             ],
             address: tkn1,
           },
         ],
         allowFailure: false,
-      });
+      })
 
       return {
         tkn0: buildToken({
@@ -161,12 +161,12 @@ export async function parseOpenMarketResult({
           mgvTestToken: false,
         }) as Token,
         tickSpacing,
-      };
-    })
-  );
+      }
+    }),
+  )
 
   const marketsConfig = rawMarketsConfigs?.map((item) => {
-    const { config01, config10 } = item;
+    const { config01, config10 } = item
 
     return {
       config01: {
@@ -179,8 +179,8 @@ export async function parseOpenMarketResult({
         density: Number(config10.rawDensity),
         offer_gasbase: config10.kilo_offer_gasbase,
       } as LocalConfig,
-    };
-  });
+    }
+  })
 
-  return { markets, marketsConfig };
+  return { markets, marketsConfig }
 }
