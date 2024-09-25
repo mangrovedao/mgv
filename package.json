@@ -1,6 +1,9 @@
 {
   "name": "mgv",
-  "workspaces": ["src", "test"],
+  "workspaces": [
+    "src",
+    "test"
+  ],
   "module": "src/index.ts",
   "private": true,
   "type": "module",
@@ -15,7 +18,7 @@
     "clean": "rimraf src/_esm src/_cjs src/_types",
     "format": "biome format . --write",
     "lint": "biome check .",
-    "lint:fix": "bun run lint --write",
+    "lint:fix": "biome check . -apply",
     "prepublishOnly": "bun scripts/prepublishOnly.ts",
     "test": "vitest -c ./test/vitest.config.ts dev",
     "test:ci": "CI=true vitest -c ./test/vitest.config.ts --retry=3"

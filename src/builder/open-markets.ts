@@ -3,7 +3,7 @@ import {
   type ContractFunctionReturnType,
   parseAbi,
 } from 'viem'
-import type { Client } from 'viem'
+import type { Abi, Client } from 'viem'
 
 import { multicall } from 'viem/actions'
 import type { Token } from '~mgv/_types/index.js'
@@ -27,7 +27,7 @@ export const openMarketsABI = parseAbi([
  *
  * ```ts
  * walletClient.writeContract({
- *   address: "0x...",
+ *   address: '0x...',
  *   ...marketOrderParams({
  *     ...
  *   })
@@ -67,99 +67,51 @@ export async function parseOpenMarketResult({
   const [rawMarkets, rawMarketsConfigs] = result
 
   const markets = await Promise.all(
-    rawMarkets.map(async (item) => {
-      const { tkn0, tkn1, tickSpacing } = item
+    rawMarkets.map(async ({ tkn0, tkn1, tickSpacing }) => {
+      const tokenAbi = [
+        {
+          name: 'decimals',
+          inputs: [],
+          outputs: [{ type: 'uint8' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+        {
+          name: 'symbol',
+          inputs: [],
+          outputs: [{ type: 'string' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ]
 
-      // Fetch token information for both tokens (tkn0 and tkn1)
       const tokenInfos = await getAction(
         client,
         multicall,
         'multicall',
       )({
-        contracts: [
-          {
-            functionName: 'decimals',
-            abi: [
-              {
-                name: 'decimals',
-                outputs: [
-                  {
-                    type: 'uint8',
-                  },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-              },
-            ],
-            address: tkn0,
-          },
-          {
-            functionName: 'symbol',
-            abi: [
-              {
-                name: 'symbol',
-                outputs: [
-                  {
-                    type: 'string',
-                  },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-              },
-            ],
-            address: tkn0,
-          },
-          {
-            functionName: 'decimals',
-            abi: [
-              {
-                name: 'decimals',
-                outputs: [
-                  {
-                    type: 'uint8',
-                  },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-              },
-            ],
-            address: tkn1,
-          },
-          {
-            functionName: 'symbol',
-            abi: [
-              {
-                name: 'symbol',
-                outputs: [
-                  {
-                    type: 'string',
-                  },
-                ],
-                stateMutability: 'view',
-                type: 'function',
-              },
-            ],
-            address: tkn1,
-          },
-        ],
+        contracts: [tkn0, tkn1].flatMap((address) => [
+          { functionName: 'decimals', abi: tokenAbi as Abi, address },
+          { functionName: 'symbol', abi: tokenAbi as Abi, address },
+        ]),
         allowFailure: false,
       })
 
+      const buildTokenFromInfo = (address: string, index: number) => {
+        const decimalsIndex = index * 2
+        const symbolIndex = decimalsIndex + 1
+        return buildToken({
+          address: address as `0x${string}`,
+          symbol: tokenInfos[symbolIndex] as string,
+          displayDecimals: tokenInfos[decimalsIndex] as number,
+          priceDisplayDecimals: tokenInfos[decimalsIndex] as number,
+          mgvTestToken: false,
+        }) as Token
+      }
+
       return {
-        tkn0: buildToken({
-          address: tkn0,
-          symbol: tokenInfos[1] as string, // Symbol for tkn0
-          displayDecimals: tokenInfos[0] as number,
-          priceDisplayDecimals: tokenInfos[0] as number, // Decimals for tkn0
-          mgvTestToken: false,
-        }) as Token,
-        tkn1: buildToken({
-          address: tkn1,
-          symbol: tokenInfos[3] as string, // Symbol for tkn1
-          displayDecimals: tokenInfos[2] as number,
-          priceDisplayDecimals: tokenInfos[2] as number, // Decimals for tkn1
-          mgvTestToken: false,
-        }) as Token,
+        tkn0: buildTokenFromInfo(tkn0, 0),
+        tkn1: buildTokenFromInfo(tkn1, 1),
         tickSpacing,
       }
     }),
