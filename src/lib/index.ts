@@ -53,6 +53,7 @@ export {
   getKandelsFromLogs,
   validateKandelParams,
   getKandelGasReq,
+  getKandelPositionRawParams,
 } from './kandel/index.js'
 
 // limit-order

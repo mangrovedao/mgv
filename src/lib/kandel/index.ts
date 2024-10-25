@@ -15,10 +15,7 @@ export {
 
 export type { KandelFromLogsResult } from './logs.js'
 
-export {
-  seederEventsABI,
-  getKandelsFromLogs,
-} from './logs.js'
+export { seederEventsABI, getKandelsFromLogs } from './logs.js'
 
 // params
 
@@ -31,4 +28,8 @@ export type {
   GetKandelGasReqParams,
 } from './params.js'
 
-export { validateKandelParams, getKandelGasReq } from './params.js'
+export {
+  validateKandelParams,
+  getKandelGasReq,
+  getKandelPositionRawParams,
+} from './params.js'
