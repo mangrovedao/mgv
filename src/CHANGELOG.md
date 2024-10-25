@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.11
+
+### Patch Changes
+
+- a886bcc: Added export for kandel util function
+
 ## 0.9.10
 
 ### Patch Changes
