@@ -75,6 +75,7 @@ export {
   seederEventsABI,
   getKandelsFromLogs,
   validateKandelParams,
+  getKandelPositionRawParams,
   getDefaultLimitOrderGasreq,
   rawSetExpirationResultFromLogs,
   setExpirationResultFromLogs,
