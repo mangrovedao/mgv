@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.12
+
+### Patch Changes
+
+- bfff56c: Add Arb/USDC.e market to arbitrum
+
 ## 0.9.11
 
 ### Patch Changes
