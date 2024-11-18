@@ -34,10 +34,27 @@ export const arbitrumweETH = buildToken({
   symbol: 'weETH',
 })
 
+export const arbitrumArb = buildToken({
+  address: '0x912CE59144191C1204E64559FE8253a0e49E6548',
+  symbol: 'ARB',
+  displayDecimals: 2,
+  priceDisplayDecimals: 4,
+})
+
+export const arbitrumUSDCe = buildToken({
+  address: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
+  symbol: 'USDC.e',
+  decimals: 6,
+  displayDecimals: 2,
+  priceDisplayDecimals: 4,
+})
+
 export const arbitrumTokens = [
   arbitrumWETH,
   arbitrumWBTC,
   arbitrumUSDC,
   arbitrumUSDT,
   arbitrumweETH,
+  arbitrumArb,
+  arbitrumUSDCe,
 ] as const

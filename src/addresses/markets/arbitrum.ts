@@ -1,6 +1,8 @@
 import type { MarketParams } from '../../types/index.js'
 import {
+  arbitrumArb,
   arbitrumUSDC,
+  arbitrumUSDCe,
   arbitrumUSDT,
   arbitrumWBTC,
   arbitrumWETH,
@@ -43,6 +45,12 @@ export const arbitrumWETHweETH = {
   tickSpacing: 1n,
 } as const satisfies MarketParams
 
+export const arbitrumARBUSDCe = {
+  base: arbitrumArb,
+  quote: arbitrumUSDCe,
+  tickSpacing: 1n,
+} as const satisfies MarketParams
+
 export const arbitrumMarkets = [
   arbitrumWETHUSDC,
   arbitrumWETHUSDT,
@@ -50,4 +58,5 @@ export const arbitrumMarkets = [
   arbitrumWETHWBTC,
   arbitrumWBTCUSDT,
   arbitrumWETHweETH,
+  arbitrumARBUSDCe,
 ] as const satisfies MarketParams[]
