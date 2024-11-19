@@ -31,10 +31,12 @@ export function tickInRange(tick: bigint): boolean {
  * Computes the tick value corresponding to the price of the asset.
  * @param price the price of the asset
  * @param tickSpacing the tick spacing of the market @default 1n
+ * @param roundUp round up the result @default false
  * @returns A Tick instance corresponding to the price of the asset.
  */
-export function tickFromPrice(price: number, tickSpacing = 1n): bigint {
-  const rawTick = BigInt(Math.floor(Math.log(price) / Math.log(1.0001)))
+export function tickFromPrice(price: number, tickSpacing = 1n, roundUp = false): bigint {
+  const roundMethod = roundUp ? Math.ceil : Math.floor
+  const rawTick = BigInt(roundMethod(Math.log(price) / Math.log(1.0001)))
   const bin = rawTick / tickSpacing + (rawTick % tickSpacing > 0n ? 1n : 0n)
   return bin * tickSpacing
 }

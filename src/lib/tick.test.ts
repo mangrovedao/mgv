@@ -3,6 +3,7 @@ import {
   MAX_SAFE_VOLUME,
   inboundFromOutbound,
   outboundFromInbound,
+  tickFromPrice,
   tickFromVolumes,
 } from './tick.js'
 
@@ -42,6 +43,12 @@ describe('ticks', () => {
     assertEq(tickFromVolumes(999999n, 1000000n), -1n)
     assertEq(tickFromVolumes(1000000n, 999999n), 0n)
     assertEq(tickFromVolumes(1000000n * 10n ** 18n, 999999n * 10n ** 18n), 0n)
+  })
+
+  test('tickFromPrice', () => {
+    assertEq(tickFromPrice(1), 0n)
+    assertEq(tickFromPrice(1.0001), 1n)
+    assertEq(tickFromPrice(0.9998, 1n, true), -2n)
   })
 
   test('outboundFromInbound and inboundFromOutbound', () => {
