@@ -4,85 +4,85 @@ import {
   type Logic,
   type MarketParams,
   minVolume,
-} from "../../index.js";
+} from '../../index.js'
 import {
   humanPriceToRawPrice,
   rawPriceToHumanPrice,
-} from "../human-readable.js";
-import { getDefaultLimitOrderGasreq } from "../limit-order.js";
-import { priceFromTick, tickFromPrice } from "../tick.js";
+} from '../human-readable.js'
+import { getDefaultLimitOrderGasreq } from '../limit-order.js'
+import { priceFromTick, tickFromPrice } from '../tick.js'
 import {
   type Distribution,
   createGeometricDistribution,
-} from "./distribution.js";
+} from './distribution.js'
 
 export type RawKandelPositionParams = {
-  minPrice: number;
-  maxPrice: number;
-  midPrice: number;
-  pricePoints: bigint;
-  market: MarketParams;
-  adjust?: boolean | undefined;
-};
+  minPrice: number
+  maxPrice: number
+  midPrice: number
+  pricePoints: bigint
+  market: MarketParams
+  adjust?: boolean | undefined
+}
 
 export type PositionKandelParams = {
-  baseQuoteTickIndex0: bigint;
-  baseQuoteTickOffset: bigint;
-  firstAskIndex: bigint;
-  pricePoints: bigint;
-};
+  baseQuoteTickIndex0: bigint
+  baseQuoteTickOffset: bigint
+  firstAskIndex: bigint
+  pricePoints: bigint
+}
 
 function getTick(price: number, tickSpacing: bigint, adjust: boolean) {
-  const lowerTick = tickFromPrice(price, tickSpacing, false);
-  if (!adjust) return lowerTick;
-  const upperTick = tickFromPrice(price, tickSpacing, true);
+  const lowerTick = tickFromPrice(price, tickSpacing, false)
+  if (!adjust) return lowerTick
+  const upperTick = tickFromPrice(price, tickSpacing, true)
 
-  if (upperTick === lowerTick) return lowerTick;
+  if (upperTick === lowerTick) return lowerTick
 
-  const lowerPrice = priceFromTick(lowerTick);
-  const upperPrice = priceFromTick(upperTick);
+  const lowerPrice = priceFromTick(lowerTick)
+  const upperPrice = priceFromTick(upperTick)
 
-  const lowerDiff = Math.abs(price - lowerPrice);
-  const upperDiff = Math.abs(price - upperPrice);
+  const lowerDiff = Math.abs(price - lowerPrice)
+  const upperDiff = Math.abs(price - upperPrice)
 
-  return lowerDiff < upperDiff ? lowerTick : upperTick;
+  return lowerDiff < upperDiff ? lowerTick : upperTick
 }
 
 export function getKandelPositionRawParams(
-  params: RawKandelPositionParams
+  params: RawKandelPositionParams,
 ): PositionKandelParams {
-  const { market, pricePoints } = params;
-  const minPriceRaw = humanPriceToRawPrice(params.minPrice, market);
-  const midPriceRaw = humanPriceToRawPrice(params.midPrice, market);
-  const maxPriceRaw = humanPriceToRawPrice(params.maxPrice, market);
+  const { market, pricePoints } = params
+  const minPriceRaw = humanPriceToRawPrice(params.minPrice, market)
+  const midPriceRaw = humanPriceToRawPrice(params.midPrice, market)
+  const maxPriceRaw = humanPriceToRawPrice(params.maxPrice, market)
 
   const baseQuoteTickIndex0 = getTick(
     minPriceRaw,
     market.tickSpacing,
-    params.adjust ?? false
-  );
+    params.adjust ?? false,
+  )
   const midTick = getTick(
     midPriceRaw,
     market.tickSpacing,
-    params.adjust ?? false
-  );
+    params.adjust ?? false,
+  )
   const maxTick = getTick(
     maxPriceRaw,
     market.tickSpacing,
-    params.adjust ?? false
-  );
+    params.adjust ?? false,
+  )
 
   let baseQuoteTickOffset =
     ((maxTick - baseQuoteTickIndex0) /
       (pricePoints - 1n) /
       market.tickSpacing) *
-    market.tickSpacing;
-  if (baseQuoteTickOffset === 0n) baseQuoteTickOffset = market.tickSpacing;
-  let firstAskIndex = 0n;
+    market.tickSpacing
+  if (baseQuoteTickOffset === 0n) baseQuoteTickOffset = market.tickSpacing
+  let firstAskIndex = 0n
 
   for (; firstAskIndex < pricePoints; ++firstAskIndex) {
     if (baseQuoteTickIndex0 + firstAskIndex * baseQuoteTickOffset >= midTick)
-      break;
+      break
   }
 
   return {
@@ -90,74 +90,74 @@ export function getKandelPositionRawParams(
     baseQuoteTickOffset,
     firstAskIndex,
     pricePoints,
-  };
+  }
 }
 
 export type RawKandelParams = RawKandelPositionParams & {
-  baseAmount: bigint;
-  quoteAmount: bigint;
-  stepSize: bigint;
-  gasreq: bigint;
-  factor: number;
-  asksLocalConfig: LocalConfig;
-  bidsLocalConfig: LocalConfig;
-  marketConfig: GlobalConfig;
-  deposit?: boolean | undefined;
-};
+  baseAmount: bigint
+  quoteAmount: bigint
+  stepSize: bigint
+  gasreq: bigint
+  factor: number
+  asksLocalConfig: LocalConfig
+  bidsLocalConfig: LocalConfig
+  marketConfig: GlobalConfig
+  deposit?: boolean | undefined
+}
 
 export type KandelParams = PositionKandelParams & {
-  stepSize: bigint;
-  askGives: bigint;
-  bidGives: bigint;
-  gasreq: bigint;
-  baseAmount?: bigint | undefined;
-  quoteAmount?: bigint | undefined;
-};
+  stepSize: bigint
+  askGives: bigint
+  bidGives: bigint
+  gasreq: bigint
+  baseAmount?: bigint | undefined
+  quoteAmount?: bigint | undefined
+}
 
 export type ValidateParamsResult = {
-  params: KandelParams;
-  rawParams: RawKandelParams;
-  minBaseAmount: bigint;
-  minQuoteAmount: bigint;
-  minProvision: bigint;
-  distribution: Distribution;
-  isValid: boolean;
-};
+  params: KandelParams
+  rawParams: RawKandelParams
+  minBaseAmount: bigint
+  minQuoteAmount: bigint
+  minProvision: bigint
+  distribution: Distribution
+  isValid: boolean
+}
 
 export function countBidsAndAsks(distribution: Distribution) {
-  let nBids = 0n;
-  let nAsks = 0n;
+  let nBids = 0n
+  let nAsks = 0n
   for (let i = 0; i < distribution.asks.length; i++) {
-    if (distribution.asks[i]!.gives !== 0n) nAsks++;
+    if (distribution.asks[i]!.gives !== 0n) nAsks++
   }
   for (let i = 0; i < distribution.bids.length; i++) {
-    if (distribution.bids[i]!.gives !== 0n) nBids++;
+    if (distribution.bids[i]!.gives !== 0n) nBids++
   }
   return {
     nBids,
     nAsks,
-  };
+  }
 }
 
 export function changeGives(
   distribution: Distribution,
   bidGives: bigint,
-  askGives: bigint
+  askGives: bigint,
 ): Distribution {
   for (let i = 0; i < distribution.asks.length; i++) {
     if (distribution.asks[i]!.gives !== 0n)
-      distribution.asks[i]!.gives = askGives;
+      distribution.asks[i]!.gives = askGives
     if (distribution.bids[i]!.gives !== 0n)
-      distribution.bids[i]!.gives = bidGives;
+      distribution.bids[i]!.gives = bidGives
   }
-  return distribution;
+  return distribution
 }
 
 export function validateKandelParams(
-  params: RawKandelParams
+  params: RawKandelParams,
 ): ValidateParamsResult {
   const { baseQuoteTickIndex0, baseQuoteTickOffset, firstAskIndex } =
-    getKandelPositionRawParams(params);
+    getKandelPositionRawParams(params)
 
   const {
     pricePoints,
@@ -169,7 +169,7 @@ export function validateKandelParams(
     bidsLocalConfig,
     marketConfig,
     deposit = false,
-  } = params;
+  } = params
 
   let distribution = createGeometricDistribution({
     baseQuoteTickIndex0,
@@ -180,36 +180,36 @@ export function validateKandelParams(
     market,
     askGives: 1n,
     bidGives: 1n,
-  });
+  })
 
-  const { nBids, nAsks } = countBidsAndAsks(distribution);
+  const { nBids, nAsks } = countBidsAndAsks(distribution)
   // asks gives base and bids gives quote
-  const askGives = nAsks > 0 ? params.baseAmount / nAsks : 0n;
-  const bidGives = nBids > 0 ? params.quoteAmount / nBids : 0n;
+  const askGives = nAsks > 0 ? params.baseAmount / nAsks : 0n
+  const bidGives = nBids > 0 ? params.quoteAmount / nBids : 0n
 
-  distribution = changeGives(distribution, bidGives, askGives);
+  distribution = changeGives(distribution, bidGives, askGives)
 
-  const baseAmount = askGives * nAsks;
-  const quoteAmount = bidGives * nBids;
+  const baseAmount = askGives * nAsks
+  const quoteAmount = bidGives * nBids
 
   const minPrice = rawPriceToHumanPrice(
     priceFromTick(baseQuoteTickIndex0),
-    market
-  );
+    market,
+  )
   const maxPrice = rawPriceToHumanPrice(
     priceFromTick(
-      baseQuoteTickIndex0 + baseQuoteTickOffset * (pricePoints - 1n)
+      baseQuoteTickIndex0 + baseQuoteTickOffset * (pricePoints - 1n),
     ),
-    market
-  );
+    market,
+  )
 
-  const bigintFactor = BigInt(factor * 10_000);
+  const bigintFactor = BigInt(factor * 10_000)
 
-  const minAsk = (minVolume(asksLocalConfig, gasreq) * bigintFactor) / 10_000n;
-  const minBid = (minVolume(bidsLocalConfig, gasreq) * bigintFactor) / 10_000n;
+  const minAsk = (minVolume(asksLocalConfig, gasreq) * bigintFactor) / 10_000n
+  const minBid = (minVolume(bidsLocalConfig, gasreq) * bigintFactor) / 10_000n
 
-  const minBaseAmount = minAsk * nAsks;
-  const minQuoteAmount = minBid * nBids;
+  const minBaseAmount = minAsk * nAsks
+  const minQuoteAmount = minBid * nBids
 
   const minProvision =
     ((gasreq + asksLocalConfig.offer_gasbase) *
@@ -217,11 +217,10 @@ export function validateKandelParams(
       (gasreq + bidsLocalConfig.offer_gasbase) *
         BigInt(distribution.bids.length)) *
     marketConfig.gasprice *
-    BigInt(1e6);
+    BigInt(1e6)
 
   const isValid =
-    (nAsks === 0n || askGives >= minAsk) &&
-    (nBids === 0n || bidGives >= minBid);
+    (nAsks === 0n || askGives >= minAsk) && (nBids === 0n || bidGives >= minBid)
 
   return {
     params: {
@@ -248,13 +247,13 @@ export function validateKandelParams(
     minProvision,
     isValid,
     distribution,
-  };
+  }
 }
 
 export type GetKandelGasReqParams = {
-  baseLogic?: Logic | undefined;
-  quoteLogic?: Logic | undefined;
-};
+  baseLogic?: Logic | undefined
+  quoteLogic?: Logic | undefined
+}
 
 export function getKandelGasReq(params: GetKandelGasReqParams) {
   return (
@@ -262,8 +261,8 @@ export function getKandelGasReq(params: GetKandelGasReqParams) {
       Math.max(
         Number(params.baseLogic?.gasreq || 0),
         Number(params.quoteLogic?.gasreq || 0),
-        Number(getDefaultLimitOrderGasreq())
-      )
+        Number(getDefaultLimitOrderGasreq()),
+      ),
     ) + 100_000n
-  );
+  )
 }
