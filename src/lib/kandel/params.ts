@@ -22,6 +22,7 @@ export type RawKandelPositionParams = {
   midPrice: number
   pricePoints: bigint
   market: MarketParams
+  adjust?: boolean | undefined
 }
 
 export type PositionKandelParams = {
@@ -31,22 +32,46 @@ export type PositionKandelParams = {
   pricePoints: bigint
 }
 
+function getTick(price: number, tickSpacing: bigint, adjust: boolean) {
+  const lowerTick = tickFromPrice(price, tickSpacing, false)
+  if (!adjust) return lowerTick
+  const upperTick = tickFromPrice(price, tickSpacing, true)
+
+  if (upperTick === lowerTick) return lowerTick
+
+  const lowerPrice = priceFromTick(lowerTick)
+  const upperPrice = priceFromTick(upperTick)
+
+  const lowerDiff = Math.abs(price - lowerPrice)
+  const upperDiff = Math.abs(price - upperPrice)
+
+  return lowerDiff < upperDiff ? lowerTick : upperTick
+}
+
 export function getKandelPositionRawParams(
   params: RawKandelPositionParams,
 ): PositionKandelParams {
   const { market, pricePoints } = params
-  const baseQuoteTickIndex0 = tickFromPrice(
-    humanPriceToRawPrice(params.minPrice, market),
+  const minPriceRaw = humanPriceToRawPrice(params.minPrice, market)
+  const midPriceRaw = humanPriceToRawPrice(params.midPrice, market)
+  const maxPriceRaw = humanPriceToRawPrice(params.maxPrice, market)
+
+  const baseQuoteTickIndex0 = getTick(
+    minPriceRaw,
     market.tickSpacing,
+    params.adjust ?? false,
   )
-  const midTick = tickFromPrice(
-    humanPriceToRawPrice(params.midPrice, market),
+  const midTick = getTick(
+    midPriceRaw,
     market.tickSpacing,
+    params.adjust ?? false,
   )
-  const maxTick = tickFromPrice(
-    humanPriceToRawPrice(params.maxPrice, market),
+  const maxTick = getTick(
+    maxPriceRaw,
     market.tickSpacing,
+    params.adjust ?? false,
   )
+
   let baseQuoteTickOffset =
     ((maxTick - baseQuoteTickIndex0) /
       (pricePoints - 1n) /
