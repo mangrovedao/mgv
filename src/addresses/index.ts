@@ -21,6 +21,7 @@ export {
   arbitrumWETHWBTC,
   arbitrumWBTCUSDT,
   arbitrumWETHweETH,
+  arbitrumARBUSDCe,
 } from './markets/index.js'
 
 // --- tokens ---
@@ -44,6 +45,8 @@ export {
   arbitrumUSDC,
   arbitrumUSDT,
   arbitrumweETH,
+  arbitrumArb,
+  arbitrumUSDCe,
   arbitrumTokens,
 } from './tokens/index.js'
 

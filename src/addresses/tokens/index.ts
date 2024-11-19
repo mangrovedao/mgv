@@ -22,6 +22,8 @@ export {
   arbitrumUSDC,
   arbitrumUSDT,
   arbitrumweETH,
+  arbitrumArb,
+  arbitrumUSDCe,
   arbitrumTokens,
 } from './arbitrum.js'
 
