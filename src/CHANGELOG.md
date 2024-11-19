@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.14
+
+### Patch Changes
+
+- 26ee3f9: Added missing exports for addresses
+
 ## 0.9.13
 
 ### Patch Changes
