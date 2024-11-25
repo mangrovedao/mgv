@@ -1,6 +1,10 @@
 import type { Address, Client } from 'viem'
-import type { GetUserRouterArgs } from '../../actions/index.js'
-import { getUserRouter } from '../../actions/index.js'
+import type {
+  GetOpenMarketArgs,
+  GetOpenMarketResult,
+  GetUserRouterArgs,
+} from '../../actions/index.js'
+import { getOpenMarkets, getUserRouter } from '../../actions/index.js'
 import {
   type GetOrdersArgs,
   type GetSingleOrderArgs,
@@ -34,6 +38,44 @@ export type MangroveActions = {
 
   /** Gets multiple orders details given their markets, sides, and ids */
   getOrders: (args: GetOrdersArgs) => Promise<OrderResult[]>
+
+  /**
+   * Gets all open markets on Mangrove
+   * @param args.cashnesses The cashness values for each token symbol (e.g. { "WETH": 10, "USDC": 100 }).
+   *                       Tokens with higher cashness will be quote tokens, lower cashness will be base tokens.
+   *                       For example, in the WETH/USDC market, WETH has higher cashness so it's the quote token.
+   * @param args.displayDecimals The number of decimals to display for each token symbol
+   * @param args.priceDisplayDecimals The number of decimals to display for prices in each token symbol
+   * @param args.testTokens Array of token addresses that are test tokens
+   * @returns Array of market parameters containing token pairs and tick spacing
+   * @example
+   * ```ts
+   * const markets = await client.getOpenMarkets({
+   *   cashnesses: {
+   *     "WETH": 10,  // Lower cashness -> WETH will be base token
+   *     "USDC": 100   // Higher cashness -> USDC will be quote token
+   *   },
+   *   displayDecimals: {
+   *     "WETH": 4,
+   *     "USDC": 2
+   *   },
+   *   priceDisplayDecimals: {
+   *     "WETH": 2,
+   *     "USDC": 4
+   *   }
+   * });
+   * // Returns:
+   * // [
+   * //   {
+   * //     base: { address: "0x...", symbol: "WETH", decimals: 18, ... },
+   * //     quote: { address: "0x...", symbol: "USDC", decimals: 6, ... },
+   * //     tickSpacing: 1n
+   * //   },
+   * //   ...
+   * // ]
+   * ```
+   */
+  getOpenMarkets: (args: GetOpenMarketArgs) => Promise<GetOpenMarketResult>
 }
 
 export function mangroveActions(actionsParams: MangroveActionsDefaultParams) {
@@ -43,5 +85,6 @@ export function mangroveActions(actionsParams: MangroveActionsDefaultParams) {
       simulateDeployRouter(client, actionsParams, args),
     getOrder: (args) => getOrder(client, actionsParams, args),
     getOrders: (args) => getOrders(client, actionsParams, args),
+    getOpenMarkets: (args) => getOpenMarkets(client, actionsParams, args),
   })
 }
