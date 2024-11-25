@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.15
+
+### Patch Changes
+
+- c35ba08: Added getTokens and getOpenMarkets
+
 ## 0.9.14
 
 ### Patch Changes
