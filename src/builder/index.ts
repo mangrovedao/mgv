@@ -112,3 +112,7 @@ export {
   deployRouterParams,
   bindParams,
 } from './smart-router.js'
+
+// reader
+
+export { getOpenMarketsParams, mgvReaderABI } from './reader.js'
