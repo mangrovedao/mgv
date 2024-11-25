@@ -1,4 +1,6 @@
-import { createAnvil, startProxy } from '@viem/anvil'
+import { createServer, defineInstance } from 'prool'
+import { anvil } from 'prool/instances'
+// import { createAnvil, startProxy } from '@viem/anvil'
 import { type Address, parseAbi, parseEther, parseUnits } from 'viem'
 import { foundry } from 'viem/chains'
 import type { GlobalSetupContext } from 'vitest/node'
@@ -26,12 +28,11 @@ export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
 export default async function ({ provide }: GlobalSetupContext) {
   // create an anvil instance
-  const anvil = createAnvil({
+  const globalInstance = anvil({
     port: Number(process.env.MAIN_PORT || 8546),
-    chainId: foundry.id,
     ipc: '/tmp/anvil.ipc',
   })
-  await anvil.start()
+  await globalInstance.start()
 
   // setting initial balances of accounts
   for (const account of accounts) {
@@ -130,16 +131,18 @@ export default async function ({ provide }: GlobalSetupContext) {
   })
 
   // starts a proxy pool from there
-  const shutdown = await startProxy({
-    port: Number(process.env.PROXY_PORT || 8545),
-    options: {
+  const server = createServer({
+    instance: anvil({
       forkUrl: '/tmp/anvil.ipc',
-    },
+    }),
+    port: Number(process.env.PROXY_PORT || 8545),
   })
 
+  await server.start()
+
   return async () => {
-    await shutdown()
-    await anvil.stop()
+    await server.stop()
+    await globalInstance.stop()
   }
 }
 
