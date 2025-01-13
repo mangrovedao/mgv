@@ -2,6 +2,8 @@
 
 mgv is an sdk aimed at providing a simple way to interact with Mangrove.
 
+improve dovumentation
+
 ## General context
 
 There are some general contexts that needs to be set
