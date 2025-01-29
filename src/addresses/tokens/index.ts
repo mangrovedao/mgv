@@ -34,6 +34,7 @@ export {
   baseEURC,
   baseCBETH,
   baseWSTETH,
+  baseTokens,
 } from './base.js'
 
 export type { Token, BuildTokenParms } from './utils.js'
