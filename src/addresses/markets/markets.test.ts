@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import type { MarketParams } from '~mgv/index.js'
+import type { MarketParams } from '~mgv/types/index.js'
+
 
 function testMarketFile(chain: string, module: any) {
   let keys = Object.keys(module)
@@ -17,9 +18,6 @@ function testMarketFile(chain: string, module: any) {
       '',
     )}${market.quote.symbol.replace(/[^\w$]/g, '')}`
     expect(key).toBe(marketName)
-    console.log(key, marketName)
-    console.log(module[key])
-
     expectTypeOf(module[key]).toMatchTypeOf<MarketParams>()
   }
 
