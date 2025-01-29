@@ -46,9 +46,10 @@ export const baseEURC = buildToken({
 })
 
 export const baseTokens = [
-  baseUSDC,
   baseWETH,
+  baseUSDC,
+  baseCBETH,
+  baseWSTETH,
   baseCBBTC,
   baseEURC,
-  baseCBETH,
 ] as const

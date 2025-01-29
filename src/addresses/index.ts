@@ -57,6 +57,7 @@ export {
   baseEURC,
   baseCBETH,
   baseWSTETH,
+  baseTokens,
 } from './tokens/index.js'
 
 // --- mangrove ---
