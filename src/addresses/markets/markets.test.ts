@@ -17,6 +17,9 @@ function testMarketFile(chain: string, module: any) {
       '',
     )}${market.quote.symbol.replace(/[^\w$]/g, '')}`
     expect(key).toBe(marketName)
+    console.log(key, marketName)
+    console.log(module[key])
+
     expectTypeOf(module[key]).toMatchTypeOf<MarketParams>()
   }
 

@@ -27,9 +27,15 @@ export {
   arbitrumTokens,
 } from './arbitrum.js'
 
-export type {
-  Token,
-  BuildTokenParms,
-} from './utils.js'
+export {
+  baseUSDC,
+  baseWETH,
+  baseCBBTC,
+  baseEURC,
+  baseCBETH,
+  baseWSTETH,
+} from './base.js'
+
+export type { Token, BuildTokenParms } from './utils.js'
 
 export { buildToken } from './utils.js'

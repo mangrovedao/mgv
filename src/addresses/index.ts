@@ -1,7 +1,4 @@
-export type {
-  Token,
-  BuildTokenParms,
-} from './tokens/index.js'
+export type { Token, BuildTokenParms } from './tokens/index.js'
 
 export {
   blastMarkets,
@@ -22,6 +19,12 @@ export {
   arbitrumWBTCUSDT,
   arbitrumWETHweETH,
   arbitrumARBUSDCe,
+  baseMarkets,
+  baseWETHUSDC,
+  baseCBBTCUSDC,
+  baseWBTCEURC,
+  baseCBBETHEURC,
+  baseWSTETHWETH,
 } from './markets/index.js'
 
 // --- tokens ---
@@ -48,6 +51,12 @@ export {
   arbitrumArb,
   arbitrumUSDCe,
   arbitrumTokens,
+  baseUSDC,
+  baseWETH,
+  baseCBBTC,
+  baseEURC,
+  baseCBETH,
+  baseWSTETH,
 } from './tokens/index.js'
 
 // --- mangrove ---
@@ -56,6 +65,7 @@ export {
   blastMangrove,
   baseSepoliaMangrove,
   arbitrumMangrove,
+  baseMangrove,
 } from './mangrove/index.js'
 
 // --- logics ---
