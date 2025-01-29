@@ -24,3 +24,12 @@ export {
   arbitrumWETHweETH,
   arbitrumARBUSDCe,
 } from './arbitrum.js'
+
+export {
+  baseMarkets,
+  baseWETHUSDC,
+  baseCBBTCUSDC,
+  baseWBTCEURC,
+  baseCBETHEURC,
+  baseWSTETHWETH,
+} from './base.js'
