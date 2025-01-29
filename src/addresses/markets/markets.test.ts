@@ -1,7 +1,6 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
 import type { MarketParams } from '~mgv/types/index.js'
 
-
 function testMarketFile(chain: string, module: any) {
   let keys = Object.keys(module)
   const marketListKey = `${chain}Markets`
