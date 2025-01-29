@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.17
+
+### Patch Changes
+
+- 1fcf0fb: Add baseTokens export
+
 ## 0.9.16
 
 ### Patch Changes
