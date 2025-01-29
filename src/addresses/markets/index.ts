@@ -30,6 +30,6 @@ export {
   baseWETHUSDC,
   baseCBBTCUSDC,
   baseWBTCEURC,
-  baseCBBETHEURC,
+  baseCBETHEURC,
   baseWSTETHWETH,
 } from './base.js'
