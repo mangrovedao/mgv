@@ -26,7 +26,7 @@ export const baseWBTCEURC = {
   tickSpacing: 1n,
 } as const satisfies MarketParams
 
-export const baseCBBETHEURC = {
+export const baseCBETHEURC = {
   base: baseCBETH,
   quote: baseWETH,
   tickSpacing: 1n,
@@ -42,6 +42,6 @@ export const baseMarkets = [
   baseWETHUSDC,
   baseCBBTCUSDC,
   baseWBTCEURC,
-  baseCBBETHEURC,
+  baseCBETHEURC,
   baseWSTETHWETH,
 ] as const satisfies MarketParams[]
