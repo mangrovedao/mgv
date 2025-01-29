@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.16
+
+### Patch Changes
+
+- eab575a: Add base addresses,tokens and markets
+
 ## 0.9.15
 
 ### Patch Changes
