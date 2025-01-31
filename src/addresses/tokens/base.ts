@@ -31,7 +31,7 @@ export const baseWSTETH = buildToken({
 
 export const baseCBBTC = buildToken({
   address: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
-  symbol: 'WBTC',
+  symbol: 'CBBTC',
   decimals: 8,
   displayDecimals: 5,
   priceDisplayDecimals: 6,
