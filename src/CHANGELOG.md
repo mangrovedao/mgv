@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.18
+
+### Patch Changes
+
+- c6e03e9: fix base token typo
+
 ## 0.9.17
 
 ### Patch Changes
