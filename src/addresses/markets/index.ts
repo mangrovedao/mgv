@@ -31,5 +31,5 @@ export {
   baseCBBTCUSDC,
   baseCBBTCEURC,
   baseWSTETHWETH,
-  baseCBETHWETH
+  baseCBETHWETH,
 } from './base.js'
