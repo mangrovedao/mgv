@@ -29,7 +29,7 @@ export {
   baseMarkets,
   baseWETHUSDC,
   baseCBBTCUSDC,
-  baseWBTCEURC,
-  baseCBETHEURC,
+  baseCBBTCEURC,
   baseWSTETHWETH,
+  baseCBETHWETH,
 } from './base.js'
