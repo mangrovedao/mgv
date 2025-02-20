@@ -2,6 +2,7 @@ import { ContractFunctionExecutionError, zeroAddress } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { getClient } from '~test/src/client.js'
 import { GetTokenInfoError, getTokens } from './tokens.js'
+
 const { WETH, USDC, DAI } = inject('tokens')
 const client = getClient()
 
