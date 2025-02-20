@@ -42,6 +42,7 @@ export type GetOpenMarketArgs = Omit<GetTokensParams, 'tokens'> &
   GetOpenMarketRawArgs & {
     // symbol -> cashness
     cashnesses: Record<string, number>
+    symbolOverrides?: Record<string, string>
   }
 
 export type GetOpenMarketResult = MarketParams[]
@@ -58,9 +59,15 @@ export async function getOpenMarkets(
   })
 
   return raw.map((market): MarketParams => {
+
+    const processedTokens = tokens.map((token) => ({
+      ...token,
+      symbol: args.symbolOverrides?.[token.symbol] ?? token.symbol,
+    }))
+
     // we don't use isAddressEqual because both are supposedly checksummed from viem
-    const tkn0 = tokens.find((token) => token.address === market.tkn0)
-    const tkn1 = tokens.find((token) => token.address === market.tkn1)
+    const tkn0 = processedTokens.find((token) => token.address === market.tkn0)
+    const tkn1 = processedTokens.find((token) => token.address === market.tkn1)
 
     if (!tkn0 || !tkn1) {
       throw new Error(

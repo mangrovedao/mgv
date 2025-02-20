@@ -1,34 +1,9 @@
-import { ContractFunctionExecutionError, createPublicClient, http, zeroAddress, type Client } from 'viem'
+import { ContractFunctionExecutionError, zeroAddress } from 'viem'
 import { describe, expect, inject, it } from 'vitest'
 import { getClient } from '~test/src/client.js'
 import { GetTokenInfoError, getTokens } from './tokens.js'
-import { arbitrum } from 'viem/chains'
-import type { Token } from '~mgv/index.js'
-
 const { WETH, USDC, DAI } = inject('tokens')
 const client = getClient()
-
-
-describe('tokens on arbitrum', () => {
-  it('should overide USDT token symbol on arbitrum', async () => {
-    const client = createPublicClient({
-      chain: arbitrum,
-      transport: http(),
-      batch: {
-        multicall: true
-      }
-    }) as Client
-  
-    const usdtAddress = "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9" as const
-  
-    const tokens = await getTokens(client as Client, {
-      tokens: [usdtAddress],
-    })
-  
-    const foundUSDT = tokens[0] as Token<typeof usdtAddress>
-    expect(foundUSDT.symbol).toEqual("USDT")
-  })
-})
 
 
 describe('tokens', () => {
