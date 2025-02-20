@@ -39,9 +39,9 @@ export class GetTokenInfoError extends BaseError {
 
 const TOKEN_SYMBOL_OVERRIDES: Record<string, Record<string, string>> = {
   // arbitrum network tokens symbol overrides
-  "42161": {
-    "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9": "USDT"
-  }
+  '42161': {
+    '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9': 'USDT',
+  },
 }
 
 export async function getTokens<
@@ -105,7 +105,8 @@ export async function getTokens<
     const display = displayDecimals[symbol]
     const priceDisplay = priceDisplayDecimals[symbol]
 
-    const networkOverrides = TOKEN_SYMBOL_OVERRIDES[client.chain?.id ?? ""] ?? {}
+    const networkOverrides =
+      TOKEN_SYMBOL_OVERRIDES[client.chain?.id ?? ''] ?? {}
 
     return buildToken({
       address: token,
