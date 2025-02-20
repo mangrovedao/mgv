@@ -78,7 +78,7 @@ export async function getTokens<
       throw new Error(
         'Error while getting token infos, This is a bug, please report at https://github.com/mangrovedao/mgv/issues',
       )
-      
+
     if (decimalsResult.status === 'failure')
       throw new GetTokenInfoError(token, 'decimals', decimalsResult.error)
     if (symbolResult.status === 'failure')
