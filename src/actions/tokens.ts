@@ -37,7 +37,6 @@ export class GetTokenInfoError extends BaseError {
   }
 }
 
-
 export async function getTokens<
   T extends readonly Address[] = readonly Address[],
 >(
@@ -49,7 +48,6 @@ export async function getTokens<
     testTokens = [],
   }: GetTokensParams<T>,
 ): Promise<GetTokensResult<T>> {
-
   const tokenInfos = await getAction(
     client,
     multicall,

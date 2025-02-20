@@ -73,7 +73,7 @@ describe('getOpenMarkets', () => {
       symbolOverrides: {
         USDC: 'USDC0',
       },
-    })  
+    })
 
     expect(markets[0]?.base.symbol).toEqual('WETH')
     expect(markets[0]?.quote.symbol).toEqual('USDC0')

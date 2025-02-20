@@ -59,7 +59,6 @@ export async function getOpenMarkets(
   })
 
   return raw.map((market): MarketParams => {
-
     const processedTokens = tokens.map((token) => ({
       ...token,
       symbol: args.symbolOverrides?.[token.symbol] ?? token.symbol,

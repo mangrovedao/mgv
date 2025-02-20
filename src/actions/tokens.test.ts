@@ -5,7 +5,6 @@ import { GetTokenInfoError, getTokens } from './tokens.js'
 const { WETH, USDC, DAI } = inject('tokens')
 const client = getClient()
 
-
 describe('tokens', () => {
   it('should get tokens', async () => {
     const tokens = await getTokens(client, { tokens: [WETH.address] as const })
