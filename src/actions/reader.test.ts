@@ -68,13 +68,13 @@ describe('getOpenMarkets', () => {
     const markets = await getOpenMarkets(client, params, {
       cashnesses: {
         WETH: 1,
-        USDC: 1000,
+        USDC0: 1000,
       },
       symbolOverrides: {
         USDC: 'USDC0',
       },
     })
 
-    expect(markets[0]?.base.symbol).toEqual('USDC0')
+    expect(markets[0]?.quote.symbol).toEqual('USDC0')
   })
 })
