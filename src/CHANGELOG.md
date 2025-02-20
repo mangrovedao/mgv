@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.19
+
+### Patch Changes
+
+- 8f021c0: Add symbol override functionality in getOpenMarkets
+
 ## 0.9.18
 
 ### Patch Changes
