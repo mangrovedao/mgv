@@ -15,7 +15,7 @@ export default defineConfig({
     },
     benchmark: {
       outputFile: './bench/report.json',
-      reporters: process.env.CI ? ['json'] : ['verbose'],
+      reporters: process.env.CI ? ['default'] : ['verbose'],
     },
     coverage: {
       all: false,
@@ -36,5 +36,6 @@ export default defineConfig({
     globalSetup: [join(__dirname, './globalSetup.ts')],
     hookTimeout: 20_000,
     testTimeout: 20_000,
+    teardownTimeout: 10_000,
   },
 })
