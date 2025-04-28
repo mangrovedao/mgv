@@ -67,6 +67,7 @@ export {
   baseSepoliaMangrove,
   arbitrumMangrove,
   baseMangrove,
+  seiMangrove,
 } from './mangrove/index.js'
 
 // --- logics ---
