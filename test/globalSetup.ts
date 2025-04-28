@@ -1,7 +1,7 @@
 import { createServer } from 'prool'
 import { anvil } from 'prool/instances'
 import { type Address, parseAbi, parseEther, parseUnits } from 'viem'
-import type { GlobalSetupContext } from 'vitest/node'
+import type { TestProject } from 'vitest/node'
 import type { SerializableMarketParams, Token } from '~mgv/index.js'
 import { toSerializable } from '~mgv/lib/utils.js'
 import { globalTestClient } from '~test/src/client.js'
@@ -24,11 +24,10 @@ import { smartKandelSeederBytecode } from './src/contracts/smart-kandel-seeder.b
 
 export const multicall: Address = '0xcA11bde05977b3631167028862bE2a173976CA11'
 
-export default async function ({ provide }: GlobalSetupContext) {
+export default async function ({ provide }: TestProject) {
   // create an anvil instance
   const globalInstance = anvil({
     port: Number(process.env.MAIN_PORT || 8546),
-    ipc: '/tmp/anvil.ipc',
   })
   await globalInstance.start()
 
@@ -131,7 +130,7 @@ export default async function ({ provide }: GlobalSetupContext) {
   // starts a proxy pool from there
   const server = createServer({
     instance: anvil({
-      forkUrl: '/tmp/anvil.ipc',
+      forkUrl: `http://localhost:${Number(process.env.MAIN_PORT || 8546)}`,
     }),
     port: Number(process.env.PROXY_PORT || 8545),
   })
@@ -141,6 +140,8 @@ export default async function ({ provide }: GlobalSetupContext) {
   return async () => {
     await server.stop()
     await globalInstance.stop()
+    // const socket = await globalTestClient.transport.getRpcClient();
+    // socket.close();
   }
 }
 

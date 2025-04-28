@@ -7,13 +7,12 @@ import {
 } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { foundry } from 'viem/chains'
-import { ipc } from 'viem/node'
 import { multicall } from '~test/globalSetup.js'
 import { accounts, poolId } from './constants.js'
 
 export const globalTestClient = createTestClient({
   chain: foundry,
-  transport: ipc('/tmp/anvil.ipc'),
+  transport: http(`http://localhost:${process.env.MAIN_PORT || 8546}`),
   mode: 'anvil',
   account: privateKeyToAccount(accounts[0].privateKey),
 })
@@ -47,8 +46,6 @@ export function getClient() {
   const httpTransport = http(
     `http://localhost:${process.env.PROXY_PORT || 8545}/${poolId}`,
   )
-
-  // const ipcTransport = ipc(`/tmp/anvil-${poolId}.ipc`)
 
   return createTestClient({
     chain: mgvTestChain,
