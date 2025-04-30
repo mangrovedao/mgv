@@ -47,4 +47,5 @@ export {
   offerIdOfIndexParams,
   provisionOfParams,
   viewKandelABI,
+  kandelParamsParams,
 } from './view.js'
