@@ -116,3 +116,33 @@ export {
 // reader
 
 export { getOpenMarketsParams, mgvReaderABI } from './reader.js'
+
+// kandel
+
+export type {
+  PopulateChunkFromOffsetParams,
+  PopulateFromOffsetParams,
+  CheckAaveAssetParams,
+  SetLogicsParams,
+  RetractParams,
+  SowParams,
+} from './kandel/index.js'
+
+export {
+  populateChunkFromOffsetParams,
+  populateFromOffsetParams,
+  checkAaveAssetParams,
+  setLogicsParams,
+  retractParams,
+  sowParams,
+  viewKandelABI,
+  kandelBaseTokenParams,
+  kandelQuoteTokenParams,
+  tickSpacingParams,
+  baseQuoteTickOffsetParams,
+  reserveBalanceParams,
+  offeredVolumeParams,
+  getOfferParams,
+  offerIdOfIndexParams,
+  provisionOfParams,
+} from './kandel/index.js'
