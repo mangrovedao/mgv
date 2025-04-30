@@ -39,7 +39,7 @@ export function populateFromOffsetParams(params: PopulateFromOffsetParams) {
     askGives,
     gasreq,
     pricePoints,
-    stepSize,
+    stepSize = 1n,
     fromIndex = 0n,
     toIndex = pricePoints,
     baseAmount = 0n,
