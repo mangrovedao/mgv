@@ -112,14 +112,6 @@ export {
   simulateDeployRouter,
 } from './smart-router.js'
 
-export type {
-  OfferParsed,
-  GetKandelStateArgs,
-  GetKandelStateParams,
-  GetKandelStateResult,
-  KandelStatus,
-} from './kandel/view.js'
-
 export { getTokens, GetTokenInfoError } from './tokens.js'
 
 export type {
@@ -135,3 +127,36 @@ export type {
   GetOpenMarketRawResult,
   GetOpenMarketResult,
 } from './reader.js'
+
+export type {
+  GetKandelStepsArgs,
+  GetKandelStepsParams,
+  GetSmartKandelStepsArgs,
+  GetSmartKandelStepsParams,
+  GetKandelStateArgs,
+  GetKandelStateParams,
+  GetKandelStateResult,
+  OfferParsed,
+  PopulateArgs,
+  PopulateResult,
+  PopulateChunkArgs,
+  PopulateChunkResult,
+  RetractArgs,
+  SimulateRetractResult,
+  SowArgs,
+  SimulateSowResult,
+  SetLogicsArgs,
+  SetLogicsResult,
+} from './kandel/index.js'
+
+export {
+  getKandelSteps,
+  getSmartKandelSteps,
+  simulatePopulate,
+  simulatePopulateChunk,
+  simulateSetLogics,
+  simulateRetract,
+  simulateSow,
+  getKandelState,
+  KandelStatus,
+} from './kandel/index.js'

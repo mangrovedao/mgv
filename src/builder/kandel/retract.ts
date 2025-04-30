@@ -5,7 +5,7 @@ import {
   parseAbi,
 } from 'viem'
 
-export const restractKandelABI = parseAbi([
+export const retractKandelABI = parseAbi([
   'function retractAndWithdraw(uint from, uint to, uint baseAmount, uint quoteAmount, uint freeWei, address recipient) external',
 ])
 
@@ -29,12 +29,12 @@ export function retractParams(params: RetractParams) {
   } = params
 
   return {
-    abi: restractKandelABI,
+    abi: retractKandelABI,
     functionName: 'retractAndWithdraw',
     args: [fromIndex, toIndex, baseAmount, quoteAmount, freeWei, recipient],
   } satisfies Omit<
     ContractFunctionParameters<
-      typeof restractKandelABI,
+      typeof retractKandelABI,
       'nonpayable',
       'retractAndWithdraw'
     >,
