@@ -145,4 +145,5 @@ export {
   getOfferParams,
   offerIdOfIndexParams,
   provisionOfParams,
+  kandelParamsParams,
 } from './kandel/index.js'
