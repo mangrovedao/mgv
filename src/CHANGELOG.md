@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.21
+
+### Patch Changes
+
+- 76b0880: Fixed step size on kandel populate
+
 ## 0.9.20
 
 ### Patch Changes
