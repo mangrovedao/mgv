@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.23
+
+### Patch Changes
+
+- 9214d54: Added missing kandel export
+
 ## 0.9.22
 
 ### Patch Changes
