@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.22
+
+### Patch Changes
+
+- 50b7d87: Added exports for kandel types, builder params, and actions
+
 ## 0.9.21
 
 ### Patch Changes
