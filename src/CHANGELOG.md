@@ -1,5 +1,11 @@
 # @mangrovedao/mgv
 
+## 0.9.24
+
+### Patch Changes
+
+- 5b3cf70: Fixed wrong address on sei
+
 ## 0.9.23
 
 ### Patch Changes
